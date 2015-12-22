@@ -2,8 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.7'
 
-gem 'pg'
-
 gem 'carrierwave'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'devise'
@@ -12,6 +10,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'less-rails'
 gem 'mini_magick'
+gem 'pg'
+gem 'pry-rails'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'simple_form'
 gem 'sitemap_generator'
@@ -30,7 +30,5 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-html-matchers'
   gem 'capybara'
-  gem 'pry'
-  gem 'pry-rails'
   gem 'factory_girl_rails'
 end
