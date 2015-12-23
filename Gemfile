@@ -2,29 +2,26 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.7'
 
-gem 'rename'
-
 gem 'pg'
-gem 'pry-rails'
 
-gem 'less-rails'
-gem 'uglifier', '>= 1.3.0'
+gem 'carrierwave'
 gem 'coffee-rails', '~> 4.0.0'
-gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0',          group: :doc
-gem 'spring',        group: :development
-
-gem 'therubyracer'
+gem 'devise'
 gem 'haml-rails'
+gem 'jbuilder', '~> 2.0'
+gem 'jquery-rails'
+gem 'less-rails'
+gem 'mini_magick'
+gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'simple_form'
 gem 'sitemap_generator'
-gem 'devise'
-gem 'carrierwave'
-gem 'mini_magick'
+gem 'spring',        group: :development
+gem 'therubyracer'
 gem 'thin'
+gem 'turbolinks'
 gem 'twitter-bootstrap-rails'
+gem 'uglifier', '>= 1.3.0'
+
 gem 'capistrano', group: :development
 gem 'capistrano-rbenv', group: :development
 gem 'capistrano-rails', group: :development
