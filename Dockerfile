@@ -13,5 +13,10 @@ RUN rbenv exec bundle install
 
 ADD . $HOME/app/
 WORKDIR $HOME/app/
+
+USER root
+RUN chown web public
+USER web
+
 RUN rbenv exec rake assets:precompile
 CMD rbenv exec bundle exec rails server
