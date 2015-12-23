@@ -3,4 +3,4 @@ Dockerfile
 log/
 spec/
 tmp/
-public/
+public/uploads

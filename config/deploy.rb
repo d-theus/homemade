@@ -26,7 +26,7 @@ set :pty, true
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, [])
-.push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
+.push('public/uploads')
 
 # rbenv
 #set :rbenv_ruby, '2.2.0'
