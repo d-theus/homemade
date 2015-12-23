@@ -1,6 +1,7 @@
 Capfile
 Dockerfile
+.gitignore
+.dockerignore
 log/
 spec/
 tmp/
-public/uploads
