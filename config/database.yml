@@ -2,7 +2,7 @@ default: &default
   adapter: postgresql
   encoding: utf8
   template: template0
-  database: fusion_food
+  database: homemade
   pool: 5
   username: web
   password: <%= ENV["DB_PASS"] %>
@@ -17,7 +17,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: fusion_food_test
+  database: homemade_test
 
 production:
   <<: *default
+  host: postgres
