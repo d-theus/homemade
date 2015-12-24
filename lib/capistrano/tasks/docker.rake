@@ -16,6 +16,7 @@ namespace :docker do
           execute :docker, "commit #{fetch :rails}-tmp #{fetch :rails}"
           execute :docker, "rm #{fetch :rails}-tmp || true"
           execute :docker, "run --name #{fetch :rails}-tmp -it --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec rake db:migrate"
+          execute :docker, "commit #{fetch :rails}-tmp #{fetch :rails}"
           execute :docker, "rm #{fetch :rails}-tmp || true"
           for i in 1..fetch(:serv_count)
             execute :docker, "run --name #{fetch :rails}#{i} -d --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec bundle exec rails server"
@@ -87,14 +88,14 @@ namespace :docker do
     task :setup do
       on roles :app do
         within File.join(current_path, fetch(:public)) do
-          execute :docker, "create --name #{fetch :public} -d -v #{File.join(current_path, 'public')}:/home/web/app/public dtheus/rails /bin/true"
+          execute :docker, "create --name #{fetch :public} -v #{File.join(current_path, 'public')}:/home/web/app/public dtheus/rails /bin/true"
         end
       end
     end
 
     task :clear => :stop do
       on roles :app do
-        execute :docker, "rm -f #{fetch :public} || true"
+        execute :docker, "rm -f -v #{fetch :public} || true"
       end
     end
 
