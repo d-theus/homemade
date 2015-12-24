@@ -21,16 +21,25 @@ set :repo_url, 'https://github.com/d-theus/homemade.git'
 
 set :pty, true
 
+# Docker specific
+namespace :docker do
+  set :user, 'dtheus'
+  set :proxy, 'nginx'
+  set :public, 'public'
+  set :uploads, 'uploads'
+  set :rails, 'rails'
+  set :db, 'postgres'
+  set :uploads_path, '/home/web/app/public/uploads'
+  set :proxy_links, -> { [*1..fetch(:serv_count)].reduce('') { |acc,i| acc += " --link #{fetch :rails}#{i}"; acc } }
+  set :volumes, "--volumes-from #{fetch :uploads} --volumes-from #{fetch :public}"
+  set :serv_count, 3
+end
+
 
 namespace :deploy do
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+  after :published, :upload_secrets do
+    on roles :app do
+      upload! '.rbenv-vars', current_path
     end
   end
-
 end
