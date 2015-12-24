@@ -87,8 +87,7 @@ namespace :docker do
     task :setup do
       on roles :app do
         within File.join(current_path, fetch(:public)) do
-          execute :docker, "build -t #{fetch :public} ."
-          execute :docker, "run --name #{fetch :public} -d #{fetch :public}"
+          execute :docker, "create --name #{fetch :public} -d -v #{File.join(current_path, 'public')}:/home/web/app/public dtheus/rails /bin/true"
         end
       end
     end
