@@ -30,5 +30,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-html-matchers'
   gem 'capybara'
+  gem 'capybara-webkit'
   gem 'factory_girl_rails'
 end

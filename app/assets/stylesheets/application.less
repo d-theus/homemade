@@ -1,1 +1,38 @@
 @import 'bootstrap_and_overrides';
+@import 'landing.less';
+
+
+#content{
+  min-height: 200vh;
+}
+
+header.sticky{
+  background: @brand-primary;
+  height: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  transition: height .3s;
+  width: 100%;
+  z-index: 100;
+  &.in{
+    height: 96px;
+  }
+  a,h1,h2,h3,h4,span,p,li{ color: white;}
+  box-shadow: 0px 1px 8px black;
+}
+
+header.abs{
+  position: absolute;
+  background: transparent;
+  font-family: Roboto Condensed;
+  font-size:  18px;
+  color: black;
+  padding-top: 4px;
+  padding-left: 10%;
+}
+
+a.tel{
+  font-family: Roboto Condensed;
+  font-size: 18px;
+}
