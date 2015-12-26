@@ -1,3 +1,30 @@
-// Place all the styles related to the landing controller here.
-// They will automatically be included in application.css.
-// You can use Less here: http://lesscss.org/
+#hero{
+  height: 80vh;
+  background: image-url('bg-lg.jpg') no-repeat 70% 30%;
+  -webkit-background-size: 100% auto;
+  -moz-background-size:    100% auto;
+  -o-background-size:      100% auto;
+  background-size:         100% auto;
+  margin: 0;
+}
+
+#order{
+  .red;
+  margin: 0;
+}
+
+#menu{
+  .white;
+  height: 50vh;
+  margin: 0;
+}
+
+.red{
+  background: @brand-primary;
+  a,h1,h2,h3,h4,span,p,li{ color: white;}
+}
+
+.white{
+  background: white;
+  a,h1,h2,h3,h4,span,p,li{ color: @brand-primary;}
+}

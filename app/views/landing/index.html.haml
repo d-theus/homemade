@@ -1,2 +1,20 @@
-%h1 Landing#index
-%p Find me in app/views/landing/index.html.haml
+.jumbotron#hero
+  %center
+    = image_tag 'logo.svg', width: '20%';
+.jumbotron#order
+  .row
+    %center.col-xs-12
+      %span.lead Продукты для
+      = select_tag 'count', options_for_select([5, 3])
+      %span.lead ужинов на двоих с доставкой в воскресенье,
+      %span.lead#d_date #{next_sunday}
+  .row
+    %center.col-xs-12
+      %a.btn.btn-primary.btn-lg(href="#") Заказать 
+.jumbotron#menu
+  %center
+    %h1 МЕНЮ НА НЕДЕЛЮ
+    %h2
+      %span#bow= next_week_begin
+      &mdash;
+      %span#eow= next_week_end

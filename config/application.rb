@@ -15,9 +15,9 @@ Bundler.require(*Rails.groups)
 
 module Homemade
   class Application < Rails::Application
-    # config.time_zone = 'Central Time (US & Canada)'
-    config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    config.default_locale = :ru
+    config.time_zone = 'Moscow'
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}').to_s]
+    config.i18n.default_locale = :ru
     config.active_record.default_timezone = :local
 
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif *.woff *.ttf *.svg *.eot)
