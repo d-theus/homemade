@@ -2,15 +2,17 @@
   %center
     = image_tag 'logo.svg', class: 'icon'
 .jumbotron#order
-  .row
-    %center.col-xs-12.jt
-      %span.lead Продукты для
-      = select_tag 'count', options_for_select([5, 3])
-      %span.lead ужинов на двоих с доставкой в воскресенье,
-      %span.lead#d_date #{next_sunday}
-  .row
-    %center.col-xs-12.jt
-      %a.btn.btn-primary.btn-lg(href="#") Заказать 
+  = form_tag 'orders#new', class: 'material form-inline jt' do
+    .row.text-nowrap.lead
+      %center.col-xs-12
+        Продукты для
+        %span.form-group.no-title
+          = select_tag 'count', options_for_select([5, 3], 5), placeholder: 'количество'
+        ужинов на двоих с доставкой в воскресенье,
+        #d_date #{next_sunday}
+    .row
+      %center.col-xs-12.jt
+        %a.btn.btn-primary.btn-lg(href="#") Заказать 
 .jumbotron#menu
   %center
     %h1.jt МЕНЮ НА НЕДЕЛЮ

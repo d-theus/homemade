@@ -14,6 +14,7 @@
 
 @import "fontawesome/font-awesome";
 @import "fonts";
+@import "jquery.material.form.css";
 
 @brand-primary: #f02618;
 @navbar-height: 96px;
@@ -26,6 +27,9 @@
 @container-lg: (1340px + @grid-gutter-width);
 @grid-float-breakpoint: @screen-sm-max;
 
+@input-bg: transparent;
+@input-bg-disabled: transparent;
+@input-color: @gray-darker;
 
 .navbar-brand{
   color: white;
@@ -41,4 +45,23 @@
 
 .well{
   box-shadow: 3px 3px 5px @gray;
+}
+
+.material{
+  .no-title{
+    .material-title{
+      display: none;
+    }
+    .material-select{
+      padding-top: 0;
+      padding-left: 1em;
+      padding-right: 3em;
+      margin-left: 1em;
+      top: -0.4em;
+      .radio{
+        padding-left: 0;
+        list-style: none;
+      }
+    }
+  }
 }
