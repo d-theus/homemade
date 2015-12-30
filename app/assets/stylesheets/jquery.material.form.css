@@ -92,6 +92,13 @@
     left:0;
     top:18px;
 }
+.material.material-inverse .material-input label{
+  color:white;
+}
+
+.material.material-inverse .material-input label{
+  color: white;
+}
 
 .material .material-bar{
     position: absolute;
@@ -258,6 +265,9 @@
     cursor: pointer;
     position: relative;
     display: block;
+}
+.material.material-inverse .material-select > label{
+  color:white;
 }
 
 .material .material-select > .material-title{

@@ -1,0 +1,35 @@
+.modal.fade#order_modal
+  .modal-dialog
+    .modal-content
+      .modal-body
+        %button.close(data-dismiss='modal') &times;
+        .row
+          .col-xs-12.col-xs-offset-0.col-sm-8.col-sm-offset-2
+            %h2 Оформление заказа
+            = form_tag 'orders#new', class: 'material' do
+              .form-group
+                .row
+                  - # TODO: value option should be set to IV's count
+                  = number_field_tag 'count', '', placeholder: 'Количество наборов', min: 3, max: 5, step: 2, value: 5
+                .row
+                  = phone_field_tag 'phone', '+7', placeholder: 'Номер телефона', class: 'mask tel'
+                .row
+                  = text_field_tag 'address', '', placeholder: 'Адрес доставки'
+                .row
+                  = select_tag 'payment_method', options_for_select(["Наличными курьеру", "Банковской картой"], "Банковской картой"), placeholder: 'Способ оплаты', class: 'material-select'
+                .row
+                  .col-xs-1
+                    %input.material-cb#email_me(type="checkbox" name="email_me")
+                  .col-xs-11
+                    %label(for="email_me")
+                      Отправить рецепты на почту
+                .row(data-visible-if-checked="#email_me")
+                  .col-xs-12
+                    = email_field_tag 'email', '', placeholder: "Адрес эл. почты"
+                %br/
+                %br/
+        .row
+          .col-xs-11.text-right.lead
+            = link_to 'ЗАКАЗАТЬ', '', class: 'strong text-primary btn-material'
+            &nbsp;&nbsp;
+            = link_to 'ОТМЕНА', '', class: 'text-muted btn-material', data: { dismiss: 'modal' }

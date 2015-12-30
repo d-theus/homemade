@@ -2,7 +2,7 @@
   %center
     = image_tag 'logo.svg', class: 'icon'
 .jumbotron#order
-  = form_tag 'orders#new', class: 'material form-inline jt' do
+  = form_tag 'orders#new', class: 'material material-inverse form-inline jt' do
     .row.text-nowrap.lead
       %center.col-xs-12
         Продукты для
@@ -12,7 +12,7 @@
         %span#d_date>= next_sunday
     .row
       %center.col-xs-12.jt
-        %a.btn.btn-primary.btn-lg.jb(href="#") Заказать 
+        %a.btn.btn-primary.btn-lg.jb(href="#" data-toggle='modal' data-target='#order_modal') ЗАКАЗАТЬ 
 .jumbotron#menu
   %center
     %h1.jt МЕНЮ НА НЕДЕЛЮ
@@ -148,4 +148,6 @@
   %center.jt
     %span.lead Вот так просто.
     %br/
-    = link_to 'Заказать', '#', class: 'btn btn-primary btn-lg jb'
+    = link_to 'ЗАКАЗАТЬ', '', class: 'btn btn-primary btn-lg jb', data: { toggle: 'modal', target: '#order_modal' }
+
+= render partial: 'order_modal'
