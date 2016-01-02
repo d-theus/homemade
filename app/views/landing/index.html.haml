@@ -1,15 +1,17 @@
 .jumbotron#hero
   %center
+    %br/
     = image_tag 'logo.svg', class: 'icon'
 .jumbotron#order
   = form_tag 'orders#new', class: 'material material-inverse form-inline jt' do
-    .row.text-nowrap.lead
+    .row.lead
       %center.col-xs-12
-        Продукты для
+        %span.text-nowrap Продукты для
         %span.form-group.no-title
           = select_tag 'count', options_for_select([5, 3], 5), placeholder: 'количество'
-        ужинов на двоих с доставкой в воскресенье,
-        %span#d_date>= next_sunday
+        %span.text-nowrap ужинов на двоих
+        %span.text-nowrap с доставкой в воскресенье,
+        %span.text-nowrap#d_date>= next_sunday
     .row
       %center.col-xs-12.jt
         %a.btn.btn-primary.btn-lg.jb(href="#" data-toggle='modal' data-target='#order_modal') ЗАКАЗАТЬ 

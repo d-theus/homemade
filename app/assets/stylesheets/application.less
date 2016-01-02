@@ -1,7 +1,6 @@
 @import 'bootstrap_and_overrides';
 @import 'landing.less';
 
-
 #content{
   min-height: 200vh;
 }
@@ -14,12 +13,21 @@ header.sticky{
   top: 0;
   transition: height .3s;
   width: 100%;
+  margin: 0;
   z-index: 100;
   &.in{
     height: 96px;
   }
   a,h1,h2,h3,h4,span,p,li{ color: white;}
   box-shadow: 0px 1px 8px black;
+
+  .navbar-brand{
+    line-height: @navbar-height;
+    padding: 10px;
+    img{
+      max-height: @navbar-height - 20px;
+    }
+  }
 }
 
 header.abs{
