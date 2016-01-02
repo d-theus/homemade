@@ -1,6 +1,6 @@
 namespace :docker do
   task :stop  => %w(proxy:stop servers:stop uploads:stop public:stop)
-  task :start => %w(public:start uploads:start servers:start proxy:start)
+  task :start => %w(db:start public:start uploads:start servers:start proxy:start)
   task :restart => %w(stop start)
   task :clear => %w(proxy:clear servers:clear public:clear)
   task :setup => %w(clear public:setup public:start uploads:start servers:setup proxy:setup)
@@ -127,6 +127,23 @@ namespace :docker do
         execute %Q(
         if [ $(docker ps --filter="name=#{fetch :uploads}" -q) ]
           then docker stop #{fetch :uploads}
+        fi)
+      end
+    end
+  end
+
+  namespace :db do
+    task :start do
+      on roles :app do
+        execute :docker, "start #{fetch :db}"
+      end
+    end
+
+    task :stop do
+      on roles :app do
+        execute %Q(
+        if [ $(docker ps --filter="name=#{fetch :db}" -q) ]
+          then docker stop #{fetch :db}
         fi)
       end
     end
