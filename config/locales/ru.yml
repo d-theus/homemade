@@ -127,6 +127,7 @@ ru:
       confirmation: не совпадает со значением поля %{attribute}
       empty: не может быть пустым
       equal_to: может иметь лишь значение, равное %{count}
+      extension_white_list_error: неверный тип файла %{extension}, разрешено %{allowed_types}
       even: может иметь лишь нечетное значение
       exclusion: имеет зарезервированное значение
       greater_than: может иметь значение большее %{count}
