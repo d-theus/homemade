@@ -27,4 +27,19 @@ RSpec.describe InventoryItem, type: :model do
       expect { item.save! }.not_to raise_error
     end
   end
+
+  describe '<-> Recipe' do
+    context 'when there are recipes dependent' do
+      it 'isnt deleted'
+      it 'has error'
+    end
+    context 'when there are no recipes' do
+      before { FactoryGirl.create(:inventory_item) }
+      let(:ii) { InventoryItem.last }
+
+      it 'is deleted' do
+        expect(ii.delete).to be_truthy
+      end
+    end
+  end
 end
