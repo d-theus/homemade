@@ -94,7 +94,7 @@ RSpec.describe InventoryItemsController, type: :controller do
 
     context 'when authorized' do
       before { sign_in }
-      context 'given existent item' do
+      context 'given existent item with no recipes associated' do
         before { FactoryGirl.create(:inventory_item) }
         let(:id) { InventoryItem.last.id }
 
@@ -103,8 +103,28 @@ RSpec.describe InventoryItemsController, type: :controller do
           expect(response).to have_http_status(:ok)
         end
         
-        it 'reduces count if InventoryItem by 1' do
+        it 'reduces count of InventoryItem by 1' do
           expect { delete :destroy, id: id }.to change(InventoryItem, :count).by(-1)
+        end
+      end
+
+      context 'given existent item with recipe associated' do
+        before { FactoryGirl.create(:recipe) }
+        let(:recipe) { Recipe.first }
+        let(:ii)     { recipe.inventory_items.first}
+
+        it 'is not being deleted' do
+          expect {delete :destroy, id: ii.id}.not_to change(InventoryItem, :count)
+        end
+
+        it 'returns :bad_request' do
+          delete :destroy, id: ii.id
+          expect(response).to have_http_status(:bad_request)
+        end
+
+        it 'describes error' do
+          delete :destroy, id: ii.id
+          expect(JSON.parse!(response.body)['messages'].join).to match /.*зависимости.*/
         end
       end
 

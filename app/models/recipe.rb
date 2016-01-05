@@ -1,5 +1,6 @@
 class Recipe < ActiveRecord::Base
-  has_and_belongs_to_many :inventory_items
+  has_many :inventory_items, through: :inventory_items_recipes
+  has_many :inventory_items_recipes, class_name: 'InventoryItemsRecipes'
   validates_associated :inventory_items
 
   validates :title, presence: true, length: { within: 2..25}

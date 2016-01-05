@@ -54,4 +54,13 @@ RSpec.describe Recipe, type: :model do
       expect(recipe).to be_valid
     end
   end
+
+  describe '<-> InventoryItem' do
+    let!(:recipe) { FactoryGirl.create(:recipe) }
+
+    it 'does not delete any dependent inventory items' do
+      expect(recipe.inventory_items.count).to eq(4)
+      expect {recipe.delete}.not_to change(InventoryItem, :count)
+    end
+  end
 end
