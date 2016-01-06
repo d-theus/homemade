@@ -6,7 +6,6 @@ gem 'carrierwave'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'devise'
 gem 'haml-rails'
-gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'less-rails'
 gem 'mini_magick'
@@ -21,6 +20,8 @@ gem 'thin'
 gem 'turbolinks'
 gem 'twitter-bootstrap-rails'
 gem 'uglifier', '>= 1.3.0'
+gem 'active_model_serializers'
+gem 'will_paginate'
 
 gem 'capistrano', group: :development
 gem 'capistrano-rbenv', group: :development

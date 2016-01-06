@@ -30,7 +30,7 @@ RSpec.describe InventoryItem, type: :model do
 
   describe '<-> Recipe' do
     context 'when there are recipes dependent' do
-      let!(:recipe) { FactoryGirl.create(:recipe) }
+      let!(:recipe) { FactoryGirl.create(:recipe_with_inventory_items) }
       let!(:ii) { recipe.inventory_items.first }
 
       it 'isnt deleted' do
