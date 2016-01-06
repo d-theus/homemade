@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe InventoryItemsController, type: :controller do
+  let(:json) { JSON.parse! response.body }
   describe 'index' do
     it_requires_authentication(:get, :index)
 
@@ -9,7 +10,7 @@ RSpec.describe InventoryItemsController, type: :controller do
       it 'returns json' do
         get :index
         expect(response).to have_http_status(:success)
-        expect { JSON.parse! response.body }.not_to raise_error
+        expect { json }.not_to raise_error
       end
     end
   end
@@ -23,11 +24,8 @@ RSpec.describe InventoryItemsController, type: :controller do
     it 'succeed without authentication' do
       get :show, id: @ii.id
       expect(response).to have_http_status(:success)
-      expect { JSON.parse! response.body }.not_to raise_error
-      expect(JSON.parse! response.body).to have_key("inventory_item")
+      expect(json).to have_key("inventory_item")
     end
-
-    it_handles_nonexistent(:get, :show, id: 5000)
   end
 
   describe 'create' do
@@ -49,10 +47,12 @@ RSpec.describe InventoryItemsController, type: :controller do
       end
 
       context 'with invalid item' do
+        let(:req) { post :create, inventory_item: bad_inventory_item  }
         it 'does not create an inventory item' do
-          expect { post :create, inventory_item: bad_inventory_item }
-          .not_to change(InventoryItem, :count)
+          expect { req() }.not_to change(InventoryItem, :count)
           expect(response).to have_http_status(:unprocessable_entity)
+          expect(json).to have_key('errors')
+          expect(json['errors']).to have_key('name')
         end
       end
     end
@@ -62,9 +62,8 @@ RSpec.describe InventoryItemsController, type: :controller do
     it_requires_authentication(:put, :update, id: rand(256))
 
     context 'when authorized' do
-      let(:ii) { FactoryGirl.create(:inventory_item) }
+      let!(:ii) { FactoryGirl.create(:inventory_item) }
       before { sign_in }
-      before { ii.inspect }
 
       context 'with valid item' do
         it 'updates an inventory item' do
@@ -75,17 +74,17 @@ RSpec.describe InventoryItemsController, type: :controller do
       end
 
       context 'with invalid item' do
+        before { post :update, id: ii.id, inventory_item: { name: '' } }
         it 'returns unprocessable_entity status' do
-          post :update, id: ii.id, inventory_item: { name: '' }
           expect(response).to have_http_status(:unprocessable_entity)
+          expect(json).to have_key('errors')
+          expect(json['errors']).to have_key('name')
         end
 
         it 'does not update an inventory item' do
           expect { put :update, id: ii.id, inventory_item: { name: '' } }.not_to change(InventoryItem, :last)
         end
       end
-
-      it_handles_nonexistent(:put, :update, id: 5000)
     end
   end
 
@@ -109,26 +108,24 @@ RSpec.describe InventoryItemsController, type: :controller do
       end
 
       context 'given existent item with recipe associated' do
-        before { FactoryGirl.create(:recipe) }
-        let(:recipe) { Recipe.first }
-        let(:ii)     { recipe.inventory_items.first}
+        let!(:recipe) { FactoryGirl.create(:recipe_with_inventory_items) }
+        let(:req) { delete :destroy, id: recipe.inventory_items.first.id }
 
         it 'is not being deleted' do
-          expect {delete :destroy, id: ii.id}.not_to change(InventoryItem, :count)
+          expect { req() }.not_to change(InventoryItem, :count)
         end
 
         it 'returns :bad_request' do
-          delete :destroy, id: ii.id
+          req()
           expect(response).to have_http_status(:bad_request)
         end
 
         it 'describes error' do
-          delete :destroy, id: ii.id
-          expect(JSON.parse!(response.body)['messages'].join).to match /.*зависимости.*/
+          req()
+          expect(json).to have_key('errors')
+          expect(json['errors'].values.join).to match /.*зависимости.*/
         end
       end
-
-      it_handles_nonexistent(:delete, :destroy, id: 5000)
     end
   end
 end

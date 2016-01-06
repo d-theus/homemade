@@ -11,7 +11,7 @@ class InventoryItemsController < ApplicationController
     if @ii.persisted?
       render json: { inventory_item: @ii, status: :success }
     else
-      render json: { messages: @ii.errors.full_messages, status: :error }, status: :unprocessable_entity
+      render json: { errors: @ii.errors }, status: :unprocessable_entity
     end
   end
 
@@ -20,7 +20,7 @@ class InventoryItemsController < ApplicationController
     if @ii.update(ii_params)
       render json: { inventory_item: @ii, status: :success }
     else
-      render json: { messages: @ii.errors.full_messages, status: :error },
+      render json: { errors: @ii.errors },
         status: :unprocessable_entity
     end
   end
@@ -30,7 +30,7 @@ class InventoryItemsController < ApplicationController
     if @ii.destroy
       render json: { status: :success}
     else
-      render json: { status: :error, messages: @ii.errors.full_messages },
+      render json: { errors: @ii.errors },
         status: :bad_request
     end
   end
