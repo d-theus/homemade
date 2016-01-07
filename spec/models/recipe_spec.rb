@@ -53,6 +53,43 @@ RSpec.describe Recipe, type: :model do
       recipe = FactoryGirl.build :recipe
       expect(recipe).to be_valid
     end
+
+    describe 'day' do
+      before { Recipe.delete_all }
+
+      it 'is allowed for day to be nil' do
+        recipe = FactoryGirl.build :recipe, day: nil
+        expect(recipe.save).to be_truthy
+      end
+
+      it 'successfully assigns days (1,2,3,4,5)' do
+        5.times do |i|
+          recipe =  FactoryGirl.build :recipe, day: i+1
+          expect(recipe.save).to be_truthy
+        end
+      end
+
+      it 'days are forced to be unique' do
+        recipe1 =  FactoryGirl.build :recipe, day: 1
+        recipe2 =  FactoryGirl.build :recipe, day: 1
+        expect(recipe1.save).to be_truthy
+        expect(recipe2.save).to be_falsy
+        expect(recipe2.errors).to have_key(:day)
+      end
+
+      it 'fails when day out of range' do
+        recipe =  FactoryGirl.build :recipe, day: 6
+        expect(recipe.save).to be_falsy
+        expect(recipe.errors).to have_key(:day)
+      end
+
+      it 'does not delete recipe with day assigned' do
+        recipe =  FactoryGirl.build :recipe, day: 6
+        expect(recipe.destroy).to be_falsy
+        recipe =  FactoryGirl.build :recipe, day: nil
+        expect(recipe.destroy).to be_truthy
+      end
+    end
   end
 
   describe '<-> InventoryItem' do

@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe RecipesController, type: :controller do
   let(:json) { JSON.parse! response.body }
-  describe 'index' do
-    before(:all) { Recipe.delete_all }
-    before(:all) { 100.times { FactoryGirl.create(:recipe) } }
+  before(:all) { Recipe.delete_all }
+  before(:all) { 100.times { FactoryGirl.create(:recipe) } }
 
+  describe '#index' do
     it_requires_authentication :get, :index
 
     context 'authorized' do
@@ -17,12 +17,12 @@ RSpec.describe RecipesController, type: :controller do
       end
 
       it 'result is paginated' do
-        expect(assigns(:recipes).size).to be <= 25
+        expect(assigns(:recipes).size).to be <= 18
       end
     end
   end
 
-  describe 'show' do
+  describe '#show' do
     context 'not authorized' do
       before { sign_in nil }
       before { get :show, id: Recipe.first.id, format: :json }
@@ -32,14 +32,14 @@ RSpec.describe RecipesController, type: :controller do
 
       it 'response is one recipe' do
         expect(json).to have_key('recipe')
-        expect(json['recipe'].keys).to include('id', 'title', 'subtitle', 'cooking_time', 'calories', 'inventory_items', 'url')
+        expect(json['recipe'].keys).to include('id', 'title', 'subtitle', 'cooking_time', 'calories', 'inventory_items', 'url', 'day')
         expect(json['recipe'].keys).not_to include('edit_url')
         expect(json['recipe']['id']).not_to be_nil
       end
     end
   end
 
-  describe 'new' do
+  describe '#new' do
     it_requires_authentication :get, :new
 
     context 'authorized' do
@@ -56,7 +56,7 @@ RSpec.describe RecipesController, type: :controller do
     end
   end
 
-  describe 'create' do
+  describe '#create' do
     it_requires_authentication :post, :create
 
     context 'authorized' do
@@ -98,8 +98,8 @@ RSpec.describe RecipesController, type: :controller do
     end
   end
 
-  describe 'edit' do
-    it_requires_authentication :get, :edit, id: Recipe.first.id
+  describe '#edit' do
+    it_requires_authentication :get, :edit, id: (FactoryGirl.create(:recipe)).id
 
     context 'authorized' do
       before { sign_in }
@@ -116,7 +116,7 @@ RSpec.describe RecipesController, type: :controller do
     end
   end
 
-  describe 'update' do
+  describe '#update' do
     it_requires_authentication :put, :update, id: Recipe.first.id
 
     context 'authorized' do
@@ -124,24 +124,40 @@ RSpec.describe RecipesController, type: :controller do
 
       context 'with valid recipe' do
         let(:req) { put :update, id: Recipe.first.id, recipe: { title: 'Updated'} }
-        it 'returns :ok' do
+        it 'redirects to recipe' do
           req()
-          expect(response).to have_http_status :ok
+          expect(response).to redirect_to(recipe_path(Recipe.first.id))
         end
         it 'changes a recipe' do
           expect { req()}.to change {Recipe.first.title}.from(Recipe.first.title).to('Updated')
         end
       end
       context 'with invalid recipe' do
-        before { put :update, id: Recipe.first.id, recipe: { title: ''} }
+        context 'with invalid title' do
+          before { put :update, id: Recipe.first.id, recipe: { title: ''} }
 
-        it 'returns :unprocessable_entity' do
-           expect(response).to have_http_status(:unprocessable_entity)
+          it 'returns :unprocessable_entity' do
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+
+          it 'has errors' do
+            expect(assigns(:recipe)).to respond_to(:errors)
+            expect(assigns(:recipe).errors).to have_key(:title)
+          end
         end
 
-        it 'has errors' do
-          expect(json).to have_key('errors')
-          expect(json['errors']).to have_key('title')
+        context 'with invalid day' do
+          before { put :update, id: Recipe.offset(1).first.id, recipe: { day: 1} }
+          before { put :update, id: Recipe.offset(2).first.id, recipe: { day: 1 } }
+
+          it 'returns :unprocessable_entity' do
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+
+          it 'has errors' do
+            expect(assigns(:recipe)).to respond_to(:errors)
+            expect(assigns(:recipe).errors).to have_key(:day)
+          end
         end
       end
       context 'with bad params' do
@@ -154,24 +170,42 @@ RSpec.describe RecipesController, type: :controller do
     end
   end
 
-  describe 'destroy' do
-    it_requires_authentication :delete, :destroy, id: Recipe.first.id, format: :json
+  describe '#destroy' do
+    let(:recipe) { FactoryGirl.create(:recipe)}
+    let(:req) { delete :destroy, id: recipe.id, format: :json }
+
+    context 'unauthorized' do
+      it 'returns 403' do
+        delete :destroy, id: recipe.id, format: :json
+      end
+    end
 
     context 'authorized' do
       before { sign_in }
 
-      context 'if recipe belongs to week recipes' do
-        it 'cannot be deleted'
-        it 'has errors'
+      context 'if recipe is feautred' do
+        before { recipe.update(day: 1)}
+        it 'cannot be deleted' do
+          req()
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+        it 'has errors' do
+          req()
+          expect(json['errors']).to have_key('day')
+        end
+        it 'does not change Recipe' do
+          expect {req()}.not_to change(Recipe, :count)
+        end
       end
 
-      context 'if recipe does not belong to week' do
-        let(:req) { delete :destroy, id: Recipe.first, format: :json }
+      context 'if recipe isnt featured' do
         it 'returns :ok' do
           req()
           expect(response).to have_http_status(:ok)
         end
         it 'is deleted' do
+          recipe.inspect
+          expect(Recipe.count).to be > 0
           expect {req()}.to change(Recipe, :count).by(-1)
         end
       end

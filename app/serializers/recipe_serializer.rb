@@ -5,6 +5,7 @@ class RecipeSerializer < ActiveModel::Serializer
       :cooking_time,
       :calories,
       :description,
+      :day,
       :url
     has_many :inventory_items
 

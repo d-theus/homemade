@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :week_recipes, only: [:update, :index]
+  get 'recipes/featured', controller: :featured_recipes, action: :index, format: :json
   resources :recipes
   resources :inventory_items, defaults: { format: :json}
   devise_for :admins

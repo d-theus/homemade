@@ -21,19 +21,17 @@ class RecipesController < ApplicationController
 
   def update
     if @recipe.update(recipe_params)
-      render json: @recipe
+      redirect_to recipe_path(@recipe), notice: 'flash.update.notice'
     else
-      render json: { errors: @recipe.errors },
-        status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity, alert: 'errors.messages.record_invalid'
     end
   end
 
   def show
-    render json: @recipe
   end
 
   def index
-    @recipes = Recipe.paginate(page: params[:page], per_page: 25)
+    @recipes = Recipe.paginate(page: params[:page], per_page: 15)
   end
 
   def destroy
@@ -49,7 +47,7 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(
-      :title, :subtitle,
+      :title, :subtitle, :day,
       :calories, :cooking_time,
       inventory_items: []
     )

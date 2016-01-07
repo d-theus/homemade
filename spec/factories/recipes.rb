@@ -13,5 +13,9 @@ FactoryGirl.define do
         end
       end
     end
+
+    factory :recipe_with_day do
+      sequence(:day) { |n| n }
+    end
   end
 end
