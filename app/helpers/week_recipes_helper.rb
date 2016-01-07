@@ -1,0 +1,2 @@
+module WeekRecipesHelper
+end
