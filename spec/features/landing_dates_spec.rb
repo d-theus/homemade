@@ -1,33 +1,49 @@
 require 'rails_helper'
+require 'landing_helper'
+include LandingHelper
 
 RSpec.feature "LandingDates", type: :feature do
   subject { page }
 
-  context 'when it\'s Monday to Saturday' do
-    before {  Date.stub(:today) do Date.new 2016, 01, 04 end }
-    before { visit '/' }
-    describe 'delivery date' do
-      it { is_expected.to have_css '#d_date', text: I18n.l((Date.new 2016, 1, 10), format: '%e %B') }
-    end
-    describe 'next week begin' do
-      it { is_expected.to have_css '#bow', text: I18n.l((Date.new 2016, 1, 11), format: '%e %B') }
-    end
-    describe 'next week end' do
-      it { is_expected.to have_css '#eow', text: I18n.l((Date.new 2016, 1, 15), format: '%e %B') }
+  [*4..7].each do |day|
+    context "when it's #{Date.new(2016,1,day).strftime('%A')}" do
+      before(:each) { Timecop.travel(Date.new 2016, 1, day)}
+      before(:each) { visit '/' }
+      after (:each) { Timecop.return }
+
+      describe 'delivery date' do
+        it { is_expected.to have_css '#d_date',
+             text: date_format(Date.new 2016, 1, 10) }
+      end
+      describe 'next week begin' do
+        it { is_expected.to have_css '#bow',
+             text: date_format(Date.new 2016, 1, 11) }
+      end
+      describe 'next week end' do
+        it { is_expected.to have_css '#eow',
+             text: date_format(Date.new 2016, 1, 15) }
+      end
     end
   end
 
-  context 'when it\'s Sunday' do
-    before {  Date.stub(:today) do Date.new 2016, 01, 10 end }
-    before { visit '/' }
-    describe 'delivery date' do
-      it { is_expected.to have_css '#d_date', text: I18n.l((Date.new 2016, 1, 17), format: '%e %B') }
-    end
-    describe 'next week begin' do
-      it { is_expected.to have_css '#bow', text: I18n.l((Date.new 2016, 1, 18), format: '%e %B') }
-    end
-    describe 'next week end' do
-      it { is_expected.to have_css '#eow', text: I18n.l((Date.new 2016, 1, 22), format: '%e %B') }
+  [*8..10].each do |day|
+    context "when it's #{Date.new(2016,01,day).strftime('%A')}" do
+      before(:each) { Timecop.travel(Date.new 2016, 1, day)}
+      before(:each) { visit '/' }
+      after (:each) { Timecop.return }
+
+      describe 'delivery date' do
+        it { is_expected.to have_css '#d_date',
+             text: date_format(Date.new 2016, 1, 17) }
+      end
+      describe 'next week begin' do
+        it { is_expected.to have_css '#bow',
+             text: date_format(Date.new 2016, 1, 18) }
+      end
+      describe 'next week end' do
+        it { is_expected.to have_css '#eow',
+             text: date_format(Date.new 2016, 1, 22) }
+      end
     end
   end
 

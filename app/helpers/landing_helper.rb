@@ -3,34 +3,34 @@ module LandingHelper
     controller_name == 'landing'
   end
 
-  def format(date)
+  def date_format(date)
     I18n.l(date, format: '%e %B')
   end
 
   def next_week_begin
     today = Date.today
-    if today.sunday?
-      format(today + 8.days)
+    if today.days_to_week_start < 4
+      date_format(today.next_week)
     else
-      format today.next_week
+      date_format(today.next_week + 1.week)
     end
   end
 
   def next_week_end
     today = Date.today
-    if today.sunday?
-      format(today + 12.days)
+    if today.days_to_week_start < 4
+      date_format(today.next_week + 4.days)
     else
-      format(today.next_week + 4.days)
+      date_format(today.next_week + 11.days)
     end
   end
 
   def next_sunday
     today = Date.today
-    if today.sunday?
-      format(today + 1.week)
+    if today.days_to_week_start < 4
+      date_format(today.sunday)
     else
-      format today.sunday
+      date_format(today.next_week.sunday)
     end
   end
 end
