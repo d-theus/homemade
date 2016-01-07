@@ -15,15 +15,17 @@
 
 
   %body
-    %header.sticky
+    %header.header-app{class:('sticky' if landing?)}
       = render partial: 'shared/header'
-    %header.abs
-      %a(href='tel:+7499112233')
-        %i.fa.fa-fw.fa-phone
-        +7 910 111 22 33
+    
+    - if landing?
+      %header.header-abs
+        %a(href='tel:+7499112233')
+          %i.fa.fa-fw.fa-phone
+          +7 910 111 22 33
 
     .container-fluid#content
       .row
         = yield
-      %footer
-        = render partial: 'shared/footer'
+    %footer.container-fluid
+      = render partial: 'shared/footer'

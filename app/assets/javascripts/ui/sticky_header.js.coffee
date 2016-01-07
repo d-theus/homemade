@@ -6,9 +6,9 @@ StickyHeader = {
 
   apply: ->
     if $(this).scrollTop() > 1
-      $('header').addClass('in')
+      $('header.sticky').addClass('in')
     else
-      $('header').removeClass('in')
+      $('header.sticky').removeClass('in')
 }
 
 window.Ui.register StickyHeader

@@ -1,4 +1,8 @@
 module LandingHelper
+  def landing?
+    controller_name == 'landing'
+  end
+
   def format(date)
     I18n.l(date, format: '%e %B')
   end

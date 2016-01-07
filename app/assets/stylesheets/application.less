@@ -2,22 +2,17 @@
 @import 'landing.less';
 
 #content{
-  min-height: 200vh;
+  min-height: 80vh;
 }
 
-header.sticky{
+.header-app{
   background: @brand-primary;
-  height: 0;
   overflow: hidden;
-  position: fixed;
-  top: 0;
-  transition: height .3s;
   width: 100%;
   margin: 0;
+  top: 0;
   z-index: 100;
-  &.in{
-    height: 96px;
-  }
+  height: @navbar-height;
   a,h1,h2,h3,h4,span,p,li{ color: white;}
   box-shadow: 0px 1px 8px black;
 
@@ -30,7 +25,16 @@ header.sticky{
   }
 }
 
-header.abs{
+.sticky{
+  height: 0 !important;
+  position: fixed;
+  transition: height .3s;
+  &.in{
+    height: @navbar-height !important;
+  }
+}
+
+header.header-abs{
   position: absolute;
   background: transparent;
   font-family: Roboto Condensed;
