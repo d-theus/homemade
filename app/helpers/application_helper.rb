@@ -15,4 +15,8 @@ module ApplicationHelper
       end
     end
   end
+
+  def admin?
+    admin_signed_in?
+  end
 end
