@@ -92,6 +92,15 @@ RSpec.describe Recipe, type: :model do
     end
   end
 
+  describe '#featured?' do
+    it 'returns true if day is present' do
+      expect(Recipe.new(day: 5).featured?).to be_truthy
+    end
+    it 'returns false when day is nil' do
+      expect(Recipe.new(day: nil).featured?).to be_falsy
+    end
+  end
+
   describe '<-> InventoryItem' do
     let!(:recipe) { FactoryGirl.create(:recipe_with_inventory_items) }
 
