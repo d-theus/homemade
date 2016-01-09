@@ -22,7 +22,7 @@ gem 'turbolinks'
 gem 'twitter-bootstrap-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'active_model_serializers'
-gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 
 gem 'capistrano', group: :development
 gem 'capistrano-rbenv', group: :development
@@ -35,4 +35,6 @@ group :development, :test do
   gem 'capybara-webkit'
   gem 'factory_girl_rails'
   gem 'timecop'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
