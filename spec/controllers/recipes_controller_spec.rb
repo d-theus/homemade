@@ -25,16 +25,17 @@ RSpec.describe RecipesController, type: :controller do
   describe '#show' do
     context 'not authorized' do
       before { sign_in nil }
-      before { get :show, id: Recipe.first.id, format: :json }
+      before { get :show, id: Recipe.first.id }
       it 'grants access' do
         expect(response).to have_http_status(:success)
       end
 
-      it 'response is one recipe' do
-        expect(json).to have_key('recipe')
-        expect(json['recipe'].keys).to include('id', 'title', 'subtitle', 'cooking_time', 'calories', 'inventory_items', 'url', 'day')
-        expect(json['recipe'].keys).not_to include('edit_url')
-        expect(json['recipe']['id']).not_to be_nil
+      it 'responds with html' do
+        expect(response.header['Content-Type']).to match(/html/)
+      end
+
+      it 'assigns @recipe' do
+        expect(assigns(:recipe)).to be_a Recipe
       end
     end
   end
@@ -52,6 +53,10 @@ RSpec.describe RecipesController, type: :controller do
 
       it 'renders html template' do
         expect(response).to render_template(:new)
+      end
+
+      it 'assigns @recipe' do
+        expect(assigns(:recipe)).not_to be_nil
       end
     end
   end

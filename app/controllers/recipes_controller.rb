@@ -4,6 +4,7 @@ class RecipesController < ApplicationController
   before_action :fetch_recipe, only: [:show, :edit, :update, :destroy]
 
   def new
+    @recipe = Recipe.new
   end
 
   def edit
