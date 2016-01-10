@@ -6,6 +6,10 @@
 }
 
 .header-app{
+  @media(min-width: @grid-float-breakpoint){
+    .navbar-inverse;
+  }
+
   background: @brand-primary;
   overflow: hidden;
   width: 100%;
@@ -13,7 +17,6 @@
   top: 0;
   z-index: 100;
   height: @navbar-height;
-  a,h1,h2,h3,h4,span,p,li{ color: white;}
   box-shadow: 0px 1px 8px black;
 
   .navbar-brand{
@@ -21,6 +24,26 @@
     padding: 10px;
     img{
       max-height: @navbar-height - 20px;
+    }
+  }
+
+  .navbar-collapse{
+    @media screen and (max-width: @grid-float-breakpoint){
+      &.in, &.collapsing{
+        .well;
+        border-radius: 0;
+        width: 100vw;
+        position: fixed;
+        padding: 0 2em;
+        z-index: 99;
+      }
+    }
+    @media screen and (min-width: @grid-float-breakpoint){
+      .open .dropdown-menu{
+        position: fixed;
+        top: @navbar-height;
+        width: 10em;
+      }
     }
   }
 }
