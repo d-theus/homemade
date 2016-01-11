@@ -257,11 +257,33 @@ ru:
       short: "%d %b, %H:%M"
     pm: вечера
 
+  will_paginate:
+    previous_label: "&#8592; Пред."
+    next_label: "След. &#8594;"
+    page_gap: "&hellip;"
+
   activerecord:
     models:
       admin: Администратор
+      recipe: Рецепт
+      inventory_item: Предмет
     attributes:
       admin:
         email: Эл. Почта
         password: Пароль
         remember_me: Запомнить меня
+      recipe:
+        title: Название
+        subtitle: Подзаголовок
+        calories: Калорийность
+        cooking_time: Время приготовления
+        day: День
+        description: Описание
+        inventory_items: Для приготовления необходимо
+      inventory_item:
+        name: Название
+        image: Картинка
+  flash:
+    update:
+      notice: "Успешно обновили %{resource_name}"
+  

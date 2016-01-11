@@ -43,6 +43,8 @@ ru:
     sessions:
       new:
         sign_in: Войти
+      admin:
+        signed_in: Успешно вошли в учетную запись администратора
     shared:
       links:
         didn_t_receive_confirmation_instructions: Не получили подтверждение?

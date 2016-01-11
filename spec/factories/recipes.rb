@@ -15,7 +15,17 @@ FactoryGirl.define do
     end
 
     factory :recipe_with_day do
-      sequence(:day) { |n| n }
+      sequence(:day) do |n|
+        if Recipe.where.not(day: nil).count > 4
+          nil
+        else
+          day = nil
+          begin
+            day = rand(5) + 1
+          end until (Recipe.where(day: day).count == 0)
+          day
+        end
+      end
     end
   end
 end

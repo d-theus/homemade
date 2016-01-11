@@ -1,0 +1,13 @@
+.row
+  .col-xs-12.col-xs-offset-0.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
+    .row
+      .col-xs-12
+        %h1 Добавить рецепт
+    .row
+      .col-xs-12
+        = render partial: 'form'
+
+
+- content_for(:title) { 'Редактор рецептов' }
+
+= javascript_include_tag 'recipes', async: true

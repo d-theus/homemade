@@ -1,0 +1,16 @@
+.row
+  .col-xs-12.col-xs-offset-0.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
+    .row
+      .col-xs-12
+        %h1 Редактировать рецепт
+        %h2.text-muted
+          = @recipe.title
+          %small= @recipe.subtitle
+    .row
+      .col-xs-12
+        = render partial: 'form'
+
+
+- content_for(:title) { 'Редактор рецептов' }
+
+= javascript_include_tag 'recipes', async: true

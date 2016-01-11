@@ -1,0 +1,42 @@
+.row
+  .col-xs-6.col-xs-offset-1
+    %h1 Архив рецептов
+  .col-xs-5
+    %ul.nav.nav-pills
+      %li
+        %a{href: new_recipe_path, title: "добавить", name: 'new'}
+          ДОБАВИТЬ РЕЦЕПТ
+  .col-xs-6.col-xs-offset-0.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
+    %table.table#recipes
+      %thead
+        %tr
+          %th Название
+          %th Создан
+          %th Управление
+      %tbody
+        - @recipes.each do |recipe|
+          %tr.recipe{'data-id' => recipe.id}
+            %td
+              = recipe.title
+              %small.text-muted= recipe.subtitle
+            %td= l recipe.created_at, format: :long
+            %td
+              %a.btn.text-info{href: edit_recipe_path(recipe), name: 'edit', title: "изменить"}
+                %i.fa.fa-fw.fa-edit
+              - if recipe.featured?
+                %span.btn.btn-disabled.text-muted{title: 'нельзя удалить: используется'}
+                  %i.fa.fa-fw.fa-lock
+              - else
+                %a.btn.text-danger{href: recipe_path(recipe),
+                  name: "delete",
+                  title: "удалить",
+                  data: { remote: true,
+                  method: :delete,
+                  confirm: "Хотите удалить рецепт #{recipe.title}?"}}
+                  %i.fa.fa-fw.fa-times
+
+    = will_paginate @recipes, renderer: BootstrapPagination::Rails
+
+- content_for(:title) { 'Архив рецептов' }
+
+= javascript_include_tag 'recipes', async: true
