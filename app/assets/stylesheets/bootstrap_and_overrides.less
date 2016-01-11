@@ -22,7 +22,7 @@
 
 @well-bg: #fff;
 
-@border-radius-base: 4px;
+@border-radius-base: 0;
 @screen-lg-min: 1440px;
 @container-lg: (1340px + @grid-gutter-width);
 @grid-float-breakpoint: @screen-sm-max;
@@ -43,6 +43,8 @@
 @navbar-inverse-toggle-border-color: @brand-primary;
 @navbar-inverse-toggle-icon-bar-bg: white;
 
+@list-group-border: transparent;
+
 .navbar-brand{
   color: white;
   font-size: 24px;
@@ -53,6 +55,7 @@
 
 .well{
   box-shadow: 3px 3px 5px @gray;
+  border-radius: 4px;
 }
 
 .lead{

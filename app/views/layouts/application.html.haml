@@ -18,7 +18,7 @@
     %header.header-app.sticky
       = render partial: 'shared/header'
     
-    - if landing?
+    - unless admin?
       %header.header-abs
         %a(href='tel:+7499112233')
           %i.fa.fa-fw.fa-phone

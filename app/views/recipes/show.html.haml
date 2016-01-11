@@ -1,22 +1,52 @@
 .row
-  .col-xs-12.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-1
-    - if alert or notice
+  .col-xs-12.col-lg-9.col-lg-offset-1
+    - if admin? and (alert or notice)
       .row 
         - if notice
           %p.alert.alert-success= notice
         - if alert
           %p.alert.alert-danger= alert
+    %br/
+    %br/
+    %br/
+    - if admin?
+      .row
+        .col-xs-10
+          .col-xs-2
+            %br/
+            %a.btn.btn-info.btn-block{href: edit_recipe_path(@recipe)}
+              ИЗМЕНИТЬ
+            %br/
+            %a.btn.btn-danger.btn-block{href: recipe_path(@recipe), data: { method: :delete, confirm: 'Удалить рецепт?'}}
+              УДАЛИТЬ
+    %br/
+    %br/
     .row
-      .col-xs-10
-        %h1= @recipe.title
-        %h2= @recipe.subtitle
-      - if admin?
-        .col-xs-2
-          %br/
-          %a.btn.btn-info.btn-block{href: edit_recipe_path(@recipe)}
-            %i.fa.fa-fw.fa-edit
-            Изменить
-          %br/
-          %a.btn.btn-danger.btn-block{href: recipe_path(@recipe), data: { method: :delete, confirm: 'Удалить рецепт?'}}
-            %i.fa.fa-fw.fa-trash
-            Удалить
+      .col-xs-12.col-sm-7
+        %img.img-responsive{src: @recipe.photo.url}
+      .col-xs-12.col-sm-5.no-gutter
+        .row
+          .col-xs-12.bg-primary
+            %h1.col-xs-offset-2.col-sm-offset-1= @recipe.title
+            %h2.col-xs-offset-2.col-sm-offset-1= @recipe.subtitle
+            .row
+              %center.col-xs-5.col-xs-offset-1
+                %i.fa.fa-fw.fa-clock-o
+                #{@recipe.cooking_time} мин.
+              %center.col-xs-5
+                %i.fa.fa-fw.fa-fire
+                #{@recipe.calories} ккал.
+            %br/
+        .row
+          .col-xs-12
+            %section
+              %h3 Для приготовления понадобится
+              %ul.list-inline.text-center
+                - @recipe.inventory_items.each do |ii|
+                  %li
+                    = inventory_item_tag(ii)
+                  %li
+                    = inventory_item_tag(ii)
+            %section
+              %h3 Как приготовить
+              .description.col-xs-10.col-xs-offset-1= @recipe.description
