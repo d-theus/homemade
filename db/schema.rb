@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160109072251) do
+ActiveRecord::Schema.define(version: 20160111113449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20160109072251) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "day",          limit: 2
+    t.string   "photo"
   end
 
   add_index "recipes", ["day"], name: "index_recipes_on_day", unique: true, using: :btree

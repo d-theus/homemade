@@ -54,6 +54,11 @@ RSpec.describe Recipe, type: :model do
       expect(recipe).to be_valid
     end
 
+    it 'requires photo' do
+      recipe = FactoryGirl.build :recipe, photo: nil
+      expect(recipe).not_to be_valid
+    end
+
     describe 'day' do
       before { Recipe.delete_all }
 

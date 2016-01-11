@@ -280,6 +280,7 @@ ru:
         day: День
         description: Описание
         inventory_items: Для приготовления необходимо
+        photo: Фото
       inventory_item:
         name: Название
         image: Картинка

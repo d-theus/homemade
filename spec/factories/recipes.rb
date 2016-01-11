@@ -5,6 +5,7 @@ FactoryGirl.define do
     cooking_time 25
     calories 450
     description { 'lipsum adlsfashdflk ad fjalksd fjlkasjd flkajs dkfljs kaj' }
+    photo { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'meal-1.jpg'))}
 
     factory :recipe_with_inventory_items do
       after :create do |rec|
