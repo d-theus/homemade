@@ -287,4 +287,5 @@ ru:
   flash:
     update:
       notice: "Успешно обновили %{resource_name}"
+      alert: "Возникли ошибки"
   

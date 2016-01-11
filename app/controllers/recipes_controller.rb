@@ -22,9 +22,11 @@ class RecipesController < ApplicationController
 
   def update
     if @recipe.update(recipe_params)
-      redirect_to recipe_path(@recipe), notice: 'flash.update.notice'
+      flash.now[:notice] = 'flash.update.notice'
+      redirect_to recipe_path(@recipe)
     else
-      render :edit, status: :unprocessable_entity, alert: 'errors.messages.record_invalid'
+      flash.now[:alert] = 'flash.update.alert'
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -50,7 +52,7 @@ class RecipesController < ApplicationController
     params.require(:recipe).permit(
       :title, :subtitle, :day,
       :calories, :cooking_time,
-      inventory_items: []
+      :photo, inventory_items: []
     )
   end
 

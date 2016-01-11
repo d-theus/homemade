@@ -1,7 +1,7 @@
 - if notice
-  %p.alert.alert-success= notice
+  %p.alert.alert-success= I18n.t notice
 - if alert
-  %p.alert.alert-danger= alert
+  %p.alert.alert-danger= I18n.t alert
 
 = simple_form_for(@recipe, html: { class: 'form-horizontal'} ) do |f|
   = f.input :title
@@ -11,4 +11,5 @@
   = f.input :day, label: 'Назначить день', as: :select, collection: [*1..5]
   = f.association :inventory_items, as: :check_boxes
   = f.input :description
+  = f.input :photo
   = f.submit 'Готово', class: 'btn btn-primary btn-lg'
