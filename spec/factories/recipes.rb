@@ -28,5 +28,35 @@ FactoryGirl.define do
         end
       end
     end
+
+    factory :recipe_for_landing do
+      sequence(:title) do
+        ["Lorem ipsum",
+         "Dolor sit Amet" ,
+         "consectetur adipiscing",
+         "Duis id",
+         "Pretium purus",
+         "Donec iaculis est"].sample
+      end
+      sequence(:subtitle) do
+        ["Lorem ipsum",
+         "" ,
+         "consectetur adipiscing elit",
+         "",
+         "Pretium purus",
+         "Donec iaculis est"].sample
+      end
+      sequence(:cooking_time) { 25 + rand(20) }
+      sequence(:calories) { 400 + rand(200) }
+      description { 'lipsum adlsfashdflk ad fjalksd fjlkasjd flkajs dkfljs kaj' }
+      sequence(:day)  { |n| n } 
+      sequence(:photo) do |n|
+        Rack::Test::UploadedFile.new(
+          File.join(Rails.root, 'spec', 'support', "meal-#{n}.jpg"))
+      end
+      after :create do |rec|
+        rec.inventory_items << InventoryItem.order('RANDOM()').limit(4)
+      end
+    end
   end
 end
