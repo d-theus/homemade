@@ -45,6 +45,7 @@ ru:
         sign_in: Войти
       admin:
         signed_in: Успешно вошли в учетную запись администратора
+        signed_out: Успешный выход из учетной записи администратора
     shared:
       links:
         didn_t_receive_confirmation_instructions: Не получили подтверждение?
