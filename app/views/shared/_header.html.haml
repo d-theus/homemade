@@ -1,9 +1,31 @@
-.container
-  .navbar-header
+.container.navbar
+  .navbar-header.navbar-inverse
+    - if admin?
+      %button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target="#header_collapse")
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
     %a.navbar-brand(href='/')
       = image_tag 'logo-inverse.svg', alt: 'HomeMade', title: 'HomeMade'
-    .navbar-text
-      %a.tel.pull-right(href='tel:+7 910 111 22 33')
-        %i.fa.fa-fw.fa-phone
-        +7 910 111 22 33
-        &nbsp; &nbsp;
+    - unless admin?
+      %ul.nav.navbar-nav.nav-pills.pull-right
+        %li
+          %a.tel(href='tel:+7 910 111 22 33')
+            %i.fa.fa-fw.fa-phone
+            +7 910 111 22 33
+            &nbsp; &nbsp;
+  - if admin?
+    .collapse.navbar-collapse#header_collapse
+      %ul.nav.navbar-nav.navbar-right.lead
+        %li.dropdown
+          %a.dropdown-toggle(data-toggle="dropdown" name="recipes" href="#")
+            Рецепты
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              %a{href: recipes_path} Архив
+            %li
+              %a{href: new_recipe_path} Новый
+        %li
+          %a{href: destroy_admin_session_path, data: { method: :delete } }
+            Выйти
