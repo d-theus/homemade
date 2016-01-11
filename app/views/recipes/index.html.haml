@@ -17,7 +17,7 @@
         - @recipes.each do |recipe|
           %tr.recipe{'data-id' => recipe.id}
             %td
-              = recipe.title
+              %a{href: recipe_path(recipe)}= recipe.title
               %small.text-muted= recipe.subtitle
             %td= l recipe.created_at, format: :long
             %td
