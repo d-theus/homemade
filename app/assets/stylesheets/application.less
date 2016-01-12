@@ -76,11 +76,16 @@ a.tel{
   .well;
   border: none;
   padding: 0;
+  color: @gray-darker;
   overflow: hidden;
-  height: 580px;
+  max-width: 420px;
+  height: 480px;
+  @media screen and (min-width: @screen-sm) and (max-width: @screen-md){
+    height: 580px;
+  }
 
   .card-img-container{
-    height: 48.2%;
+    height: 55%;
     width: 100%;
     overflow: hidden;
     display: -webkit-box;
@@ -146,4 +151,8 @@ a.tel{
   margin-right: 0;
   padding-left: 0;
   padding-right: 0;
+}
+
+.fade{
+  opacity: .5;
 }

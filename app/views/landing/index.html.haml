@@ -7,7 +7,7 @@
     .row.lead
       %center.col-xs-12
         %span.text-nowrap Продукты для
-        %span.form-group.no-title
+        %span.form-group.no-title#count
           = select_tag 'count', options_for_select([5, 3], 5), placeholder: 'количество'
         %span.text-nowrap ужинов на двоих
         %span.text-nowrap с доставкой в воскресенье,
@@ -23,107 +23,27 @@
       &mdash;
       %span#eow= next_week_end
   %br/
-  .row
-    .col-xs-12.col-xs-offset-0.col-sm-6.col-sm-offset-3.col-md-12.col-md-offset-0.col-lg-10.col-lg-offset-1
-      %center.col-md-4.col-xs-12
-        = card do
-          = card_image 'meal-1.jpg'
-          .card-heading
-            %h2 Рис с курицей
-            %h3 По-особенному
-          .card-description.col-xs-11.col-xs-offset-1
-            .row
-              .col-xs-7 Время приготовления:
-              .col-xs-5 35 минут
-            .row
-              .col-xs-7 Калорийность:
-              .col-xs-5 425 ккал
-            .row
-              .col-xs-7
-                Для приготовления понадобится:
-              .col-xs-5
-                = image_tag 'aids/pot.svg', class: 'icon'
-                = image_tag 'aids/pan.svg', class: 'icon'
-                = image_tag 'aids/knife.svg', class: 'icon'
-                = image_tag 'aids/plates.svg', class: 'icon'
-      %center.col-md-4.col-xs-12
-        = card do
-          = card_image 'meal-2.jpg'
-          .card-heading
-            %h2 Тако с рыбой
-          .card-description.col-xs-11.col-xs-offset-1
-            .row
-              .col-xs-7 Время приготовления:
-              .col-xs-5 35 минут
-            .row
-              .col-xs-7 Калорийность:
-              .col-xs-5 425 ккал
-            .row
-              .col-xs-7
-                Для приготовления понадобится:
-              .col-xs-5
-                = image_tag 'aids/knife.svg', class: 'icon'
-                = image_tag 'aids/plates.svg', class: 'icon'
-      %center.col-md-4.col-sm-12
-        = card do
-          = card_image 'meal-3.jpg'
-          .card-heading
-            %h2 Кесадилья с креветками
-          .card-description.col-xs-11.col-xs-offset-1
-            .row
-              .col-xs-7 Время приготовления:
-              .col-xs-5 35 минут
-            .row
-              .col-xs-7 Калорийность:
-              .col-xs-5 425 ккал
-            .row
-              .col-xs-7
-                Для приготовления понадобится:
-              .col-xs-5
-                = image_tag 'aids/knife.svg', class: 'icon'
-                = image_tag 'aids/plates.svg', class: 'icon'
-  %br/
-  .row
-    .col-lg-10.col-lg-offset-1.col-md-12.col-md-offset-0.col-sm-6.col-sm-offset-3.col-xs-12.col-xs-offset-0
-      %center.col-md-4.col-md-offset-2.col-sm-12.col-sm-offset-0
-        = card do
-          = card_image 'meal-4.jpg'
-          .card-heading
-            %h2 Фетучини с говядиной
-            %h3 с соусом карри и чесночными гренками
-          .card-description.col-xs-11.col-xs-offset-1
-            .row
-              .col-xs-7 Время приготовления:
-              .col-xs-5 35 минут
-            .row
-              .col-xs-7 Калорийность:
-              .col-xs-5 425 ккал
-            .row
-              .col-xs-7
-                Для приготовления понадобится:
-              .col-xs-5
-                = image_tag 'aids/pot.svg', class: 'icon'
-                = image_tag 'aids/pan.svg', class: 'icon'
-                = image_tag 'aids/knife.svg', class: 'icon'
-                = image_tag 'aids/plates.svg', class: 'icon'
-      %center.col-md-4.col-xs-12
-        = card do
-          = card_image 'meal-5.jpg'
-          .card-heading
-            %h2 Тако по-корейски
-          .card-description.col-xs-11.col-xs-offset-1
-            .row
-              .col-xs-7 Время приготовления:
-              .col-xs-5 35 минут
-            .row
-              .col-xs-7 Калорийность:
-              .col-xs-5 425 ккал
-            .row
-              .col-xs-7
-                Для приготовления понадобится:
-              .col-xs-5
-                = image_tag 'aids/knife.svg', class: 'icon'
-                = image_tag 'aids/plates.svg', class: 'icon'
+  - if @recipes.count == 5
+    .row
+      .col-xs-12.col-xs-offset-0.col-sm-6.col-sm-offset-3.col-md-12.col-md-offset-0.col-lg-10.col-lg-offset-1
+        - @recipes.take(3).each do |recipe|
+          %center.col-md-4.col-xs-12
+            = render partial: 'recipe_card', locals: { recipe: recipe}
+    %br/
+    .row
+      %center.col-xs-12#why_disabled{style: 'display:none'}
+        %h3.text-muted Доступны при выборе 5 наборов
+      .col-lg-10.col-lg-offset-1.col-md-12.col-md-offset-0.col-sm-6.col-sm-offset-3.col-xs-12.col-xs-offset-0
+        %center.col-md-4.col-md-offset-2.col-sm-12.col-sm-offset-0
+          = render partial: 'recipe_card', locals: { recipe: @recipes[3]}
+        %center.col-md-4.col-md-offset-0.col-sm-12.col-sm-offset-0
+          = render partial: 'recipe_card', locals: { recipe: @recipes[4]}
+  - else
+    .row#stub
+      %center.col-xs-12
+        %h3 В данный момент меню обновляется.
+        %h4 Обновите страницу через пару минут.
+
 .jumbotron#how
   %center.jt
     %h1 КАК ЭТО РАБОТАЕТ?
@@ -152,4 +72,5 @@
     %br/
     = link_to 'ЗАКАЗАТЬ', '', class: 'btn btn-primary btn-lg jb', data: { toggle: 'modal', target: '#order_modal' }
 
+= javascript_include_tag 'landing'
 = render partial: 'order_modal'

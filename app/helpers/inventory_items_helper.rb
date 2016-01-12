@@ -3,7 +3,8 @@ module InventoryItemsHelper
     capture_haml do
       haml_tag :img,
         src: item.image,
-        title: item.name
+        title: item.name,
+        class: :icon
     end
   end
 end

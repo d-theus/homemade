@@ -1,0 +1,22 @@
+%a{href: recipe_path(recipe),
+  title: "#{recipe.title} #{recipe.subtitle}",
+  name: 'recipe',
+  'data-day' => recipe.day }
+  = card do
+    = card_image recipe.photo
+    .card-heading
+      %h2= recipe.title
+      %h3= recipe.subtitle
+    .card-description.col-xs-11.col-xs-offset-1
+      .row
+        .col-xs-7 Время приготовления:
+        .col-xs-5 #{recipe.cooking_time}&nbsp;мин.
+      .row
+        .col-xs-7 Калорийность:
+        .col-xs-5 #{recipe.calories}&nbsp;ккал
+      .row
+        .col-xs-7
+          Для приготовления понадобится:
+        .col-xs-5.text-center
+          - recipe.inventory_items.each do |ii|
+            = inventory_item_tag ii
