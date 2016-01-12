@@ -284,8 +284,26 @@ ru:
       inventory_item:
         name: Название
         image: Картинка
+      customer: &customer_labels
+        name: Имя
+        phone: Телефон
+        email: Эл. Почта
+        address: Адрес
+      order:
+        count: Количество наборов
+        payment_method: Способ оплаты
+    values:
+      order:
+        payment_method:
+          cash: Наличные
+          card: Карта
   flash:
     update:
       notice: "Успешно обновили %{resource_name}"
       alert: "Возникли ошибки"
+  simple_form:
+    labels:
+      order:
+        customer:
+          <<: *customer_labels
   
