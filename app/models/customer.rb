@@ -3,7 +3,7 @@ class Customer < ActiveRecord::Base
   validates :address, presence: true, length: { minimum: 2, maximum: 100 }
   validates :phone,
     presence: true,
-    length: { minimum: 2, maximum: 100 },
+    length: { minimum: 12, maximum: 12 },
     uniqueness: true,
     format: /\+\d{11}/
 end

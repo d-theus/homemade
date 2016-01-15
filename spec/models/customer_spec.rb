@@ -38,6 +38,10 @@ RSpec.describe Customer, type: :model do
         .to be_falsy
         expect(FactoryGirl.build(:customer, phone: 'askldfjaklsdf').valid?)
         .to be_falsy
+        expect(FactoryGirl.build(:customer, phone: '+100022233344').valid?)
+        .to be_falsy
+        expect(FactoryGirl.build(:customer, phone: '+1000223344').valid?)
+        .to be_falsy
       end
     end
     describe '.address' do
