@@ -297,6 +297,11 @@ ru:
         payment_method:
           cash: Наличные
           card: Карта
+        status:
+          new: Новый
+          paid: Оплачен
+          cancelled: Отменён
+          closed: Завершён
   flash:
     update:
       notice: "Успешно обновили %{resource_name}"

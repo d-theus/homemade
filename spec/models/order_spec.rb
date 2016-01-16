@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  before(:all) { Customer.delete_all }
-  before(:all) { FactoryGirl.create(:customer) }
+  before(:all) { Customer.delete_all && FactoryGirl.create(:customer) }
 
   describe 'attribute validation of' do
     describe '.customer' do
@@ -58,12 +57,15 @@ RSpec.describe Order, type: :model do
 
       it 'paid succeeds' do
         expect(rec.can_change_status_to?('paid')).to be_truthy
+        expect(rec.pay).to be_truthy
       end
       it 'cancelled succeeds' do
         expect(rec.can_change_status_to?('closed')).to be_truthy
+        expect(rec.cancel).to be_truthy
       end
       it 'closed succeeds' do
         expect(rec.can_change_status_to?('cancelled')).to be_truthy
+        expect(rec.close).to be_truthy
       end
     end
 
@@ -76,9 +78,11 @@ RSpec.describe Order, type: :model do
 
       it 'cancelled is ok' do
         expect(rec.can_change_status_to?('cancelled')).to be_truthy
+        expect(rec.cancel).to be_truthy
       end
       it 'closed is ok' do
         expect(rec.can_change_status_to?('closed')).to be_truthy
+        expect(rec.close).to be_truthy
       end
       it 'new fails' do
         expect(rec.can_change_status_to?('new')).to be_falsy
@@ -94,9 +98,11 @@ RSpec.describe Order, type: :model do
 
       it 'closed is ok' do
         expect(rec.can_change_status_to?('closed')).to be_truthy
+        expect(rec.close).to be_truthy
       end
       it 'paid is fails' do
         expect(rec.can_change_status_to?('paid')).to be_falsy
+        expect(rec.pay).to be_falsy
       end
       it 'new is fails' do
         expect(rec.can_change_status_to?('new')).to be_falsy
@@ -114,9 +120,11 @@ RSpec.describe Order, type: :model do
       end
       it 'paid fails' do
         expect(rec.can_change_status_to?('paid')).to be_falsy
+        expect(rec.pay).to be_falsy
       end
       it 'cancelled fails' do
         expect(rec.can_change_status_to?('cancelled')).to be_falsy
+        expect(rec.cancel).to be_falsy
       end
     end
   end

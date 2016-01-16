@@ -10,20 +10,30 @@ module ControllerHelpers
   end
 end
 
-def it_requires_authentication(verb, action, parameters = {})
-  context 'when unauthorized' do
-    before { sign_in nil }
-    it 'returns 403' do
-      self.send(verb, action, parameters)
-      expect(response).to have_http_status(:forbidden)
-    end
+shared_context 'an unauthorized request' do
+  it 'returns 403' do
+    expect(response).to have_http_status(:forbidden)
   end
 end
 
-def it_handles_nonexistent(verb, action, parameters = {})
-  context 'when nonexistent id' do
-    it 'returns 404' do
-      expect { self.send(verb, action, parameters) }.to raise_error ActiveRecord::RecordNotFound
-    end
+shared_context 'an authorized request' do
+  it 'does not return 403' do
+    expect(response).not_to have_http_status(:forbidden)
+  end
+end
+
+shared_context 'unprocessable entity request' do
+  it 'returns (422) unprocessable entity' do
+    expect(response).to have_http_status(:unprocessable_entity)
+  end
+
+  it 'has alert' do
+    expect(flash.now[:alert]).not_to be_nil
+  end
+end
+
+shared_examples_for 'successful request' do
+  it 'succeeds' do
+    expect(req).to have_http_status(:ok)
   end
 end

@@ -1,2 +1,42 @@
-%h1 Orders#index
-%p Find me in app/views/orders/index.html.haml
+.row
+  .col-xs-8.col-xs-offset-2
+    %h1 Заказы
+.row
+  .col-xs-10.col-xs-offset-1
+    %table.table.table-hover#orders
+      %thead
+        %tr
+          %th(rowspan=2) №
+          %th(rowspan=2) К-во наборов
+          %th(rowspan=1 colspan=2) Заказчик
+          %th(rowspan=2) Дата доставки
+          %th(rowspan=2) Оплата
+          %th(rowspan=2) Статус
+          %th(rowspan=2) Управление
+        %tr
+          %th(rowspan=1) Телефон
+          %th(rowspan=1) Имя
+
+      %tbody
+        - @orders.each do |ord|
+          %tr.order{id: "order_#{ord.id}"}
+            %td= ord.id
+            %td= ord.count
+            %td= phone_number ord.customer.phone
+            %td= ord.customer.name
+            %td= next_sunday(ord.created_at)
+            %td= t "activerecord.values.order.payment_method.#{ord.payment_method}"
+            %td= t "activerecord.values.order.status.#{ord.status}"
+            %td
+              = link_to 'ЗАВЕРШИТЬ',
+                close_order_path(ord),
+                data: { confirm: "Завершить заказ №#{ord.id}?", method: :post},
+                class: 'btn text-warning'
+              = link_to 'ОТМЕНИТЬ',
+                cancel_order_path(ord),
+                data: { confirm: "Отменить заказ №#{ord.id}?", method: :post},
+                class: 'btn text-danger'
+
+    = will_paginate @orders, renderer: BootstrapPagination::Rails
+
+- content_for(:title) { 'Заказы' }

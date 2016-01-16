@@ -26,6 +26,13 @@
               %a{href: recipes_path} Архив
             %li
               %a{href: new_recipe_path} Новый
+        %li.dropdown
+          %a.dropdown-toggle(data-toggle="dropdown" name="recipes" href="#")
+            Заказы
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              %a{href: orders_path} Список
         %li
           %a{href: destroy_admin_session_path, data: { method: :delete } }
             Выйти

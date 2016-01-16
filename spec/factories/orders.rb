@@ -5,6 +5,10 @@ FactoryGirl.define do
       Customer.order('RANDOM()').first.id
     end
     sequence(:count) { [3,5].sample }
-    state "new"
+    status "new"
+
+    factory :order_with_customer do
+      sequence(:customer) { FactoryGirl.create :customer }
+    end
   end
 end
