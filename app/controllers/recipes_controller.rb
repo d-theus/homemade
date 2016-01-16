@@ -34,7 +34,7 @@ class RecipesController < ApplicationController
   end
 
   def index
-    @recipes = Recipe.paginate(page: params[:page], per_page: 15)
+    @recipes = Recipe.order('day ASC').paginate(page: params[:page], per_page: 15)
   end
 
   def destroy
