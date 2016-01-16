@@ -3,9 +3,10 @@ class Order < ActiveRecord::Base
 
   STATUS_TABLE = {
     :nil => [ :new ],
-    :new => [ :paid, :cancelled, :closed],
-    :paid => [ :cancelled, :closed],
-    :cancelled => [:closed],
+    :new => [ :pending, :cancelled, :closed],
+    :pending => [ :paid, :cancelled ],
+    :paid => [ :cancelled, :closed ],
+    :cancelled => [],
     :closed => []
   }.with_indifferent_access
 
@@ -17,6 +18,7 @@ class Order < ActiveRecord::Base
   validates :count, presence: true, inclusion: { in: [3,5] }
   validate  :check_status
   before_destroy :can_destroy?
+  after_create   :make_card_pending
 
   def pay
     change_status(:paid)
@@ -31,7 +33,7 @@ class Order < ActiveRecord::Base
   end
 
   def can_pay?
-    can_change_status_to? :paid
+    can_change_status_to?(:paid)
   end
 
   def can_cancel?
@@ -74,5 +76,12 @@ class Order < ActiveRecord::Base
         "Невозможно изменить статус заказа на #{status}"
       return false
     end
+  end
+
+  def make_card_pending
+    if self.payment_method == 'card'
+      self.status = 'pending'
+    end
+    true
   end
 end

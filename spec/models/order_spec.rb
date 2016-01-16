@@ -55,9 +55,17 @@ RSpec.describe Order, type: :model do
     describe 'new ->' do
       let(:rec) { FactoryGirl.create :order, status: 'new'}
 
-      it 'paid succeeds' do
-        expect(rec.can_change_status_to?('paid')).to be_truthy
-        expect(rec.pay).to be_truthy
+      it 'paid fails' do
+        rec.update(payment_method: 'card')
+        expect(rec.can_change_status_to?('paid')).to be_falsy
+        expect(rec.pay).to be_falsy
+        rec.update(payment_method: 'cash')
+        expect(rec.can_change_status_to?('paid')).to be_falsy
+        expect(rec.pay).to be_falsy
+      end
+      it 'pending succeeds' do
+        rec.update(payment_method: 'card')
+        expect(rec.can_change_status_to?('pending')).to be_truthy
       end
       it 'cancelled succeeds' do
         expect(rec.can_change_status_to?('closed')).to be_truthy
@@ -66,6 +74,27 @@ RSpec.describe Order, type: :model do
       it 'closed succeeds' do
         expect(rec.can_change_status_to?('cancelled')).to be_truthy
         expect(rec.close).to be_truthy
+      end
+    end
+
+    describe 'pending ->' do
+      let(:rec) do
+        ord = FactoryGirl.create :order, status: 'new'
+        ord.update(status: 'pending')
+        ord
+      end
+
+      it 'cancelled is ok' do
+        expect(rec.can_change_status_to?('cancelled')).to be_truthy
+        expect(rec.cancel).to be_truthy
+      end
+      it 'closed fails' do
+        expect(rec.can_change_status_to?('closed')).to be_falsy
+        expect(rec.close).to be_falsy
+      end
+      it 'paid succeeds' do
+        expect(rec.can_change_status_to?('paid')).to be_truthy
+        expect(rec.pay).to be_truthy
       end
     end
 
@@ -84,9 +113,6 @@ RSpec.describe Order, type: :model do
         expect(rec.can_change_status_to?('closed')).to be_truthy
         expect(rec.close).to be_truthy
       end
-      it 'new fails' do
-        expect(rec.can_change_status_to?('new')).to be_falsy
-      end
     end
 
     describe 'cancelled ->' do
@@ -96,16 +122,13 @@ RSpec.describe Order, type: :model do
         ord
       end
 
-      it 'closed is ok' do
-        expect(rec.can_change_status_to?('closed')).to be_truthy
-        expect(rec.close).to be_truthy
+      it 'closed fails' do
+        expect(rec.can_change_status_to?('closed')).to be_falsy
+        expect(rec.close).to be_falsy
       end
       it 'paid is fails' do
         expect(rec.can_change_status_to?('paid')).to be_falsy
         expect(rec.pay).to be_falsy
-      end
-      it 'new is fails' do
-        expect(rec.can_change_status_to?('new')).to be_falsy
       end
     end
     describe 'closed ->' do
@@ -115,9 +138,6 @@ RSpec.describe Order, type: :model do
         ord
       end
 
-      it 'new fails' do
-        expect(rec.can_change_status_to?('new')).to be_falsy
-      end
       it 'paid fails' do
         expect(rec.can_change_status_to?('paid')).to be_falsy
         expect(rec.pay).to be_falsy
