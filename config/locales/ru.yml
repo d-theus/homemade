@@ -306,6 +306,7 @@ ru:
           pending: Ожид. оплаты
           awaiting_delivery: Ожид. доставки
           awaiting_refund: Ожид. возвр. денег
+          nil: Неизвестно
   flash:
     update:
       notice: "Успешно обновили %{resource_name}"

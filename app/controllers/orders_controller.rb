@@ -60,7 +60,10 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.order('created_at DESC').paginate(page: params[:page], per_page: 12)
+    @orders = Order
+    .order('created_at DESC')
+    .where(query_params)
+    .paginate(page: params[:page], per_page: 12)
   end
 
   def destroy
@@ -109,5 +112,9 @@ class OrdersController < ApplicationController
 
   def fetch_order
     @order = Order.find(order_id)
+  end
+
+  def query_params
+    params.permit(:payment_method, :status)
   end
 end
