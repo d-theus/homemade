@@ -3,17 +3,25 @@
   name: 'recipe',
   'data-day' => recipe.day }
   = card do
-    = card_image recipe.photo
-    .card-heading
-      %h2= recipe.title
-      %h3= recipe.subtitle
+    .row.card-img-container.carousel
+      %img.card-img{src: recipe.photo}
+      .carousel-caption
+        .row
+          .col-xs-11.col-xs-offset-1
+            %h3= recipe.title
+        .row
+          .col-xs-11.col-xs-offset-1
+            %h4= recipe.subtitle
+        .row
+          %center.col-xs-4
+            %i.fa.fa-fw.fa-clock-o
+            #{recipe.cooking_time} мин.
+          %center.col-xs-4
+            %strong день #{human_day(recipe.day)}
+          %center.col-xs-4
+            %i.fa.fa-fw.fa-fire
+            #{recipe.calories} ккал.
     .card-description.col-xs-11.col-xs-offset-1
-      .row
-        .col-xs-7 Время приготовления:
-        .col-xs-5 #{recipe.cooking_time}&nbsp;мин.
-      .row
-        .col-xs-7 Калорийность:
-        .col-xs-5 #{recipe.calories}&nbsp;ккал
       .row
         .col-xs-7
           Для приготовления понадобится:
