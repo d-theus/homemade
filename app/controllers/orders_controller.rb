@@ -21,6 +21,7 @@ class OrdersController < ApplicationController
 
     @order = Order.new(order_params)
     if @order.save
+      cookies[:last_order_id] = @order.id
       redirect_to received_order_path
     else
       flash.now[:alert] = 'Заказ не создан'
@@ -72,6 +73,7 @@ class OrdersController < ApplicationController
   end
 
   def received
+    @subscription = WeeklyMenuSubscription.new
   end
 
   private

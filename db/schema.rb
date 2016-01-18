@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160118085521) do
+ActiveRecord::Schema.define(version: 20160118112619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,5 +84,11 @@ ActiveRecord::Schema.define(version: 20160118085521) do
   end
 
   add_index "week_recipes", ["recipe_id"], name: "index_week_recipes_on_recipe_id", using: :btree
+
+  create_table "weekly_menu_subscriptions", force: true do |t|
+    t.string   "email",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

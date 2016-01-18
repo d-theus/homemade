@@ -1,0 +1,2 @@
+module WeeklyMenuSubscriptionsHelper
+end
