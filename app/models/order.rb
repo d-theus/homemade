@@ -3,9 +3,11 @@ class Order < ActiveRecord::Base
 
   STATUS_TABLE = {
     :nil => [ :new ],
-    :new => [ :pending, :cancelled, :closed],
+    :new => [ :pending, :cancelled, :awaiting_delivery],
     :pending => [ :paid, :cancelled ],
-    :paid => [ :cancelled, :closed ],
+    :paid => [ :awaiting_delivery, :awaiting_refund ],
+    :awaiting_refund => [ :cancelled ],
+    :awaiting_delivery => [ :closed ],
     :cancelled => [],
     :closed => []
   }.with_indifferent_access
@@ -51,6 +53,12 @@ class Order < ActiveRecord::Base
 
   def can_destroy?
     %w(cancelled closed).include? status
+  end
+
+  STATUS_TABLE.keys.each do |key|
+    define_method "#{key}?" do
+      status == key
+    end
   end
 
   private

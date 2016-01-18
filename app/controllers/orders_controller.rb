@@ -7,8 +7,19 @@ class OrdersController < ApplicationController
   end
 
   def create
-    #TODO: transaction for nested user
-    @order = Order.new(order_with_customer_params)
+    @customer = if customer_id
+                  Customer.find(customer_id)
+                else
+                  Customer.new(customer_params)
+                end
+
+    unless @customer.save
+      flash.now[:alert] = 'Не удалось создать запись о клиенте'
+      render :new, status: :unprocessable_entity
+      return
+    end
+
+    @order = Order.new(order_params)
     if @order.save
       redirect_to received_order_path
     else
@@ -71,12 +82,23 @@ class OrdersController < ApplicationController
     )
   end
 
-  def order_with_customer_params
+  def order_params
     params.require(:order).permit(
-      { customer: [ :name, :phone, :address ] },
       :payment_method,
       :state
     )
+  end
+
+  def customer_params
+    params.require(:order).fetch(:customer, {}).permit(
+      :name, :phone, :address
+      )
+  end
+
+  def customer_id
+    params.fetch(:order, {})
+    .fetch(:customer, {})
+    .fetch(:id, nil)
   end
 
   def order_id

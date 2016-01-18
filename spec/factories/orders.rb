@@ -8,7 +8,10 @@ FactoryGirl.define do
     status "new"
 
     factory :order_with_customer do
-      sequence(:customer) { FactoryGirl.create :customer }
+      before(:create) do |record|
+        c = FactoryGirl.create :customer
+        record.customer_id = c.id
+      end
     end
   end
 end

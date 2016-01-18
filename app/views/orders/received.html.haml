@@ -1,0 +1,21 @@
+%br
+.row
+  %center.col-xs-12
+    .row
+      .col-xs-2.col-xs-offset-5
+        = image_tag 'logo.svg', class: 'img-responsive'
+    .row
+      %h1 Спасибо за ваш заказ.
+    %br/
+    .row
+      .lead
+        В ближайшее время с Вами свяжутся для уточнения деталей доставки.
+    %br/
+    .row
+      - if @order.try(:customer).try(:email)
+        = link_to 'ОТПРАВИТЬ РЕЦЕПТЫ НА ПОЧТУ', class: 'btn text-primary'
+      - else
+        Выслать рецепты на неделю на этот электронный адрес:
+        = simple_form_for @order.customer, html: {class: 'form-inline'} do |f|
+          = f.input :email
+          = f.submit 'ОТПРАВИТЬ РЕЦЕПТЫ НА ПОЧТУ', class: 'btn text-primary'

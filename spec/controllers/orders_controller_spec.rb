@@ -32,6 +32,22 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   describe '#create' do
+    context 'with new invalid customer' do
+      let(:attrs) { FactoryGirl.attributes_for(:order_with_customer).merge({customer: { phone: ''}}) }
+      let(:req) { post :create, order: attrs }
+
+      it 'fails to create order' do
+        expect { req() }.not_to change(Order, :count)
+      end
+      it 'fails to create customer' do
+        expect { req() }.not_to change(Customer, :count)
+      end
+      it 'has errors in customer' do
+        req()
+        expect(assigns[:customer].errors).not_to be_empty
+      end
+      it_behaves_like 'unprocessable entity request'
+    end
     context 'with valid order' do
       before { post :create, order: FactoryGirl.attributes_for(:order_with_customer) }
 
@@ -55,20 +71,23 @@ RSpec.describe OrdersController, type: :controller do
 
   describe 'update methods' do
     let(:order) { FactoryGirl.create(:order) }
-    let(:req)   { post :close, id: order.id }
 
     describe '#close' do
+      let(:req) { post :close, id: order.id }
       context 'when not signed in' do
         before { sign_in nil }
-        before { post :close, id: order.id }
         it_behaves_like 'an unauthorized request'
       end
 
       context 'when signed in' do
         before { sign_in }
 
-        context 'new order' do
-          before { order.update status: 'new' } 
+        context 'new order with cash' do
+          before { order.update status: 'new', payment_method: 'cash' } 
+          it_behaves_like 'successful request'
+        end
+        context 'pending order with card' do
+          before { order.update status: 'pending', payment_method: 'card' } 
           it_behaves_like 'unprocessable entity request'
         end
         context 'paid order' do
@@ -81,15 +100,15 @@ RSpec.describe OrdersController, type: :controller do
         end
         context 'cancelled order' do
           before { order.update status: 'cancelled' } 
-          it_behaves_like 'successful request'
+          it_behaves_like 'unprocessable entity request'
         end
 
       end
     end
     describe '#cancel' do
+      let(:req) { post :cancel, id: order.id }
       context 'when not signed in' do
         before { sign_in nil }
-        before { post :cancel, id: order.id }
         it_behaves_like 'an unauthorized request'
       end
 
@@ -98,6 +117,11 @@ RSpec.describe OrdersController, type: :controller do
 
         context 'new order' do
           before { order.update status: 'new' } 
+          it_behaves_like 'successful request'
+        end
+
+        context 'pending order' do
+          before { order.update status: 'paid' } 
           it_behaves_like 'successful request'
         end
 
@@ -118,13 +142,18 @@ RSpec.describe OrdersController, type: :controller do
       end
     end
     describe '#pay' do
+      let(:req) { post :pay, id: order.id }
       context 'when not signed in' do
         before { sign_in nil }
-        let(:req) { post :pay, id: order.id }
         it_behaves_like 'an authorized request'
 
         context 'new order' do
           before { order.update status: 'new' } 
+          it_behaves_like 'unprocessable entity request'
+        end
+
+        context 'pending order' do
+          before { order.update status: 'pending' } 
           it_behaves_like 'successful request'
         end
 
@@ -171,5 +200,11 @@ RSpec.describe OrdersController, type: :controller do
         end
       end
     end
+  end
+
+  describe '#received' do
+    it 'fetches order'
+    it 'fetched order.customer'
+    it 'concerned with access rights'
   end
 end

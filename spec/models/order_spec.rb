@@ -51,102 +51,54 @@ RSpec.describe Order, type: :model do
     end
   end
 
-  describe 'status' do
-    describe 'new ->' do
-      let(:rec) { FactoryGirl.create :order, status: 'new'}
-
-      it 'paid fails' do
-        rec.update(payment_method: 'card')
-        expect(rec.can_change_status_to?('paid')).to be_falsy
-        expect(rec.pay).to be_falsy
-        rec.update(payment_method: 'cash')
-        expect(rec.can_change_status_to?('paid')).to be_falsy
-        expect(rec.pay).to be_falsy
-      end
-      it 'pending succeeds' do
-        rec.update(payment_method: 'card')
-        expect(rec.can_change_status_to?('pending')).to be_truthy
-      end
-      it 'cancelled succeeds' do
-        expect(rec.can_change_status_to?('closed')).to be_truthy
-        expect(rec.cancel).to be_truthy
-      end
-      it 'closed succeeds' do
-        expect(rec.can_change_status_to?('cancelled')).to be_truthy
-        expect(rec.close).to be_truthy
+  describe 'status change' do
+    shared_examples "transition" do |param|
+      let(:rec) { ord = FactoryGirl.build(:order, status: param[:from].to_s);ord.save(validate: false);ord }
+      it "#{param[:from]} -> #{param[:to]} is #{param[:is]}" do
+        expect(rec.can_change_status_to?(param[:to].to_s)).to (param[:is] == :ok ? be_truthy : be_falsy)
+        if param[:with_method]
+          expect(rec.send(param[:with_method])).to (param[:is] == :ok ? be_truthy : be_falsy)
+        end
       end
     end
 
-    describe 'pending ->' do
-      let(:rec) do
-        ord = FactoryGirl.create :order, status: 'new'
-        ord.update(status: 'pending')
-        ord
-      end
+    it_behaves_like 'transition', from: :new, to: :paid, with: :pay, is: :not_ok
+    it_behaves_like 'transition', from: :new, to: :cancelled, with: :cancel, is: :ok
+    it_behaves_like 'transition', from: :new, to: :closed, with: :close, is: :not_ok
+    it_behaves_like 'transition', from: :new, to: :pending, is: :ok
 
-      it 'cancelled is ok' do
-        expect(rec.can_change_status_to?('cancelled')).to be_truthy
-        expect(rec.cancel).to be_truthy
-      end
-      it 'closed fails' do
-        expect(rec.can_change_status_to?('closed')).to be_falsy
-        expect(rec.close).to be_falsy
-      end
-      it 'paid succeeds' do
-        expect(rec.can_change_status_to?('paid')).to be_truthy
-        expect(rec.pay).to be_truthy
+    it_behaves_like 'transition', from: :pending, to: :paid, with: :pay, is: :ok
+    it_behaves_like 'transition', from: :pending, to: :cancelled, with: :cancel, is: :ok
+    it_behaves_like 'transition', from: :pending, to: :closed, with: :close, is: :not_ok
+    it_behaves_like 'transition', from: :pending, to: :awaiting_delivery, is: :not_ok
+
+    it_behaves_like 'transition', from: :paid, to: :cancelled, with: :cancel, is: :not_ok
+    it_behaves_like 'transition', from: :paid, to: :closed, with: :close, is: :not_ok
+    it_behaves_like 'transition', from: :paid, to: :awaiting_refund, is: :ok
+    it_behaves_like 'transition', from: :paid, to: :awaiting_delivery, is: :ok
+
+    it_behaves_like 'transition', from: :awaiting_delivery, to: :closed, with: :close, is: :ok
+    it_behaves_like 'transition', from: :awaiting_delivery, to: :cancelled, with: :cancel, is: :not_ok
+
+    it_behaves_like 'transition', from: :awaiting_refund, to: :cancelled, with: :cancel, is: :ok
+    it_behaves_like 'transition', from: :awaiting_refund, to: :closed, with: :close, is: :false
+  end
+
+  describe 'status quering:' do
+    shared_examples "?-method" do |param|
+      let(:rec) { ord = FactoryGirl.build(:order, status: param[:status].to_s);ord.save(validate: false);ord }
+      it "##{param[:status]}? == true" do
+        expect(rec.send("#{param[:status]}?")).to be_truthy
       end
     end
 
-    describe 'paid ->' do
-      let(:rec) do
-        ord = FactoryGirl.create :order, status: 'new'
-        ord.update(status: 'paid')
-        ord
-      end
-
-      it 'cancelled is ok' do
-        expect(rec.can_change_status_to?('cancelled')).to be_truthy
-        expect(rec.cancel).to be_truthy
-      end
-      it 'closed is ok' do
-        expect(rec.can_change_status_to?('closed')).to be_truthy
-        expect(rec.close).to be_truthy
-      end
-    end
-
-    describe 'cancelled ->' do
-      let(:rec) do
-        ord = FactoryGirl.create :order
-        ord.update(status: 'cancelled')
-        ord
-      end
-
-      it 'closed fails' do
-        expect(rec.can_change_status_to?('closed')).to be_falsy
-        expect(rec.close).to be_falsy
-      end
-      it 'paid is fails' do
-        expect(rec.can_change_status_to?('paid')).to be_falsy
-        expect(rec.pay).to be_falsy
-      end
-    end
-    describe 'closed ->' do
-      let(:rec) do
-        ord = FactoryGirl.create :order
-        ord.update(status: 'closed')
-        ord
-      end
-
-      it 'paid fails' do
-        expect(rec.can_change_status_to?('paid')).to be_falsy
-        expect(rec.pay).to be_falsy
-      end
-      it 'cancelled fails' do
-        expect(rec.can_change_status_to?('cancelled')).to be_falsy
-        expect(rec.cancel).to be_falsy
-      end
-    end
+    it_behaves_like '?-method', status: :new
+    it_behaves_like '?-method', status: :awaiting_delivery
+    it_behaves_like '?-method', status: :awaiting_refund
+    it_behaves_like '?-method', status: :paid
+    it_behaves_like '?-method', status: :pending
+    it_behaves_like '?-method', status: :closed
+    it_behaves_like '?-method', status: :cancelled
   end
 
   describe '#create' do
@@ -154,11 +106,18 @@ RSpec.describe Order, type: :model do
       expect(FactoryGirl.create(:order, status: 'new'))
       .to be_truthy
     end
+
     it 'with other status fails' do
       %w(paid cancelled closed).each do |st|
         expect {FactoryGirl.create(:order, status: st)}
         .to raise_error ActiveRecord::RecordInvalid
       end
+    end
+
+    it 'immediately assigns status [pending] if card' do
+      rec = FactoryGirl.build(:order, status: 'new', payment_method: 'card')
+      expect(rec.save).to be_truthy
+      expect(rec.status).to eq 'pending'
     end
   end
 
