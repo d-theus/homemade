@@ -292,6 +292,7 @@ ru:
       order:
         count: Количество наборов
         payment_method: Способ оплаты
+        by_phone: По телефону
     values:
       order:
         payment_method:
@@ -302,6 +303,9 @@ ru:
           paid: Оплачен
           cancelled: Отменён
           closed: Завершён
+          pending: Ожид. оплаты
+          awaiting_delivery: Ожид. доставки
+          awaiting_refund: Ожид. возвр. денег
   flash:
     update:
       notice: "Успешно обновили %{resource_name}"

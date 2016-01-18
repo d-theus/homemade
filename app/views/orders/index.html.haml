@@ -7,35 +7,45 @@
       %thead
         %tr
           %th(rowspan=2) №
+          %th(rowspan=2)
+          %th(rowspan=2) Создан
           %th(rowspan=2) К-во наборов
-          %th(rowspan=1 colspan=2) Заказчик
-          %th(rowspan=2) Дата доставки
+          %th(rowspan=1 colspan=3) Заказчик
           %th(rowspan=2) Оплата
+          %th(rowspan=2) Доставить
           %th(rowspan=2) Статус
           %th(rowspan=2) Управление
         %tr
           %th(rowspan=1) Телефон
           %th(rowspan=1) Имя
+          %th(rowspan=1) Адрес
 
       %tbody
         - @orders.each do |ord|
           %tr.order{id: "order_#{ord.id}"}
             %td= ord.id
+            %td
+              - if ord.by_phone
+                %i.fa.fa-phone.fa-fw.text-primary{title: 'Заказан по телефону'}
+            %td= date_format ord.created_at
             %td= ord.count
             %td= phone_number ord.customer.phone
             %td= ord.customer.name
-            %td= next_sunday(ord.created_at)
+            %td= ord.customer.address
             %td= t "activerecord.values.order.payment_method.#{ord.payment_method}"
+            %td= next_sunday(ord.created_at)
             %td= t "activerecord.values.order.status.#{ord.status}"
             %td
               = link_to 'ЗАВЕРШИТЬ',
                 close_order_path(ord),
                 data: { confirm: "Завершить заказ №#{ord.id}?", method: :post},
-                class: 'btn text-warning'
+                class: 'btn text-warning',
+                disabled: !ord.can_close?
               = link_to 'ОТМЕНИТЬ',
                 cancel_order_path(ord),
                 data: { confirm: "Отменить заказ №#{ord.id}?", method: :post},
-                class: 'btn text-danger'
+                class: 'btn text-danger',
+                disabled: !ord.can_cancel?
 
     = will_paginate @orders, renderer: BootstrapPagination::Rails
 

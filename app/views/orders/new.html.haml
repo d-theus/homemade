@@ -18,5 +18,7 @@
             = ff.input :address
           = f.input :payment_method, as: :select,
             collection: payment_methods, selected: :first
+          - if admin?
+            = f.input :by_phone, input_html: { checked: true }, label: 'совершён через телефонный звонок'
           %br/
           = f.submit 'ЗАКАЗАТЬ', class: 'btn btn-lg btn-primary'
