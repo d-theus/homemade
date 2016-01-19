@@ -8,7 +8,7 @@
         = select_tag 'status', 
           options_for_select(statuses, params[:status]),
           placeholder: "Статус"
-      %span.col-xs-3
+      %span.col-xs-5
         = select_tag 'payment_method',
           options_for_select(payment_methods, params[:payment_method]),
           placeholder: "Способ оплаты"
