@@ -45,6 +45,22 @@
 
 @list-group-border: transparent;
 
+@input-border: transparent;
+@input-border-focus: transparent;
+input.form-control,
+input.form-control:focus
+textarea.form-control,
+textarea.form-control:focus{
+  outline: none;
+  //border: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.material .material-bar:before,.material .material-bar:after{
+  background: @brand-primary;
+}
+
 .navbar-brand{
   color: white;
   font-size: 24px;

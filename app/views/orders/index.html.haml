@@ -3,7 +3,7 @@
     %h1 Заказы
 .row
   .col-xs-10.col-xs-offset-1
-    = form_tag orders_path, method: :get, class: 'material' do |f|
+    = form_tag orders_path, method: :get, class: 'form-inline material' do |f|
       %span.col-xs-3
         = select_tag 'status', 
           options_for_select(statuses, params[:status]),

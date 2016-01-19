@@ -3,19 +3,19 @@
     %br/
     = image_tag 'logo.svg', class: 'icon'
 .jumbotron#order
-  = form_tag 'orders#new', class: 'material material-inverse form-inline jt' do
-    .row.lead
-      %center.col-xs-12
-        %span.text-nowrap Продукты для
+  .row.lead
+    %center.col-xs-12.jt
+      %span.text-nowrap Продукты для
+      = form_tag 'orders#new', class: 'material material-inverse form-inline jt' do
         %span.form-group.no-title#count
           = select_tag 'count', options_for_select([5, 3], 5), placeholder: 'количество'
-        %span.text-nowrap ужинов на двоих
-        %span.text-nowrap с доставкой в воскресенье,
-        %span.text-nowrap#d_date>= next_sunday
+      %span.text-nowrap ужинов на двоих
+      %span.text-nowrap с доставкой в воскресенье,&nbsp;
+      %span.text-nowrap#d_date>= next_sunday
     .row
       %center.col-xs-12.jt
         %a.btn.btn-primary.btn-lg.jb(href="#" data-toggle='modal' data-target='#order_modal') ЗАКАЗАТЬ 
-    .row.text-center.text-inverse
+    .row.text-center.text-inverse.small
       %br/
       %a{href:'#how'} как это работает?
 .jumbotron#menu

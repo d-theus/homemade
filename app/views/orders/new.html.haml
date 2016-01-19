@@ -7,17 +7,19 @@
         %center.row
           %p.alert.alert-danger= alert
       .col-xs-12.col-lg-8.col-lg-offset-2
-        = simple_form_for @order, html: { class: 'form-horizontal' } do |f|
+        = simple_form_for @order, html: { class: 'form-horizontal material' } do |f|
           = f.input :count,
             as: :select,
             collection: [3,5],
-            selected: @order.count || 5
+            selected: @order.count || 5,
+            placeholder: "Количество наборов"
           = f.simple_fields_for :customer do |ff|
             = ff.input :name
             = ff.input :phone
             = ff.input :address
           = f.input :payment_method, as: :select,
-            collection: payment_methods, selected: :first
+            collection: payment_methods, selected: :first,
+            placeholder: 'Способ оплаты'
           - if admin?
             = f.input :by_phone, input_html: { checked: true }, label: 'совершён через телефонный звонок'
           %br/

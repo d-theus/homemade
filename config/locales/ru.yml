@@ -267,7 +267,7 @@ ru:
       admin: Администратор
       recipe: Рецепт
       inventory_item: Предмет
-    attributes:
+    attributes: &attrs
       admin:
         email: Эл. Почта
         password: Пароль
@@ -319,4 +319,6 @@ ru:
       order:
         customer:
           <<: *customer_labels
+    placeholders:
+      <<: *attrs
   
