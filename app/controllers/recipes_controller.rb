@@ -21,7 +21,7 @@ class RecipesController < ApplicationController
   end
 
   def update
-    if @recipe.update(recipe_params)
+    if @recipe.update(update_recipe_params)
       flash.now[:notice] = 'flash.update.notice'
       redirect_to recipe_path(@recipe)
     else
@@ -61,7 +61,7 @@ class RecipesController < ApplicationController
       :title, :subtitle, :day,
       :calories, :cooking_time,
       :photo, :description,
-      inventory_items_ids: []
+      inventory_item_ids: []
     )
   end
 
