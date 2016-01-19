@@ -90,6 +90,8 @@ a.tel{
   .card-img-container{
     height: 66%;
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .card-img{
@@ -118,6 +120,12 @@ a.tel{
       width: 2em;
     }
   }
+
+  .card-footer{
+    position: absolute;
+    margin-bottom: 2em;
+    bottom: 0;
+  }
 }
 
 .carousel-caption{
@@ -127,7 +135,16 @@ a.tel{
   text-align: left;
   left: 0;
   width: 100%;
-  h1,h2,h3,h4 { margin: 0.1em;}
+  hgroup{
+    h1,h2,h3,h4 { margin-bottom: 0.1em; margin-top: 0; }
+    margin-bottom: 0.3em;
+  }
+  section{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 1em;
+  }
   box-shadow: inset 0px -80px 40px -40px rgba(0,0,0,0.5);
 }
 

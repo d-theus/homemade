@@ -1,8 +1,8 @@
 module ApplicationHelper
   SRCW = { 'lg' => 1440, 'md' => 920, 'sm' => 520}
-  def card(&block)
+  def card(options = {}, &block)
     capture_haml do
-      haml_tag :div, class: 'card' do
+      haml_tag :div, options.deep_merge(class: 'card') do
         yield
       end
     end

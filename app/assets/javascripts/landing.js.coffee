@@ -8,7 +8,7 @@ wait = (cb)->
 
 updateCount = (val = Cookies.get('count'))->
   Cookies.set('count', val)
-  recipes = $('a[name="recipe"][data-day="4"],a[name="recipe"][data-day="5"]')
+  recipes = $('[name="recipe"][data-day="4"],[name="recipe"][data-day="5"]')
   if Number(val) > 3
     recipes.each ->
       $(this).removeClass('fade')
