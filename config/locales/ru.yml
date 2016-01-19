@@ -309,6 +309,8 @@ ru:
           awaiting_refund: Ожид. возвр. денег
           nil: Неизвестно
   flash:
+    create:
+      alert: 'Возникли ошибки'
     update:
       notice: "Успешно обновили %{resource_name}"
       alert: "Возникли ошибки"

@@ -11,12 +11,12 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = Recipe.new(recipe_params)
-    if @recipe.save
-      render json: @recipe
+    @recipe = Recipe.new(new_recipe_params)
+    if @recipe.save && @recipe.update(inventory_item_ids: params[:recipe][:inventory_item_ids])
+      redirect_to recipe_path(@recipe)
     else
-      render json: { errors: @recipe.errors },
-        status: :unprocessable_entity
+      flash.now[:alert] = 'flash.create.alert'
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -48,12 +48,20 @@ class RecipesController < ApplicationController
 
   private
 
-  def recipe_params
+  def new_recipe_params
+    params.require(:recipe).permit(
+      :title, :subtitle, :day,
+      :calories, :cooking_time,
+      :photo, :description
+    )
+  end
+
+  def update_recipe_params
     params.require(:recipe).permit(
       :title, :subtitle, :day,
       :calories, :cooking_time,
       :photo, :description,
-      inventory_item_ids: []
+      inventory_items_ids: []
     )
   end
 
