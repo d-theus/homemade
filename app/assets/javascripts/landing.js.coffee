@@ -17,6 +17,8 @@ updateCount = (val = Cookies.get('count'))->
     $('#why_disabled').show()
     recipes.each ->
       $(this).addClass('fade')
+  $('.order_count input[type="radio"][value=' + val + ']')
+    .click()
 
 window.Ui.ready ->
   wait ->
@@ -25,4 +27,6 @@ window.Ui.ready ->
         updateCount($(this).val())
     if cv = Cookies.get('count')
       $('#count input[type="radio"][name="count"][value=' + cv + ']')
+        .click()
+      $('.order_count input[type="radio"][value=' + cv + ']')
         .click()
