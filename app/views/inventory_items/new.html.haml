@@ -1,0 +1,10 @@
+.row
+  .col-xs-10.col-xs-offset-1
+    %h1 Новый кухонный инструмент
+.row
+  .col-xs-10.col-xs-offset-1
+    = simple_form_for @ii do |f|
+      = f.input :name
+      = f.input :image
+      = f.submit 'СОЗДАТЬ', class: 'btn btn-primary'
+

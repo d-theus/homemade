@@ -6,6 +6,10 @@ class InventoryItemsController < ApplicationController
     render json: InventoryItem.all
   end
 
+  def new
+    @ii = InventoryItem.new
+  end
+
   def create
     @ii = InventoryItem.create(ii_params)
     if @ii.persisted?
