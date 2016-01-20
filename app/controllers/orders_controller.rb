@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_or_forbid, except: [:new, :create, :pay]
+  before_action :authenticate_or_forbid, except: [:new, :create, :pay, :received]
   before_action :fetch_order, only: [:cancel, :close, :pay, :destroy]
 
   def new
@@ -12,21 +12,26 @@ class OrdersController < ApplicationController
                 else
                   Customer.new(customer_params)
                 end
-
-    unless @customer.save
-      flash.now[:alert] = 'Не удалось создать запись о клиенте'
-      render :new, status: :unprocessable_entity
-      return
-    end
-
     @order = Order.new(order_params)
-    if @order.save
-      cookies[:last_order_id] = @order.id
-      redirect_to received_order_path
-    else
-      flash.now[:alert] = 'Заказ не создан'
-      render :new, status: :unprocessable_entity
+
+    Order.transaction do
+      @customer.save!
+      @order.customer_id = @customer.id
+      @order.save!
     end
+
+  redirect_to received_order_path
+
+  rescue 
+    if @customer.errors.any?
+      flash.now[:alert] = 'Не удалось создать запись о клиенте'
+    end
+
+    unless @order.persisted?
+      flash.now[:alert] = 'Заказ не создан'
+    end
+    render :new, status: :unprocessable_entity
+    return
   end
 
   def cancel
@@ -90,7 +95,8 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(
       :payment_method,
-      :state
+      :interval,
+      :state, :count
     )
   end
 

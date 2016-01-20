@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
-  before(:all) { Customer.delete_all }
-  before(:all) { FactoryGirl.create(:customer) }
-
   describe '#index' do
     context 'when not signed in' do
       before { sign_in nil }
@@ -32,8 +29,17 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   describe '#create' do
+    before(:each) { Customer.delete_all }
+
     context 'with new invalid customer' do
-      let(:attrs) { FactoryGirl.attributes_for(:order_with_customer).merge({customer: { phone: ''}}) }
+      let(:attrs) do
+        FactoryGirl.attributes_for(:order,
+                                   customer_id: nil,
+                                   customer: {
+                                     name: 'some',
+                                     phone: 'not valid',
+                                     address: 'some random ave' })
+      end
       let(:req) { post :create, order: attrs }
 
       it 'fails to create order' do
@@ -48,8 +54,15 @@ RSpec.describe OrdersController, type: :controller do
       end
       it_behaves_like 'unprocessable entity request'
     end
-    context 'with valid order' do
-      before { post :create, order: FactoryGirl.attributes_for(:order_with_customer) }
+    context 'with valid order and new valid customer' do
+      before { post :create, order: FactoryGirl.attributes_for(:order,
+                                                               customer_id: nil,
+                                                               customer: {
+                                                                 name: 'some',
+                                                                 phone: '+71112223344',
+                                                                 address: 'some'
+                                                               }
+                                                              ) }
 
       it_behaves_like 'an authorized request'
 
@@ -63,14 +76,15 @@ RSpec.describe OrdersController, type: :controller do
     end
 
     context 'with invalid order' do
-      before { post :create, order: FactoryGirl.attributes_for(:order_with_customer, count: 2) }
+      before { post :create, order: FactoryGirl.attributes_for(:order, count: 2) }
 
       it_behaves_like 'unprocessable entity request'
     end
   end
 
   describe 'update methods' do
-    let(:order) { FactoryGirl.create(:order) }
+    before(:all) { Customer.delete_all }
+    let!(:order) { FactoryGirl.create(:order) }
 
     describe '#close' do
       let(:req) { post :close, id: order.id }
@@ -78,105 +92,27 @@ RSpec.describe OrdersController, type: :controller do
         before { sign_in nil }
         it_behaves_like 'an unauthorized request'
       end
-
-      context 'when signed in' do
-        before { sign_in }
-
-        context 'new order with cash' do
-          before { order.update status: 'new', payment_method: 'cash' } 
-          it_behaves_like 'successful request'
-        end
-        context 'pending order with card' do
-          before { order.update status: 'pending', payment_method: 'card' } 
-          it_behaves_like 'unprocessable entity request'
-        end
-        context 'paid order' do
-          before { order.update status: 'paid' } 
-          it_behaves_like 'successful request'
-        end
-        context 'closed order' do
-          before { order.update status: 'closed' } 
-          it_behaves_like 'unprocessable entity request'
-        end
-        context 'cancelled order' do
-          before { order.update status: 'cancelled' } 
-          it_behaves_like 'unprocessable entity request'
-        end
-
-      end
     end
+
     describe '#cancel' do
       let(:req) { post :cancel, id: order.id }
       context 'when not signed in' do
         before { sign_in nil }
         it_behaves_like 'an unauthorized request'
       end
-
-      context 'when signed in' do
-        before { sign_in }
-
-        context 'new order' do
-          before { order.update status: 'new' } 
-          it_behaves_like 'successful request'
-        end
-
-        context 'pending order' do
-          before { order.update status: 'paid' } 
-          it_behaves_like 'successful request'
-        end
-
-        context 'paid order' do
-          before { order.update status: 'paid' } 
-          it_behaves_like 'successful request'
-        end
-
-        context 'closed order' do
-          before { order.update status: 'closed' } 
-          it_behaves_like 'unprocessable entity request'
-        end
-
-        context 'canceled order' do
-          before { order.update status: 'cancelled' } 
-          it_behaves_like 'unprocessable entity request'
-        end
-      end
     end
+
     describe '#pay' do
       let(:req) { post :pay, id: order.id }
       context 'when not signed in' do
         before { sign_in nil }
         it_behaves_like 'an authorized request'
-
-        context 'new order' do
-          before { order.update status: 'new' } 
-          it_behaves_like 'unprocessable entity request'
-        end
-
-        context 'pending order' do
-          before { order.update status: 'pending' } 
-          it_behaves_like 'successful request'
-        end
-
-        context 'paid order' do
-          before { order.update status: 'paid' } 
-          it_behaves_like 'unprocessable entity request'
-        end
-
-        context 'closed order' do
-          before { order.update status: 'closed' } 
-          it_behaves_like 'unprocessable entity request'
-        end
-
-        context 'canceled order' do
-          before { order.update status: 'cancelled' } 
-          it_behaves_like 'unprocessable entity request'
-        end
       end
     end
   end
 
   describe '#delete' do
-    let(:order) { FactoryGirl.create(:order) }
+    let!(:order) { FactoryGirl.create(:order) }
     context 'when not signed in' do
       before { sign_in nil }
       before { delete :destroy, id: order.id }
@@ -203,8 +139,12 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   describe '#received' do
-    it 'fetches order'
-    it 'fetched order.customer'
-    it 'concerned with access rights'
+    before { get :received }
+
+    it_behaves_like 'an authorized request'
+
+    it 'has @subscription' do
+      expect(assigns :subscription).not_to be_nil
+    end
   end
 end

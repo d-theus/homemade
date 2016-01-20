@@ -1,17 +1,15 @@
 FactoryGirl.define do
   factory :order do
     payment_method "cash"
-    sequence(:customer_id) do
-      Customer.order('RANDOM()').first.id
-    end
     sequence(:count) { [3,5].sample }
     status "new"
-
-    factory :order_with_customer do
-      before(:create) do |record|
-        c = FactoryGirl.create :customer
-        record.customer_id = c.id
-      end
+    sequence(:interval) {
+      b = rand(8)
+      "#{b}-#{b+3}"
+    }
+    sequence(:customer_id) do
+      c = FactoryGirl.create :customer
+      c.id
     end
   end
 end

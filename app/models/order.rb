@@ -19,6 +19,7 @@ class Order < ActiveRecord::Base
   validates :payment_method, presence: true
   validates :count, presence: true, inclusion: { in: [3,5] }
   validate  :check_status
+  validate  :check_interval
   before_destroy :can_destroy?
   after_create   :make_card_pending
 
@@ -85,6 +86,25 @@ class Order < ActiveRecord::Base
         "Невозможно изменить статус заказа на #{status}"
       return false
     end
+  end
+
+  def check_interval
+    if interval.blank?
+      self.errors[:interval] = I18n.t "activerecord.errors.message.blank"
+      return false
+    end
+    ms = /(?<b>\d+)-(?<e>\d+)/.match interval
+    unless ms && ms[:e] && ms[:b]
+      self.errors[:interval] = I18n.t "activerecord.errors.message.invalid"
+      return false
+    end
+    b = ms[:b].to_i
+    e = ms[:e].to_i
+    unless b < 24 && e < 24 && (ms[:e].to_i - ms[:b].to_i == 3)
+      self.errors[:interval] = "не более трёх часов"
+      return false
+    end
+    true
   end
 
   def make_card_pending

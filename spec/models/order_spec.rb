@@ -49,6 +49,20 @@ RSpec.describe Order, type: :model do
         .to be_truthy
       end
     end
+
+    describe '.interval' do
+      it 'fails when absent' do
+        expect(FactoryGirl.build(:order, interval: nil)).not_to be_valid
+      end
+      it 'fails with bad format' do
+        expect(FactoryGirl.build(:order, interval: 'asdaf')).not_to be_valid
+        expect(FactoryGirl.build(:order, interval: '0-13')).not_to be_valid
+        expect(FactoryGirl.build(:order, interval: '110-13')).not_to be_valid
+      end
+      it 'succeeds when matches pattern' do
+        expect(FactoryGirl.build(:order, interval: '10-13')).to be_valid
+      end
+    end
   end
 
   describe 'status change' do
