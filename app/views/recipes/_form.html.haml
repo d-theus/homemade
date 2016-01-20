@@ -10,6 +10,5 @@
   = f.input :cooking_time
   = f.input :day, label: 'Назначить день', as: :select, collection: [*1..5], selected: 1, placeholder: 'День'
   = f.association :inventory_items, as: :check_boxes
-  = f.input :description
   = f.input :photo
   = f.submit 'Готово', class: 'btn btn-primary btn-lg'

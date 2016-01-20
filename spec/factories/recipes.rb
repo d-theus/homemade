@@ -4,7 +4,6 @@ FactoryGirl.define do
     subtitle { 'dolor sit amet' }
     cooking_time 25
     calories 450
-    description { 'lipsum adlsfashdflk ad fjalksd fjlkasjd flkajs dkfljs kaj' }
     photo { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'meal-1.jpg'))}
 
     factory :recipe_with_inventory_items do
@@ -48,7 +47,6 @@ FactoryGirl.define do
       end
       sequence(:cooking_time) { 25 + rand(20) }
       sequence(:calories) { 400 + rand(200) }
-      description { 'lipsum adlsfashdflk ad fjalksd fjlkasjd flkajs dkfljs kaj' }
       sequence(:day)  { |n| n } 
       sequence(:photo) do |n|
         Rack::Test::UploadedFile.new(
