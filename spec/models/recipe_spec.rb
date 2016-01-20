@@ -95,6 +95,13 @@ RSpec.describe Recipe, type: :model do
         expect(recipe.destroy).to be_truthy
       end
     end
+
+    describe 'picture' do
+      it 'is required' do
+        recipe = FactoryGirl.build :recipe, picture: nil
+        expect(recipe).not_to be_valid
+      end
+    end
   end
 
   describe '#featured?' do

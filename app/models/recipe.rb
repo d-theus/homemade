@@ -9,10 +9,12 @@ class Recipe < ActiveRecord::Base
   validates :cooking_time, presence: true, inclusion: { within: 0..180 }
   validates :day, uniqueness: true, inclusion: { within: 1..5 }, allow_nil: true
   validates :photo, presence: true
+  validates :picture, presence: true
 
   scope :featured, ->{ where('day IN (1,2,3,4,5)') }
 
   mount_uploader :photo, RecipePhotoUploader
+  mount_uploader :picture, RecipePictureUploader
 
   def featured?
     !self.day.nil?

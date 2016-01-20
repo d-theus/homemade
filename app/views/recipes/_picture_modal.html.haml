@@ -1,0 +1,8 @@
+.modal.modal-xl.fade#picture_modal
+  .modal-dialog
+    .modal-content
+      .modal-body
+        %button.close(data-dismiss='modal') &times;
+        .row
+          .col-xs-12.no-gutter
+            %img.img-responsive{src: @recipe.picture}

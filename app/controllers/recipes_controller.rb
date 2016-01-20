@@ -52,7 +52,7 @@ class RecipesController < ApplicationController
     params.require(:recipe).permit(
       :title, :subtitle, :day,
       :calories, :cooking_time,
-      :photo
+      :photo, :picture
     )
   end
 
@@ -60,7 +60,7 @@ class RecipesController < ApplicationController
     params.require(:recipe).permit(
       :title, :subtitle, :day,
       :calories, :cooking_time,
-      :photo,
+      :photo, :picture,
       inventory_item_ids: []
     )
   end

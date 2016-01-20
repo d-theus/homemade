@@ -278,9 +278,10 @@ ru:
         calories: Калорийность
         cooking_time: Время приготовления
         day: День
-        description: Описание
         inventory_items: Для приготовления необходимо
         photo: Фото
+        picture: Картинка с рецептом
+
       inventory_item:
         name: Название
         image: Картинка

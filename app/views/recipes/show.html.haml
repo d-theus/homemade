@@ -40,3 +40,10 @@
                 - @recipe.inventory_items.each do |ii|
                   %li
                     = inventory_item_tag(ii)
+            %section
+              %h3 Как приготовить
+              %center
+                %button.btn.btn-primary{ type: :button, data: { toggle: 'modal', target: '#picture_modal' }}
+                  ПОКАЗАТЬ РЕЦЕПТ
+= render partial: 'picture_modal'
+
