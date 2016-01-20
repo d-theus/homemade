@@ -6,21 +6,5 @@
         .row
           .col-xs-12.col-xs-offset-0.col-sm-8.col-sm-offset-2
             %h2 Оформление заказа
-            = simple_form_for @order, html: { class: 'form-horizontal material' } do |f|
-              = f.input :count,
-                as: :select, collection: [5,3],
-                placeholder: t('activerecord.attributes.order.count')
-              = f.simple_fields_for :customer do |cf|
-                = cf.input :phone, default: '+7', input_html: { class: 'mask tel' }
-                = cf.input :name
-                = cf.input :address
-              = f.input :payment_method,
-                as: :select, collection: payment_methods,
-                placeholder: t('activerecord.attributes.order.payment_method')
-              %br/
-              .col-xs-12.text-right.lead
-                .btn-group
-                  = f.submit 'ГОТОВО', class: 'btn btn-lg btn-flat text-primary'
-                  = link_to 'ОТМЕНА', '', class: 'btn btn-lg text-muted btn-material', data: { dismiss: 'modal' }
+            = render partial: 'orders/form'
 
-= javascript_include_tag 'orders'
