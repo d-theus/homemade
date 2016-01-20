@@ -8,7 +8,9 @@
   = f.input :subtitle
   = f.input :calories
   = f.input :cooking_time
-  = f.input :day, label: 'Назначить день', as: :select, collection: [*1..5], selected: 1, placeholder: 'День'
+  = f.input :day, label: 'Назначить день',
+    as: :select, collection: options_for_day,
+    selected: 'нет', placeholder: 'День'
   = f.association :inventory_items, as: :check_boxes
   .form-group
     = f.label :photo
