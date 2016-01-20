@@ -23,7 +23,7 @@ module Homemade
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif *.woff *.ttf *.svg *.eot)
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
     config.assets.paths << "#{Rails}/vendor/assets/twitter/bootstrap/fonts"
-    config.assets.precompile += %w(landing.js weekly_menu_subscriptions.js)
+    config.assets.precompile += %w(landing.js weekly_menu_subscriptions.js recipes.js orders.js)
 
     config.filter_parameters += [:password, :data]
   end
