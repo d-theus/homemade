@@ -90,12 +90,15 @@ RSpec.describe Order, type: :model do
     it_behaves_like 'transition', from: :paid, to: :closed, with: :close, is: :not_ok
     it_behaves_like 'transition', from: :paid, to: :awaiting_refund, is: :ok
     it_behaves_like 'transition', from: :paid, to: :awaiting_delivery, is: :ok
+    it_behaves_like 'transition', from: :paid, to: :paid, with: :pay, is: :not_ok
 
     it_behaves_like 'transition', from: :awaiting_delivery, to: :closed, with: :close, is: :ok
     it_behaves_like 'transition', from: :awaiting_delivery, to: :cancelled, with: :cancel, is: :not_ok
 
     it_behaves_like 'transition', from: :awaiting_refund, to: :cancelled, with: :cancel, is: :ok
-    it_behaves_like 'transition', from: :awaiting_refund, to: :closed, with: :close, is: :false
+    it_behaves_like 'transition', from: :awaiting_refund, to: :closed, with: :close, is: :not_ok
+
+    it_behaves_like 'transition', from: :cancelled, to: :cancelled, with: :cancel, is: :not_ok
   end
 
   describe 'status quering:' do

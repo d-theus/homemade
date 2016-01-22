@@ -49,7 +49,7 @@ class Order < ActiveRecord::Base
 
   def can_change_status_to?(new_status)
     old_status = (id && self.class.find(id).status) || :nil
-    return true if old_status.to_s == new_status.to_s
+    return false if old_status.to_s == new_status.to_s
     STATUS_TABLE[old_status].include?(new_status.to_sym)
   end
 
