@@ -20,9 +20,9 @@
               %small #{recipe.calories} ккал.
   .card-description.col-xs-11.col-xs-offset-1
     .row
-      .col-xs-7
+      .col-xs-12.col-sm-7.lead
         Для приготовления понадобится:
-      .col-xs-5.text-center
+      .col-xs-12.col-sm-5.text-center
         - recipe.inventory_items.each do |ii|
           = inventory_item_tag ii
   .card-footer

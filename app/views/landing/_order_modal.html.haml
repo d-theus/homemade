@@ -4,7 +4,9 @@
       .modal-body
         %button.close(data-dismiss='modal') &times;
         .row
-          .col-xs-12.col-xs-offset-0.col-sm-8.col-sm-offset-2
+          %center.col-xs-12
             %h2 Оформление заказа
+        .row
+          .col-xs-12.col-xs-offset-0.col-sm-8.col-sm-offset-2
             = render partial: 'orders/form'
 

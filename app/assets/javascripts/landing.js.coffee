@@ -6,15 +6,19 @@ wait = (cb)->
       cb()
   , 1000
 
-updateCount = (val = Cookies.get('count'))->
+updateCount = (val = Cookies.get('count') || 5)->
   Cookies.set('count', val)
   recipes = $('[name="recipe"][data-day="4"],[name="recipe"][data-day="5"]')
   if Number(val) > 3
     recipes.each ->
       $(this).removeClass('fade')
     $('#why_disabled').hide()
+    $('#price_5').show()
+    $('#price_3').hide()
   else
     $('#why_disabled').show()
+    $('#price_5').hide()
+    $('#price_3').show()
     recipes.each ->
       $(this).addClass('fade')
   $('.order_count input[type="radio"][value=' + val + ']')
@@ -22,6 +26,7 @@ updateCount = (val = Cookies.get('count'))->
 
 window.Ui.ready ->
   wait ->
+    updateCount()
     $('#count input[type="radio"][name="count"]').each ->
       $(this).on 'change', ->
         updateCount($(this).val())
