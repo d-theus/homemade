@@ -15,10 +15,9 @@
 
 
   %body
-    %header.header-app.sticky
+    %header.header-app.sticky{ class: controller_name != 'landing' && 'fixed' }
       = render partial: 'shared/header'
-    
-    - unless admin?
+    - unless admin? || controller_name != 'landing'
       %header.header-abs
         %a(href='tel:+7499112233')
           %i.fa.fa-fw.fa-phone
