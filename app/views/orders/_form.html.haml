@@ -1,19 +1,49 @@
 = simple_form_for @order, html: { class: 'form-horizontal material' } do |f|
-  = f.input :count,
-    as: :select, collection: [5,3],
-    placeholder: t('activerecord.attributes.order.count')
+  .row
+    .col-xs-2.text-center
+      %br/
+      %i.fa.fa-fw.fa-lg.fa-archive
+    .col-xs-5
+      = f.input :count,
+        as: :select, collection: [5,3],
+        placeholder: t('activerecord.attributes.order.count')
 
   = f.simple_fields_for @customer do |cf|
-    = cf.input :phone, default: '+7', input_html: { class: 'mask tel' }
-    = cf.input :name
-    = cf.input :address
+    .row
+      .col-xs-2.text-center
+        %br/
+        %i.fa.fa-fw.fa-lg.fa-phone
+      .col-xs-10
+        = cf.input :phone, default: '+7', input_html: { class: 'mask tel' }
+    .row
+      .col-xs-2.text-center
+        %br/
+        %i.fa.fa-fw.fa-lg.fa-user
+      .col-xs-10
+        = cf.input :name
+    .row
+      .col-xs-2.text-center
+        %br/
+        %i.fa.fa-fw.fa-lg.fa-map-marker
+      .col-xs-10
+        = cf.input :address
 
-  = f.input :interval,
-    as: :select, collection: intervals,
-    placeholder: t('activerecord.attributes.order.interval')
-  = f.input :payment_method,
-    as: :select, collection: payment_methods,
-    placeholder: t('activerecord.attributes.order.payment_method')
+  .row
+    .col-xs-2.text-center
+      %br/
+      %i.fa.fa-fw.fa-lg.fa-clock-o
+    .col-xs-10
+      = f.input :interval,
+        as: :select, collection: intervals,
+        placeholder: t('activerecord.attributes.order.interval')
+  .row
+    .col-xs-2.text-center
+      %br/
+      %i.fa.fa-fw.fa-lg.fa-money
+    .col-xs-10
+      = f.input :payment_method,
+        as: :select, collection: payment_methods,
+        placeholder: t('activerecord.attributes.order.payment_method')
   - if admin?
     = f.input :by_phone, input_html: { checked: true }, label: 'совершён через телефонный звонок'
   %br/
