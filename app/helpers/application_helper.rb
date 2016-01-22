@@ -49,10 +49,10 @@ module ApplicationHelper
   end
 
   def phone_number(number)
-    country = number[0..1]
-    code = number[2..4]
-    num1  = number[5..7]
-    num2  = number[8..11]
-    "#{country} (#{code}) #{num1} #{num2}"
+    country = number[0]
+    code = number[1..3]
+    num1  = number[4..6]
+    num2  = number[7..10]
+    "+#{country} (#{code}) #{num1} #{num2}"
   end
 end
