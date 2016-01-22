@@ -1,0 +1,2 @@
+module Recipes::FeaturedHelper
+end

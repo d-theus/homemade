@@ -1,13 +1,14 @@
 .row
-  .col-xs-6.col-xs-offset-1
+  .col-xs-4.col-xs-offset-1
     %h1 Архив рецептов
-  .col-xs-5
+  .col-xs-7
+    %br/
     %ul.nav.nav-pills
       %li
-        %a.btn.btn-flat{href: new_recipe_path, title: "добавить", name: 'new'}
-          ДОБАВИТЬ РЕЦЕПТ
+        %a.btn.btn-flat{href: new_recipe_path, title: "создать рецепт", name: 'new'}
+          СОЗДАТЬ РЕЦЕПТ
       %li
-        %a.btn.btn-flat.text-danger#clear_featured_recipes{href: featured_recipes_path, title: "добавить", data: { remote: true, method: :delete, confirm: 'Переместить рецепты с главной страницы в архив?'}}
+        %a.btn.btn-flat.text-danger#clear_featured_recipes{href: recipes_featured_path, title: "добавить", data: { remote: true, method: :delete, format: :json, confirm: 'Переместить рецепты с главной страницы в архив?'}}
           УБРАТЬ РЕЦЕПТЫ ИЗ МЕНЮ
   .col-xs-6.col-xs-offset-0.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
     %table.table#recipes

@@ -1,4 +1,4 @@
-class FeaturedRecipesController < ApplicationController
+class Recipes::FeaturedController < ApplicationController
   before_action :authenticate_or_forbid, except: [:index]
   respond_to :json
 
