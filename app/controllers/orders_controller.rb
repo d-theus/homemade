@@ -20,11 +20,10 @@ class OrdersController < ApplicationController
       @order.save!
     end
 
-  redirect_to received_order_path
-
-  rescue 
-    if @customer.errors.any?
-      flash.now[:alert] = 'Не удалось создать запись о клиенте'
+    if admin_signed_in?
+      redirect_to orders_path
+    else
+      redirect_to received_order_path
     end
 
     unless @order.persisted?
@@ -37,30 +36,30 @@ class OrdersController < ApplicationController
   def cancel
     if @order.cancel
       flash.now[:notice] = "Заказ №#{@order.id} отменен"
-      render :index, status: :ok
+      redirect_to orders_path
     else
       flash.now[:alert] = "Нельзя отменить заказ №#{@order.id}"
-      render :index, status: :unprocessable_entity
+      redirect_to orders_path, status: :unprocessable_entity
     end
   end
 
   def close
     if @order.close
       flash.now[:notice] = "Заказ №#{@order.id} завершен"
-      render :index, status: :ok
+      redirect_to orders_path
     else
       flash.now[:alert] = "Нельзя завершить заказ №#{@order.id}"
-      render :index, status: :unprocessable_entity
+      redirect_to orders_path, status: :unprocessable_entity
     end
   end
 
   def pay
     if @order.pay
       flash.now[:notice] = "Заказ №#{@order.id} завершен"
-      render :index, status: :ok
+      redirect_to orders_path
     else
       flash.now[:alert] = "Нельзя заплатить за заказ №#{@order.id}"
-      render :index, status: :unprocessable_entity
+      redirect_to orders_path, status: :unprocessable_entity
     end
   end
 
