@@ -20,10 +20,12 @@
             - if admin?
               .col-xs-1.text-inverse
                 %br/
-                %a.btn.pull-right{href: edit_recipe_path(@recipe)}
+                %a.btn.pull-right{href: recipes_path, title: 'Архив рецептов'}
+                  %i.fa.fa-fw.fa-lg.fa-list
+                %a.btn.pull-right{href: edit_recipe_path(@recipe), title: 'Редактировать'}
                   %i.fa.fa-fw.fa-lg.fa-edit
-                %a.btn.pull-right{href: recipe_path(@recipe), data: { method: :delete, confirm: 'Удалить рецепт?'}}
-                  %i.fa.fa-fw.fa-lg.fa-trash
+                %a.btn.pull-right{href: recipe_path(@recipe), title: 'Удалить', data: { method: :delete, confirm: 'Удалить рецепт?'}}
+                  %i.fa.fa-fw.fa-lg.fa-times
             %br/
             .row.lead
               %center.col-xs-5.col-xs-offset-1
