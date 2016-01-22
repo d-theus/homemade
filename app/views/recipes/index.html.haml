@@ -4,13 +4,17 @@
   .col-xs-5
     %ul.nav.nav-pills
       %li
-        %a{href: new_recipe_path, title: "добавить", name: 'new'}
+        %a.btn.btn-flat{href: new_recipe_path, title: "добавить", name: 'new'}
           ДОБАВИТЬ РЕЦЕПТ
+      %li
+        %a.btn.btn-flat.text-danger#clear_featured_recipes{href: featured_recipes_path, title: "добавить", data: { remote: true, method: :delete, confirm: 'Переместить рецепты с главной страницы в архив?'}}
+          УБРАТЬ РЕЦЕПТЫ ИЗ МЕНЮ
   .col-xs-6.col-xs-offset-0.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
     %table.table#recipes
       %thead
         %tr
           %th Название
+          %th День
           %th Создан
           %th Управление
       %tbody
@@ -19,6 +23,8 @@
             %td
               %a{href: recipe_path(recipe)}= recipe.title
               %small.text-muted= recipe.subtitle
+            %td
+              = recipe.day || "-"
             %td= l recipe.created_at, format: :long
             %td
               %a.btn.text-info{href: edit_recipe_path(recipe), name: 'edit', title: "изменить"}

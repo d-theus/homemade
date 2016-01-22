@@ -2,10 +2,15 @@
   = f.input :count,
     as: :select, collection: [5,3],
     placeholder: t('activerecord.attributes.order.count')
-  = f.simple_fields_for :customer do |cf|
+
+  = f.simple_fields_for @customer do |cf|
     = cf.input :phone, default: '+7', input_html: { class: 'mask tel' }
     = cf.input :name
     = cf.input :address
+
+  = f.input :interval,
+    as: :select, collection: intervals,
+    placeholder: t('activerecord.attributes.order.interval')
   = f.input :payment_method,
     as: :select, collection: payment_methods,
     placeholder: t('activerecord.attributes.order.payment_method')

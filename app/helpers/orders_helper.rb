@@ -16,4 +16,8 @@ module OrdersHelper
       ]
     end
   end
+
+  def intervals
+    [*8..20].map { |st| ["#{st}:00 ― #{st+3}:00", "#{st}-#{st+3}"] }
+  end
 end

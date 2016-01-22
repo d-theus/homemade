@@ -3,16 +3,23 @@ class OrdersController < ApplicationController
   before_action :fetch_order, only: [:cancel, :close, :pay, :destroy]
 
   def new
-    @order = Order.new
+    @customer = Customer.new
+    @order = @customer.orders.build
   end
 
   def create
-    @customer = if customer_id
-                  Customer.find(customer_id)
-                else
-                  Customer.new(customer_params)
-                end
-    @order = Order.new(order_params)
+    @order = Order.new(order_params.except(:customer))
+    @customer = Customer.find_by_phone(order_params.require(:customer)[:phone]) || Customer.new(order_params[:customer])
+    if @customer.persisted? && @customer.name != order_params.require(:customer)[:name]
+      @customer.name = nil
+      @customer.address = nil
+      flash.now[:alert] = 'Найден такой телефон, но пара "телефон - имя" не совпадает. '
+      render :new, status: :unprocessable_entity
+      return
+    end
+    if @customer.persisted? && @customer.name == order_params.require(:customer)[:name] && order_params.require(:customer)[:address]
+      @customer.address = order_params.require(:customer)[:address]
+    end
 
     Order.transaction do
       @customer.save!
@@ -26,11 +33,13 @@ class OrdersController < ApplicationController
       redirect_to received_order_path
     end
 
-    unless @order.persisted?
-      flash.now[:alert] = 'Заказ не создан'
+  rescue
+    if @customer.errors.any?
+      flash.now[:alert] = 'Не удалось создать запись о клиенте. '
+    elsif @order.errors.any?
+      flash.now[:alert] = "Заказ не создан. #{@order.errors.full_messages}"
     end
     render :new, status: :unprocessable_entity
-    return
   end
 
   def cancel

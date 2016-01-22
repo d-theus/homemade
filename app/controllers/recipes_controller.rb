@@ -11,22 +11,47 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = Recipe.new(new_recipe_params)
-    if @recipe.save && @recipe.update(inventory_item_ids: params[:recipe][:inventory_item_ids])
+    @recipe = Recipe.new(recipe_params.except(:inventory_item_ids))
+    success = nil
+    begin
+      Recipe.transaction do
+        @recipe.save!
+        @recipe.update!(inventory_item_ids: recipe_params[:inventory_item_ids])
+        success = true
+      end
       redirect_to recipe_path(@recipe)
-    else
+    rescue
+      success = false
+    end
+
+
+    unless success
       flash.now[:alert] = 'flash.create.alert'
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    if @recipe.update(update_recipe_params)
-      flash.now[:notice] = 'flash.update.notice'
-      redirect_to recipe_path(@recipe)
+    if @recipe.update(recipe_params)
+      respond_to do |f|
+        f.html do
+          flash.now[:notice] = 'flash.update.notice'
+          redirect_to recipe_path(@recipe)
+        end
+        f.json do
+          render nothing: true, status: :ok
+        end
+      end
     else
-      flash.now[:alert] = 'flash.update.alert'
-      render :edit, status: :unprocessable_entity
+      respond_to do |f|
+        f.html do
+          flash.now[:alert] = 'flash.update.alert'
+          render :edit, status: :unprocessable_entity
+        end
+        f.json do
+          render json: { message: @recipe.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
     end
   end
 
@@ -48,15 +73,7 @@ class RecipesController < ApplicationController
 
   private
 
-  def new_recipe_params
-    params.require(:recipe).permit(
-      :title, :subtitle, :day,
-      :calories, :cooking_time,
-      :photo, :picture
-    )
-  end
-
-  def update_recipe_params
+  def recipe_params
     params.require(:recipe).permit(
       :title, :subtitle, :day,
       :calories, :cooking_time,

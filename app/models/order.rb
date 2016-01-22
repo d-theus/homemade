@@ -90,12 +90,12 @@ class Order < ActiveRecord::Base
 
   def check_interval
     if interval.blank?
-      self.errors[:interval] = I18n.t "activerecord.errors.message.blank"
+      self.errors[:interval] = I18n.t "errors.messages.blank"
       return false
     end
     ms = /(?<b>\d+)-(?<e>\d+)/.match interval
     unless ms && ms[:e] && ms[:b]
-      self.errors[:interval] = I18n.t "activerecord.errors.message.invalid"
+      self.errors[:interval] = I18n.t "errors.messages.invalid"
       return false
     end
     b = ms[:b].to_i
@@ -109,8 +109,9 @@ class Order < ActiveRecord::Base
 
   def make_card_pending
     if self.payment_method == 'card'
-      self.status = 'pending'
+      self.update(status: 'pending')
+    else
+      true
     end
-    true
   end
 end
