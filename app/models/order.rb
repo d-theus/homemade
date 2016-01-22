@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  belongs_to :customer
+  belongs_to :customer, autosave: true
 
   STATUS_TABLE = {
     :nil => [ :new ],

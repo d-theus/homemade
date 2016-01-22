@@ -94,23 +94,17 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
-      :payment_method,
-      :interval,
-      :state, :count
+      :payment_method, :interval,
+      :state, :count, :by_phone,
+      customer: [ :name, :phone, :address ]
     )
   end
 
-  def customer_params
-    params.require(:order).fetch(:customer, {}).permit(
-      :name, :phone, :address
-      )
-  end
-
-  def customer_id
-    params.fetch(:order, {})
-    .fetch(:customer, {})
-    .fetch(:id, nil)
-  end
+  #def customer_params
+    #params.require(:order).fetch(:customer, {}).permit(
+      #:name, :phone, :address
+      #)
+  #end
 
   def order_id
     params.require(:id)
