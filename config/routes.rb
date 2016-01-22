@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'recipes/featured', controller: :featured_recipes, action: :index, format: :json
+  get 'recipes/featured', controller: :featured_recipes, action: :index, format: :json, as: :featured_recipes
+  delete 'recipes/featured', controller: :featured_recipes, action: :destroy, format: :json
   resources :recipes
   resources :inventory_items, defaults: { format: :json}
   get 'orders/received', controller: :orders, action: :received, as: :received_order
