@@ -14,18 +14,19 @@
       .col-xs-12.col-sm-5.no-gutter
         .row
           .col-xs-12.bg-primary
-            .col-xs-9.col-sm-10.col-xs-offset-2.col-sm-offset-1
-              %h1= @recipe.title
-              %h2= @recipe.subtitle
-            - if admin?
-              .col-xs-1.text-inverse
-                %br/
-                %a.btn.pull-right{href: recipes_path, title: 'Архив рецептов'}
-                  %i.fa.fa-fw.fa-lg.fa-list
-                %a.btn.pull-right{href: edit_recipe_path(@recipe), title: 'Редактировать'}
-                  %i.fa.fa-fw.fa-lg.fa-edit
-                %a.btn.pull-right{href: recipe_path(@recipe), title: 'Удалить', data: { method: :delete, confirm: 'Удалить рецепт?'}}
-                  %i.fa.fa-fw.fa-lg.fa-times
+            .row
+              .col-xs-9.col-sm-9.col-xs-offset-2.col-sm-offset-1
+                %h1= @recipe.title
+                %h2= @recipe.subtitle
+              - if admin?
+                %center.col-md-1.col-sm-12.text-inverse
+                  %br/
+                  %a.btn{href: recipes_path, title: 'Архив рецептов'}
+                    %i.fa.fa-fw.fa-lg.fa-list
+                  %a.btn{href: edit_recipe_path(@recipe), title: 'Редактировать'}
+                    %i.fa.fa-fw.fa-lg.fa-edit
+                  %a.btn{href: recipe_path(@recipe), title: 'Удалить', data: { method: :delete, confirm: 'Удалить рецепт?'}}
+                    %i.fa.fa-fw.fa-lg.fa-times
             %br/
             .row.lead
               %center.col-xs-5.col-xs-offset-1
@@ -38,14 +39,14 @@
           .col-xs-11.col-xs-offset-1.col-sm-12.col-sm-offset-0
             %section
               %h3 Для приготовления понадобится
-              %ul.list-inline.text-center
+              %ul.list-group
                 - @recipe.inventory_items.each do |ii|
-                  %li
+                  %li.list-group-item
                     = inventory_item_tag(ii)
+                    %span.lead &nbsp;&nbsp;#{ii.name}
             %section
               %h3 Как приготовить
-              %center
-                %button.btn.btn-primary{ type: :button, data: { toggle: 'modal', target: '#picture_modal' }}
-                  ПОКАЗАТЬ РЕЦЕПТ
+              %button.btn.btn-primary{ type: :button, data: { toggle: 'modal', target: '#picture_modal' }}
+                ПОКАЗАТЬ РЕЦЕПТ
 = render partial: 'picture_modal'
 
