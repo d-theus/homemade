@@ -18,8 +18,11 @@ namespace :docker do
           execute :docker, "run --name #{fetch :rails}-tmp -it --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec rake db:migrate"
           execute :docker, "commit #{fetch :rails}-tmp #{fetch :rails}"
           execute :docker, "rm #{fetch :rails}-tmp || true"
-          for i in 1..fetch(:serv_count)
-            execute :docker, "run --name #{fetch :rails}#{i} -d --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec bundle exec rails server"
+          for i in fetch(:http_backends)
+            execute :docker, "run --name #{fetch :rails}#{i} -d --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec bundle exec #{fetch :backend} start"
+          end
+          for i in fetch(:https_backends)
+            execute :docker, "run --name #{fetch :rails}#{i} -d --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec bundle exec #{fetch :backend} start --ssl"
           end
         end
       end
@@ -27,7 +30,7 @@ namespace :docker do
 
     task :clear => :stop do
       on roles :app do
-        for i in 1..fetch(:serv_count)
+        for i in 1..fetch(:backends_count)
           execute :docker, "rm -f #{fetch :rails}#{i} || true"
         end
 
@@ -37,7 +40,7 @@ namespace :docker do
 
     task :start do
       on roles :app do
-        for i in 1..fetch(:serv_count)
+        for i in 1..fetch(:backends_count)
           execute :docker, "start #{fetch :rails}#{i}"
         end
       end
@@ -45,7 +48,7 @@ namespace :docker do
 
     task :stop do
       on roles :app do
-        for i in 1..fetch(:serv_count)
+        for i in 1..fetch(:backends_count)
           execute %Q(
           if [ $(docker ps --filter="name=#{fetch :rails}" -q) ]
             then docker stop #{fetch :rails}
@@ -58,7 +61,7 @@ namespace :docker do
   namespace :proxy do
     task :setup do
       on roles :app do
-        execute :docker, "run -d --name #{fetch :proxy} #{fetch :proxy_links} #{fetch :volumes} -p 80:80 #{fetch :proxy}"
+        execute :docker, "run -d --name #{fetch :proxy} #{fetch :proxy_links} #{fetch :volumes} -p 80:80 -p 443:443 #{fetch :proxy}"
       end
     end
 

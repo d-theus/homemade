@@ -25,14 +25,17 @@ set :pty, true
 namespace :docker do
   set :user, 'dtheus'
   set :proxy, 'nginx'
+  set :backend, 'thin'
   set :public, 'public'
   set :uploads, 'uploads'
   set :rails, 'rails'
   set :db, 'postgres'
   set :uploads_path, '/home/web/app/public/uploads'
-  set :proxy_links, -> { [*1..fetch(:serv_count)].reduce('') { |acc,i| acc += " --link #{fetch :rails}#{i}"; acc } }
+  set :proxy_links, -> { (fetch(:http_backends) + fetch(:https_backends)).reduce('') { |acc,i| acc += " --link #{fetch :rails}#{i}"; acc } }
   set :volumes, "--volumes-from #{fetch :uploads} --volumes-from #{fetch :public}"
-  set :serv_count, 3
+  set :http_backends, [1,2]
+  set :https_backends, [3]
+  set :backends_count, ->{ fetch(:http_backends).count + fetch(:https_backends).count }
 end
 
 
