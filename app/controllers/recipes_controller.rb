@@ -26,7 +26,7 @@ class RecipesController < ApplicationController
 
 
     unless success
-      flash.now[:alert] = 'flash.create.alert'
+      flash.now[:alert] = t 'flash.create.alert'
       render :new, status: :unprocessable_entity
     end
   end
@@ -35,7 +35,7 @@ class RecipesController < ApplicationController
     if @recipe.update(recipe_params)
       respond_to do |f|
         f.html do
-          flash.now[:notice] = 'flash.update.notice'
+          flash.now[:notice] = t 'flash.update.notice'
           redirect_to recipe_path(@recipe)
         end
         f.json do
@@ -45,7 +45,7 @@ class RecipesController < ApplicationController
     else
       respond_to do |f|
         f.html do
-          flash.now[:alert] = 'flash.update.alert'
+          flash.now[:alert] = t 'flash.update.alert'
           render :edit, status: :unprocessable_entity
         end
         f.json do

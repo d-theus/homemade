@@ -1,7 +1,5 @@
-- if notice
-  %p.alert.alert-success= I18n.t notice
 - if alert
-  %p.alert.alert-danger= I18n.t alert
+  %p.alert.alert-danger= alert
 
 = simple_form_for @recipe, html: { class: 'form-horizontal material' } do |f|
   = f.input :title

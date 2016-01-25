@@ -1,3 +1,7 @@
+.row
+  - if alert 
+    %center.row
+      %p.alert.alert-danger= alert
 = simple_form_for @order, html: { class: 'form-horizontal material' } do |f|
   .row
     .col-xs-2.text-center
