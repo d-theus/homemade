@@ -295,6 +295,10 @@ ru:
         payment_method: Способ оплаты
         by_phone: По телефону
         interval: Интервал доставки
+      contact:
+        email: Эл. Почта
+        topic: Тема
+        text: Текст
     values:
       order:
         payment_method:

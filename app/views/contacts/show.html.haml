@@ -1,0 +1,12 @@
+.row
+  .col-xs-12.col-lg-9.col-lg-offset-2
+    %h1 Сообщение
+    %h2= @contact.topic
+.row
+  .col-xs-12.col-lg-7.col-lg-offset-2
+    %pre= @contact.text
+.row
+  %center.col-xs-12.col-lg-9.col-lg-offset-1
+    %small= @contact.email
+    %br/
+    %a.btn.btn-flat.btn-lg.text-primary{href: "mailto:#{@contact.email}"} ОТВЕТИТЬ

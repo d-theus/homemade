@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   resources :orders, only: [:new, :create, :index, :destroy]
   get 'weekly_menu_subscriptions/unsubscribed', controller: :weekly_menu_subscriptions, action: :unsubscribed
   resources :weekly_menu_subscriptions, only: [:create, :destroy], defaults: { format: :json }
+  resources :contacts, except: [:edit, :update] do
+    put :read, action: :read, as: :read, on: :member
+  end
   devise_for :admins
   root to: 'landing#index'
 end

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   force_ssl if Rails.env.production?
+  before_action :fetch_unread_count
 
   protected
 
@@ -11,6 +12,12 @@ class ApplicationController < ActionController::Base
       true
     else
       render json: { status: :forbidden }, status: 403
+    end
+  end
+
+  def fetch_unread_count
+    if current_admin
+      @unread_messages = Contact.where(unread: true).count
     end
   end
 end

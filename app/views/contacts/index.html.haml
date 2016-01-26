@@ -1,0 +1,29 @@
+.row
+  .col-xs-9.col-xs-offset-1
+    %h1 Сообщения обратной связи
+    %table.table#contacts
+      %thead
+        %tr
+          %th Получено
+          %th Тема
+          %th Отрывок
+          %th Действия
+      %tbody
+        - @contacts.each do |contact|
+          %tr{class: ('info' if contact.unread?) }
+            %td= l(contact.created_at, format: :short)
+            %td= contact.topic
+            %td= contact.text.truncate 20
+            %td
+              %a.btn.btn-flat{title: 'Просмотр', href: contact_path(contact)}
+                %i.fa.fa-fw.fa-eye
+              %a.btn.btn-flat{title: "Отметить как прочитанное", href: read_contact_path(contact), 'data-method' => :put}
+                %i.fa.fa-fw.fa-check
+              %a.btn.btn-flat{title: "Ответить", href: "mailto:#{contact.email}"}
+                %i.fa.fa-fw.fa-reply
+              %a.btn.btn-flat.text-danger{title: "Удалить", href: contact_path(contact), data: { method: :delete, confirm: 'Удалить сообщение?'}}
+                %i.fa.fa-fw.fa-times
+
+    = will_paginate @contacts, renderer: BootstrapPagination::Rails
+
+- content_for(:title) { 'Сообщения обратной связи' }
