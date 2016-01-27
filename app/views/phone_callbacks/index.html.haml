@@ -1,0 +1,25 @@
+.row
+  .col-xs-9.col-xs-offset-1
+    %h1 Сообщения обратной связи
+    %table.table#callbacks
+      %thead
+        %tr
+          %th Получено
+          %th Имя
+          %th Телефон
+          %th Действия
+      %tbody
+        - @callbacks.each do |callback|
+          %tr{class: ('info' if callback.pending?) }
+            %td= l(callback.created_at, format: :short)
+            %td= callback.name
+            %td= callback.phone
+            %td
+              %a.btn.btn-flat{title: "Отметить как исполненный", href: close_phone_callback_path(callback), 'data-method' => :put}
+                %i.fa.fa-fw.fa-check
+              %a.btn.btn-flat.text-danger{title: "Удалить", href: phone_callback_path(callback), data: { method: :delete, confirm: 'Удалить сообщение?'}}
+                %i.fa.fa-fw.fa-times
+
+    = will_paginate @callbacks, renderer: BootstrapPagination::Rails
+
+- content_for(:title) { 'Сообщения обратной связи' }

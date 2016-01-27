@@ -20,6 +20,9 @@ InputMask = {
       field.focusout ->
         if field.val() == '+7 ('
           field.val('')
+
+    field.closest('form').on 'submit', ->
+      field.unmask()
 }
 
 window.Ui.register InputMask

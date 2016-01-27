@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126081904) do
+ActiveRecord::Schema.define(version: 20160127082739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,16 +40,34 @@ ActiveRecord::Schema.define(version: 20160126081904) do
     t.datetime "updated_at"
   end
 
+  create_table "customer_addresses", force: true do |t|
+    t.integer "customer_id", null: false
+    t.string  "address",     null: false
+  end
+
+  create_table "customer_pins", force: true do |t|
+    t.string   "token"
+    t.string   "phone",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customer_pins", ["phone"], name: "index_customer_pins_on_phone", unique: true, using: :btree
+
   create_table "customers", force: true do |t|
     t.string   "name",       null: false
     t.string   "phone",      null: false
-    t.string   "address",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
   end
 
   add_index "customers", ["phone"], name: "index_customers_on_phone", unique: true, using: :btree
+
+  create_table "customers_addresses", force: true do |t|
+    t.integer "customer_id", null: false
+    t.string  "address"
+  end
 
   create_table "inventory_items", force: true do |t|
     t.string   "name"
@@ -72,6 +90,14 @@ ActiveRecord::Schema.define(version: 20160126081904) do
     t.datetime "updated_at"
     t.boolean  "by_phone"
     t.string   "interval"
+  end
+
+  create_table "phone_callbacks", force: true do |t|
+    t.string   "phone"
+    t.string   "name"
+    t.boolean  "pending",    default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "recipes", force: true do |t|

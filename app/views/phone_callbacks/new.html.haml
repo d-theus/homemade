@@ -1,0 +1,26 @@
+.row
+  .col-xs-10.col-xs-offset-1.col-sm-8.col-sm-offset-2
+    %center.row
+      %h1 Заказать обратный звонок
+.row
+  .col-xs-6.col-xs-offset-3
+    .row
+      - if alert 
+        %center.row
+          %p.alert.alert-danger= alert
+    = simple_form_for @callback, html: { class: 'form-horizontal material' } do |f|
+      .row
+        .col-xs-2.col-xs-offset-2.text-center
+          %br/
+          %i.fa.fa-fw.fa-lg.fa-user
+        .col-xs-5
+          = f.input :name
+      .row
+        .col-xs-2.col-xs-offset-2.text-center
+          %br/
+          %i.fa.fa-fw.fa-lg.fa-phone
+        .col-xs-5
+          = f.input :phone, input_html: { class: 'mask tel' }
+      .row
+        %center.col-xs-12
+          = f.submit 'ЗАКАЗАТЬ ОБРАТНЫЙ ЗВОНОК', class: 'btn btn-lg btn-flat text-primary'

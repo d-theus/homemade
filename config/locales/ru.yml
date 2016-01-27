@@ -299,6 +299,9 @@ ru:
         email: Эл. Почта
         topic: Тема
         text: Текст
+      phone_callback:
+        name: Имя
+        phone: Телефон
     values:
       order:
         payment_method:

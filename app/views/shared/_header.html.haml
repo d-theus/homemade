@@ -41,5 +41,10 @@
             %sup
               %strong.small= @unread_messages
         %li
+          %a{href: phone_callbacks_path, title: 'Сообщения обратной связи'}
+            Перезвонить
+            %sup
+              %strong.small= @pending_callbacks
+        %li
           %a{href: destroy_admin_session_path, data: { method: :delete } }
             Выйти

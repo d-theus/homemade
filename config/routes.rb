@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   resources :contacts, except: [:edit, :update] do
     put :read, action: :read, as: :read, on: :member
   end
+  resources :phone_callbacks, except: [:show, :edit, :update] do
+    put :close, action: :close, as: :close, on: :member
+  end
   devise_for :admins
   root to: 'landing#index'
 end

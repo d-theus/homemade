@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   force_ssl if Rails.env.production?
   before_action :fetch_unread_count
+  before_action :fetch_pending_callbacks_count
 
   protected
 
@@ -18,6 +19,12 @@ class ApplicationController < ActionController::Base
   def fetch_unread_count
     if current_admin
       @unread_messages = Contact.where(unread: true).count
+    end
+  end
+
+  def fetch_pending_callbacks_count
+    if current_admin
+      @pending_callbacks = PhoneCallback.where(pending: true).count
     end
   end
 end
