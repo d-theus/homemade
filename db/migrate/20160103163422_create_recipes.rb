@@ -5,9 +5,13 @@ class CreateRecipes < ActiveRecord::Migration
       t.string :subtitle
       t.integer :cooking_time
       t.integer :calories
-      t.text :description
+      t.string :photo
+      t.string :picture
+      t.integer :day, default: nil, limit: 1
 
       t.timestamps
     end
+
+    add_index  :recipes, :day, unique: true
   end
 end

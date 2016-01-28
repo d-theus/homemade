@@ -1,18 +1,60 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  before(:all) { Customer.delete_all && FactoryGirl.create(:customer) }
+  let!(:factory) { :order }
 
-  describe 'attribute validation of' do
-    describe '.customer' do
-      it 'fails without customer' do
-        expect(FactoryGirl.build(:order, customer: nil).valid?)
-        .to be_falsy
+  shared_context 'required attr' do
+    it 'is invalid when nil' do
+      expect(FactoryGirl.build(factory, param => nil)).not_to be_valid
+    end
+  end
+  shared_context 'no-blank attr' do
+    it 'is invalid when blank' do
+      expect(FactoryGirl.build(factory, param => '')).not_to be_valid
+    end
+  end
+  shared_context 'formatted attr' do |opts|
+    it 'is invalid with bad format' do
+      opts[:bad].each do |bad|
+        expect(FactoryGirl.build(factory, param => bad)).not_to be_valid
       end
-      it 'passes with existent customer' do
-        expect(FactoryGirl.build(:order, customer: Customer.first).valid?)
-        .to be_truthy
+    end
+    it 'is valid with good format' do
+      opts[:good].each do |good|
+        expect(FactoryGirl.build(factory, param => good)).to be_valid
       end
+    end
+  end
+
+  describe 'validations:' do
+    describe 'name' do
+      let!(:param) { :name }
+
+      it_behaves_like 'required attr'
+      it_behaves_like 'no-blank attr'
+      it_behaves_like 'formatted attr',
+        good: %w(name namename somename),
+        bad: [ "a"*100 , "c" ]
+    end
+
+    describe 'phone' do
+      let!(:param) { :phone }
+
+      it_behaves_like 'required attr'
+      it_behaves_like 'no-blank attr'
+      it_behaves_like 'formatted attr',
+        good: %w(71112223344 74440000000),
+        bad: [ "a"*100 , "c", "9261112233", "81112223344" ]
+    end
+
+    describe 'address' do
+      let!(:param) { :address }
+
+      it_behaves_like 'required attr'
+      it_behaves_like 'no-blank attr'
+      it_behaves_like 'formatted attr',
+        good: [ "улица Просвещения дом 20 квартира 45"],
+        bad: [ "a"*300 , "c" ]
     end
 
     describe '.payment_method' do
@@ -67,43 +109,124 @@ RSpec.describe Order, type: :model do
 
   describe 'status change' do
     shared_examples "transition" do |param|
-      let(:rec) { ord = FactoryGirl.build(:order, status: param[:from].to_s);ord.save(validate: false);ord }
+      let(:rec) do
+        ord = FactoryGirl.build(:order)
+        ord.save(validate: false)
+        ord = Order.find(ord.id)
+        ord.status = param[:from].to_s
+        ord.save(validate: false)
+        ord
+      end
+
       it "#{param[:from]} -> #{param[:to]} is #{param[:is]}" do
+        expect(rec.status).to eq(param[:from].to_s)
         expect(rec.can_change_status_to?(param[:to].to_s)).to (param[:is] == :ok ? be_truthy : be_falsy)
         if param[:with_method]
           expect(rec.send(param[:with_method])).to (param[:is] == :ok ? be_truthy : be_falsy)
+          expect { rec.send(param[:with_method]) }.send(
+            param[:is] == :ok ? :to : :not_to, change(rec, :status).from(param[:from].to_s))
         end
       end
     end
 
-    it_behaves_like 'transition', from: :new, to: :paid, with: :pay, is: :not_ok
-    it_behaves_like 'transition', from: :new, to: :cancelled, with: :cancel, is: :ok
-    it_behaves_like 'transition', from: :new, to: :closed, with: :close, is: :not_ok
-    it_behaves_like 'transition', from: :new, to: :pending, is: :ok
+    shared_examples 'transition_method' do |param|
+      let(:rec) do
+        ord = FactoryGirl.build(:order)
+        ord.save(validate: false)
+        ord = Order.find(ord.id)
+        ord.status = param[:initial].to_s
+        ord.save(validate: false)
+        ord
+      end
 
-    it_behaves_like 'transition', from: :pending, to: :paid, with: :pay, is: :ok
-    it_behaves_like 'transition', from: :pending, to: :cancelled, with: :cancel, is: :ok
-    it_behaves_like 'transition', from: :pending, to: :closed, with: :close, is: :not_ok
-    it_behaves_like 'transition', from: :pending, to: :awaiting_delivery, is: :not_ok
+      context "w/ initial state = #{param[:initial]}" do
+        it "returns #{param[:is] == :ok ? :true : :false}" do
+          fail ':method_name is to be defined' unless defined? method_name
+          fail ':is parameter is to be defined' unless param[:is]
 
-    it_behaves_like 'transition', from: :paid, to: :cancelled, with: :cancel, is: :not_ok
-    it_behaves_like 'transition', from: :paid, to: :closed, with: :close, is: :not_ok
-    it_behaves_like 'transition', from: :paid, to: :awaiting_refund, is: :ok
-    it_behaves_like 'transition', from: :paid, to: :awaiting_delivery, is: :ok
-    it_behaves_like 'transition', from: :paid, to: :paid, with: :pay, is: :not_ok
+          expect(rec.send(method_name)).to (param[:is] == :ok ? be_truthy : be_falsy)
+        end
 
-    it_behaves_like 'transition', from: :awaiting_delivery, to: :closed, with: :close, is: :ok
-    it_behaves_like 'transition', from: :awaiting_delivery, to: :cancelled, with: :cancel, is: :not_ok
+        it "#{param[:is] == :ok ? 'changes' : 'does not change'} status from #{param[:from]} to #{param[:initial]}" do
+          fail ':method_name is to be defined' unless defined? method_name
+          fail ':is parameter is to be defined' unless param[:is]
 
-    it_behaves_like 'transition', from: :awaiting_refund, to: :cancelled, with: :cancel, is: :ok
-    it_behaves_like 'transition', from: :awaiting_refund, to: :closed, with: :close, is: :not_ok
+          expect { rec.send(method_name) }.send(
+            param[:is] == :ok ? :to : :not_to, change(rec, :status).from(param[:initial].to_s))
+        end
+      end
+    end
 
-    it_behaves_like 'transition', from: :cancelled, to: :cancelled, with: :cancel, is: :not_ok
+    context 'w/ payment method = "cash"' do
+      before { rec.payment_method = 'cash'; rec.save(validate: false) }
+
+      it_behaves_like 'transition', from: :new, to: :paid, with: :pay, is: :not_ok
+      it_behaves_like 'transition', from: :new, to: :cancelled, with: :cancel, is: :ok
+      it_behaves_like 'transition', from: :new, to: :closed, with: :close, is: :not_ok
+      it_behaves_like 'transition', from: :new, to: :pending, is: :not_ok
+      it_behaves_like 'transition', from: :new, to: :awaiting_refund, is: :not_ok
+
+      it_behaves_like 'transition', from: :awaiting_delivery, to: :closed, with: :close, is: :ok
+      it_behaves_like 'transition', from: :awaiting_delivery, to: :cancelled, with: :cancel, is: :not_ok
+
+      it_behaves_like 'transition', from: :cancelled, to: :cancelled, with: :cancel, is: :not_ok
+      describe '#make_awaiting_delivery' do
+        let!(:method_name) { :make_awaiting_delivery }
+        it_behaves_like 'transition_method', initial: :new, is: :ok
+        it_behaves_like 'transition_method', initial: :paid, is: :not_ok
+        it_behaves_like 'transition_method', initial: :pending, is: :not_ok
+        it_behaves_like 'transition_method', initial: :awaiting_refund, is: :not_ok
+        it_behaves_like 'transition_method', initial: :cancelled, is: :not_ok
+        it_behaves_like 'transition_method', initial: :closed, is: :not_ok
+      end
+    end
+    context 'w/ payment method = "card"' do
+      before { rec.payment_method = 'card'; rec.save(validate: false) }
+
+      it_behaves_like 'transition', from: :new, to: :paid, with: :pay, is: :not_ok
+      it_behaves_like 'transition', from: :new, to: :cancelled, with: :cancel, is: :ok
+      it_behaves_like 'transition', from: :new, to: :closed, with: :close, is: :not_ok
+      it_behaves_like 'transition', from: :new, to: :pending, is: :not_ok
+      it_behaves_like 'transition', from: :new, to: :awaiting_delivery, is: :not_ok
+      it_behaves_like 'transition', from: :new, to: :awaiting_refund, is: :not_ok
+
+      it_behaves_like 'transition', from: :pending, to: :paid, with: :pay, is: :ok
+      it_behaves_like 'transition', from: :pending, to: :cancelled, with: :cancel, is: :ok
+      it_behaves_like 'transition', from: :pending, to: :closed, with: :close, is: :not_ok
+      it_behaves_like 'transition', from: :pending, to: :awaiting_delivery, is: :not_ok
+      it_behaves_like 'transition', from: :pending, to: :awaiting_refund, is: :not_ok
+      it_behaves_like 'transition', from: :pending, to: :pending, is: :not_ok
+
+      it_behaves_like 'transition', from: :paid, to: :cancelled, with: :cancel, is: :not_ok
+      it_behaves_like 'transition', from: :paid, to: :closed, with: :close, is: :not_ok
+      it_behaves_like 'transition', from: :paid, to: :awaiting_refund, is: :ok
+      it_behaves_like 'transition', from: :paid, to: :paid, with: :pay, is: :not_ok
+
+      it_behaves_like 'transition', from: :awaiting_delivery, to: :closed, with: :close, is: :ok
+      it_behaves_like 'transition', from: :awaiting_delivery, to: :cancelled, with: :cancel, is: :not_ok
+
+      it_behaves_like 'transition', from: :cancelled, to: :cancelled, with: :cancel, is: :not_ok
+
+      describe '#make_awaiting_delivery' do
+        let!(:method_name) { :make_awaiting_delivery }
+        it_behaves_like 'transition_method', initial: :new, is: :not_ok
+        it_behaves_like 'transition_method', initial: :paid, is: :ok
+        it_behaves_like 'transition_method', initial: :pending, is: :not_ok
+        it_behaves_like 'transition_method', initial: :awaiting_refund, is: :not_ok
+        it_behaves_like 'transition_method', initial: :cancelled, is: :not_ok
+        it_behaves_like 'transition_method', initial: :closed, is: :not_ok
+      end
+    end
   end
 
   describe 'status quering:' do
     shared_examples "?-method" do |param|
-      let(:rec) { ord = FactoryGirl.build(:order, status: param[:status].to_s);ord.save(validate: false);ord }
+      let(:rec) do
+        ord = FactoryGirl.build(:order, payment_method: 'cash', status: param[:status].to_s)
+        ord.save!(validate: false)
+        ord
+      end
+
       it "##{param[:status]}? == true" do
         expect(rec.send("#{param[:status]}?")).to be_truthy
       end

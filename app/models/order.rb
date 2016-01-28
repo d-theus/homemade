@@ -1,9 +1,7 @@
 class Order < ActiveRecord::Base
-  belongs_to :customer, autosave: true
-
   STATUS_TABLE = {
     :nil => [ :new ],
-    :new => [ :pending, :cancelled, :awaiting_delivery],
+    :new => [ :cancelled],
     :pending => [ :paid, :cancelled ],
     :paid => [ :awaiting_delivery, :awaiting_refund ],
     :awaiting_refund => [ :cancelled ],
@@ -14,10 +12,11 @@ class Order < ActiveRecord::Base
 
   PAYMENT_METHODS = %w(cash card)
 
-  validates :customer_id, presence: true
-  validates :customer, presence: true
   validates :payment_method, presence: true
   validates :count, presence: true, inclusion: { in: [3,5] }
+  validates :name,  presence: true, length: { minimum: 2, maximum: 99 }
+  validates :phone,  presence: true, format: /7\d{10}/
+  validates :address, presence: true, length: { minimum: 2, maximum: 250 }
   validate  :check_status
   validate  :check_interval
   before_destroy :can_destroy?
@@ -112,6 +111,16 @@ class Order < ActiveRecord::Base
       self.update(status: 'pending')
     else
       true
+    end
+  end
+
+  def make_awaiting_delivery
+    if  (self.payment_method == 'card' && self.status == 'paid') ||
+        (self.payment_method == 'cash' && self.status == 'new')
+      self.status = 'awaiting_delivery'
+      self.save(validate: false)
+    else
+      false
     end
   end
 end

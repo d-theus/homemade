@@ -40,35 +40,6 @@ ActiveRecord::Schema.define(version: 20160127082739) do
     t.datetime "updated_at"
   end
 
-  create_table "customer_addresses", force: true do |t|
-    t.integer "customer_id", null: false
-    t.string  "address",     null: false
-  end
-
-  create_table "customer_pins", force: true do |t|
-    t.string   "token"
-    t.string   "phone",      null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "customer_pins", ["phone"], name: "index_customer_pins_on_phone", unique: true, using: :btree
-
-  create_table "customers", force: true do |t|
-    t.string   "name",       null: false
-    t.string   "phone",      null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "email"
-  end
-
-  add_index "customers", ["phone"], name: "index_customers_on_phone", unique: true, using: :btree
-
-  create_table "customers_addresses", force: true do |t|
-    t.integer "customer_id", null: false
-    t.string  "address"
-  end
-
   create_table "inventory_items", force: true do |t|
     t.string   "name"
     t.string   "image"
@@ -84,12 +55,14 @@ ActiveRecord::Schema.define(version: 20160127082739) do
   create_table "orders", force: true do |t|
     t.integer  "count",                          null: false
     t.string   "payment_method",                 null: false
-    t.integer  "customer_id",                    null: false
     t.string   "status",         default: "new"
+    t.string   "name",                           null: false
+    t.string   "phone",                          null: false
+    t.string   "address",                        null: false
+    t.string   "interval",                       null: false
+    t.boolean  "by_phone",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "by_phone"
-    t.string   "interval"
   end
 
   create_table "phone_callbacks", force: true do |t|
@@ -105,21 +78,14 @@ ActiveRecord::Schema.define(version: 20160127082739) do
     t.string   "subtitle"
     t.integer  "cooking_time"
     t.integer  "calories"
+    t.string   "photo"
+    t.string   "picture"
+    t.integer  "day",          limit: 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "day",          limit: 2
-    t.string   "photo"
-    t.string   "picture",                null: false
   end
 
   add_index "recipes", ["day"], name: "index_recipes_on_day", unique: true, using: :btree
-
-  create_table "week_recipes", force: true do |t|
-    t.integer "recipe_id"
-    t.integer "day"
-  end
-
-  add_index "week_recipes", ["recipe_id"], name: "index_week_recipes_on_recipe_id", using: :btree
 
   create_table "weekly_menu_subscriptions", force: true do |t|
     t.string   "email",      null: false
