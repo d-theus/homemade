@@ -12,10 +12,10 @@ class Order < ActiveRecord::Base
 
   PAYMENT_METHODS = %w(cash card)
 
-  validates :payment_method, presence: true
+  validates :payment_method, presence: true, format: /\A(card|cash)\z/
   validates :count, presence: true, inclusion: { in: [3,5] }
   validates :name,  presence: true, length: { minimum: 2, maximum: 99 }
-  validates :phone,  presence: true, format: /7\d{10}/
+  validates :phone,  presence: true, format: /\A7\d{10}\z/
   validates :address, presence: true, length: { minimum: 2, maximum: 250 }
   validate  :check_status
   validate  :check_interval

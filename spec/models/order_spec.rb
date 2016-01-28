@@ -44,7 +44,7 @@ RSpec.describe Order, type: :model do
       it_behaves_like 'no-blank attr'
       it_behaves_like 'formatted attr',
         good: %w(71112223344 74440000000),
-        bad: [ "a"*100 , "c", "9261112233", "81112223344" ]
+        bad: [ "a"*100 , "c", "9261112233", "81112223344", "79266779116747" ]
     end
 
     describe 'address' do
@@ -62,11 +62,19 @@ RSpec.describe Order, type: :model do
         expect(FactoryGirl.build(:order, payment_method: nil).valid?)
         .to be_falsy
       end
-      it 'fails with payment methon which is not in the list' do
+
+      it 'succeeds with payment methon which is in the list' do
         expect(FactoryGirl.build(:order, payment_method: 'cash').valid?)
         .to be_truthy
         expect(FactoryGirl.build(:order, payment_method: 'card').valid?)
         .to be_truthy
+      end
+
+      it 'fails with payment methon which is not in the list' do
+        expect(FactoryGirl.build(:order, payment_method: 'blah').valid?)
+        .to be_falsy
+        expect(FactoryGirl.build(:order, payment_method: 'cardcard').valid?)
+        .to be_falsy
       end
     end
 
