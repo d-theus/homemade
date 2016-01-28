@@ -25,8 +25,8 @@
           %th(rowspan=2) Наборов
           %th(rowspan=1 colspan=3) Заказчик
           %th(rowspan=2) Оплата
-          %th(rowspan=2) Доставить
           %th(rowspan=2) Статус
+          %th(rowspan=2) Доставить
           %th(rowspan=2) Управление
         %tr
           %th(rowspan=1) Телефон
@@ -42,12 +42,12 @@
                 %i.fa.fa-phone.fa-fw.text-primary{title: 'Заказан по телефону'}
             %td= date_format ord.created_at
             %td= ord.count
-            %td= phone_number ord.customer.phone
-            %td= ord.customer.name
-            %td= ord.customer.address
+            %td= phone_number ord.phone
+            %td= ord.name
+            %td= ord.address
             %td= t "activerecord.values.order.payment_method.#{ord.payment_method}"
-            %td= next_sunday(ord.created_at)
             %td= t "activerecord.values.order.status.#{ord.status}"
+            %td= next_sunday(ord.created_at)
             %td
               = link_to 'ЗАВЕРШИТЬ',
                 close_order_path(ord),

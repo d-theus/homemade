@@ -3,43 +3,21 @@ class OrdersController < ApplicationController
   before_action :fetch_order, only: [:cancel, :close, :pay, :destroy]
 
   def new
-    @customer = Customer.new
-    @order = @customer.orders.build
+    @order = Order.new
   end
 
   def create
-    @order = Order.new(order_params.except(:customer))
-    @customer = Customer.find_by_phone(order_params.require(:customer)[:phone]) || Customer.new(order_params[:customer])
-    if @customer.persisted? && @customer.name != order_params.require(:customer)[:name]
-      @customer.name = nil
-      @customer.address = nil
-      flash.now[:alert] = 'Найден такой телефон, но пара "телефон - имя" не совпадает. '
-      render :new, status: :unprocessable_entity
-      return
-    end
-    if @customer.persisted? && @customer.name == order_params.require(:customer)[:name] && order_params.require(:customer)[:address]
-      @customer.address = order_params.require(:customer)[:address]
-    end
-
-    Order.transaction do
-      @customer.save!
-      @order.customer_id = @customer.id
-      @order.save!
-    end
-
-    if admin_signed_in?
-      redirect_to orders_path
+    @order = Order.new(order_params)
+    if @order.save
+      if admin_signed_in?
+        redirect_to orders_path
+      else
+        redirect_to received_order_path
+      end
     else
-      redirect_to received_order_path
-    end
-
-  rescue
-    if @customer.errors.any?
-      flash.now[:alert] = 'Не удалось создать запись о клиенте. '
-    elsif @order.errors.any?
       flash.now[:alert] = "Заказ не создан. #{@order.errors.full_messages}"
+      render :new, status: :unprocessable_entity
     end
-    render :new, status: :unprocessable_entity
   end
 
   def cancel
@@ -82,6 +60,7 @@ class OrdersController < ApplicationController
   def destroy
     if @order.destroy
       flash.now[:notice] = "Успешно удалили заказ №#{@order.id}"
+      redirect_to orders_path
     else
       flash.now[:alert] = "Нельзя удалить заказ #{@order.id}: неподходящий статус"
       render :index, status: :unprocessable_entity
@@ -102,17 +81,16 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
-      :payment_method, :interval,
-      :state, :count, :by_phone,
-      customer: [ :name, :phone, :address ]
+    :count,
+    :payment_method,
+    :status,
+    :name,
+    :phone,
+    :address,
+    :interval,
+    :by_phone
     )
   end
-
-  #def customer_params
-    #params.require(:order).fetch(:customer, {}).permit(
-      #:name, :phone, :address
-      #)
-  #end
 
   def order_id
     params.require(:id)

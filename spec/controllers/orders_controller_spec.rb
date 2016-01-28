@@ -2,15 +2,17 @@ require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
   describe '#index' do
+    before { sign_in as_user }
+    before { get :index }
+
     context 'when not signed in' do
-      before { sign_in nil }
-      before { get :index }
+      let(:as_user) { nil }
+
       it_behaves_like 'an unauthorized request'
     end
 
     context 'when signed in' do
-      before { sign_in }
-      before { get :index }
+      let(:as_user) { double('admin') }
 
       it_behaves_like 'an authorized request'
       it 'assigns @orders' do
@@ -29,61 +31,55 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   describe '#create' do
-    before(:each) { Customer.delete_all }
+    context 'w/ invalid' do
+      before { post :create, order: FactoryGirl.attributes_for(:order, attrs) }
 
-    context 'with new invalid customer' do
-      let(:attrs) do
-        FactoryGirl.attributes_for(:order,
-                                   customer_id: nil,
-                                   customer: {
-                                     name: 'some',
-                                     phone: 'not valid',
-                                     address: 'some random ave' })
+      context 'count' do
+       let(:attrs) {{ count: 2 }}
+       it_behaves_like 'unprocessable entity request'
       end
-      let(:req) { post :create, order: attrs }
-
-      it 'fails to create order' do
-        expect { req() }.not_to change(Order, :count)
+      context 'payment method' do
+        let(:attrs) {{ payment_method: :lol  }}
+        it_behaves_like 'unprocessable entity request'
       end
-      it 'fails to create customer' do
-        expect { req() }.not_to change(Customer, :count)
+      context 'interval' do
+        let(:attrs) {{ interval: 2  }}
+        it_behaves_like 'unprocessable entity request'
       end
-      it 'has errors in customer' do
-        req()
-        expect(assigns[:customer].errors).not_to be_empty
+      context 'name' do
+        let(:attrs) {{ name: nil  }}
+        it_behaves_like 'unprocessable entity request'
       end
-      it_behaves_like 'unprocessable entity request'
-    end
-    context 'with valid order and new valid customer' do
-      before { post :create, order: FactoryGirl.attributes_for(:order,
-                                                               customer_id: nil,
-                                                               customer: {
-                                                                 name: 'some',
-                                                                 phone: '+71112223344',
-                                                                 address: 'some'
-                                                               }
-                                                              ) }
-
-      it_behaves_like 'an authorized request'
-
-      it 'has empty alert' do
-        expect(flash.now[:alert]).to be_nil
+      context 'phone' do
+        let(:attrs) {{ phone: 2  }}
+        it_behaves_like 'unprocessable entity request'
       end
-
-      it 'redirects to "Order Received" page' do
-        expect(response).to redirect_to(received_order_path)
+      context 'address' do
+        let(:attrs) {{ address: 2  }}
+        it_behaves_like 'unprocessable entity request'
       end
     end
 
-    context 'with invalid order' do
-      before { post :create, order: FactoryGirl.attributes_for(:order, count: 2) }
+    context 'w/ valid' do
+      before { sign_in as_user }
+       before { post :create, order: FactoryGirl.attributes_for(:order) }
+       subject { response }
 
-      it_behaves_like 'unprocessable entity request'
+       context 'when admin' do
+         let(:as_user) { double('admin') }
+
+         it { is_expected.to redirect_to orders_path }
+       end
+
+       context 'when customer' do
+         let(:as_user) { nil }
+
+         it { is_expected.to redirect_to received_order_path }
+       end
     end
   end
 
   describe 'update methods' do
-    before(:all) { Customer.delete_all }
     let!(:order) { FactoryGirl.create(:order) }
 
     describe '#close' do
@@ -113,26 +109,40 @@ RSpec.describe OrdersController, type: :controller do
 
   describe '#delete' do
     let!(:order) { FactoryGirl.create(:order) }
+    before { sign_in as_user }
+
     context 'when not signed in' do
-      before { sign_in nil }
+      let(:as_user) { nil }
       before { delete :destroy, id: order.id }
       it_behaves_like 'an unauthorized request'
     end
 
     context 'when authorized' do
-      before { sign_in }
+      let(:as_user) { double('admin') }
+      let(:status) { 'new' }
+      before { order.status = status; order.save(validate: false ) }
+      before { delete :destroy, id: order.id }
+      subject { response }
 
       it_behaves_like 'an authorized request'
 
-      context 'attempting to delete' do
+      context 'attempt to delete' do
         context 'paid order' do
-          before { order.update(status: 'paid')}
-          before { delete :destroy, id: order.id }
+          let(:status) { 'paid '}
           it_behaves_like 'unprocessable entity request'
         end
         context 'new order' do
-          before { delete :destroy, id: order.id }
+          let(:status) { 'new'}
           it_behaves_like 'unprocessable entity request'
+        end
+        context 'pending order' do
+          let(:status) { 'pending'}
+          it_behaves_like 'unprocessable entity request'
+        end
+        context 'cancelled order' do
+          let(:status) { 'cancelled'}
+          it_behaves_like 'successful request'
+          it { is_expected.to redirect_to orders_path }
         end
       end
     end

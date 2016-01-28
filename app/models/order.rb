@@ -108,7 +108,8 @@ class Order < ActiveRecord::Base
 
   def make_card_pending
     if self.payment_method == 'card'
-      self.update(status: 'pending')
+      self.status = 'pending'
+      self.save(validate: false)
     else
       true
     end

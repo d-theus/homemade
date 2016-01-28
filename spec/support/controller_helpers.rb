@@ -39,6 +39,6 @@ end
 shared_examples_for 'successful request' do
   it 'succeeds' do
     req() if defined? req
-    expect(response).to have_http_status(:ok)
+    expect(response).to have_http_status(:ok).or have_http_status(:found)
   end
 end

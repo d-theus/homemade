@@ -14,13 +14,21 @@
       %span.text-nowrap#d_date>= next_sunday
     .row
       %center.col-xs-12.jt
-        %a.btn.btn-primary.btn-lg.jb(href="#" data-toggle='modal' data-target='#order_modal') ЗАКАЗАТЬ 
-    .row
-      %center.col-xs-12.text-nowrap.jt
-        за
-        %span#price_5{style: 'display:none'} 3500
-        %span#price_3{style: 'display:none'} 2500
-        рублей
+        - if @recipes.count == 5
+          %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ЗАКАЗАТЬ 
+        - else
+          %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ЗАКАЗАТЬ 
+          %br/
+          %small Нельзя заказать: меню составляется
+          %br/
+
+    - if @recipes.count == 5
+      .row
+        %center.col-xs-12.text-nowrap.jt
+          за
+          %span#price_5{style: 'display:none'} 3500
+          %span#price_3{style: 'display:none'} 2500
+          рублей
     .row.text-center.text-inverse.small
       %br/
       %a{href:'#how'} как это работает?
@@ -79,7 +87,13 @@
   %center.jt
     %span.lead Вот так просто.
     %br/
-    = link_to 'ЗАКАЗАТЬ', '', class: 'btn btn-primary btn-lg jb', data: { toggle: 'modal', target: '#order_modal' }
+    - if @recipes.count == 5
+      %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ЗАКАЗАТЬ 
+    - else
+      %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ЗАКАЗАТЬ 
+      %br/
+      %small Нельзя заказать: меню составляется
+      %br/
 
 .jumbotron#subscribe
   %br/
@@ -96,4 +110,4 @@
   %br/
 
 = javascript_include_tag 'landing.js'
--#= render partial: 'order_modal'
+= render partial: 'order_modal'

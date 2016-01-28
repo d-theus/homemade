@@ -281,20 +281,17 @@ ru:
         inventory_items: Для приготовления необходимо
         photo: Фото
         picture: Картинка с рецептом
-
       inventory_item:
         name: Название
         image: Картинка
-      customer: &customer_labels
-        name: Имя
-        phone: Телефон
-        email: Эл. Почта
-        address: Адрес
       order:
         count: Количество наборов
         payment_method: Способ оплаты
         by_phone: По телефону
         interval: Интервал доставки
+        name: Имя
+        phone: Телефон
+        address: Адрес
       contact:
         email: Эл. Почта
         topic: Тема
@@ -307,7 +304,6 @@ ru:
         payment_method:
           cash: Наличные
           card: Карта
-
         status:
           new: Новый
           paid: Оплачен
@@ -324,10 +320,6 @@ ru:
       notice: "Успешно обновили %{resource_name}"
       alert: "Возникли ошибки"
   simple_form:
-    labels:
-      order:
-        customer:
-          <<: *customer_labels
     placeholders:
       <<: *attrs
   
