@@ -32,7 +32,7 @@ class RecipePhotoUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :preview do
-    process :resize_to_fit => [800, 600]
+    process :resize_to_fill => [800, 600]
   end
 
   version :show do
