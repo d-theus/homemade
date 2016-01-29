@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
         redirect_to received_order_path
       end
     else
-      flash.now[:alert] = "Заказ не создан. #{@order.errors.full_messages}"
+      flash.now[:alert] = t "flash.create.alert"
       render :new, status: :unprocessable_entity
     end
   end

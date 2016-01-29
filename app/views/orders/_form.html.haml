@@ -28,7 +28,7 @@
       %i.fa.fa-fw.fa-lg.fa-archive
     .col-xs-5
       = f.input :count,
-        as: :select, collection: [5,3],
+        as: :select, collection: [['5 за 3500 р.', 5],['3 за 2500 р.', 3]],
         placeholder: t('activerecord.attributes.order.count')
   .row
     .col-xs-2.text-center
