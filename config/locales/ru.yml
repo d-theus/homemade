@@ -293,6 +293,7 @@ ru:
         phone: Телефон
         address: Адрес
       contact:
+        name: Имя
         email: e-mail
         topic: Тема
         text: Текст

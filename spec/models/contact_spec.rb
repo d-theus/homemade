@@ -17,13 +17,27 @@ RSpec.describe Contact, type: :model do
 
       context 'when too long' do
         it 'is invalid' do
-          expect(FactoryGirl.build(:contact, topic: nil)).not_to be_valid
+          expect(FactoryGirl.build(:contact, topic: 'test'*150)).not_to be_valid
         end
       end
 
       context 'when valid' do
         it 'is valid' do
           expect(FactoryGirl.build(:contact, topic: 'some topic')).to be_valid
+        end
+      end
+    end
+
+    describe '.name' do
+      context 'when too long' do
+        it 'is invalid' do
+          expect(FactoryGirl.build(:contact, name: 'test' * 100)).not_to be_valid
+        end
+      end
+
+      context 'when valid' do
+        it 'is valid' do
+          expect(FactoryGirl.build(:contact, name: 'some topic')).to be_valid
         end
       end
     end

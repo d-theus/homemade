@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20160127082739) do
     t.string   "topic",                     null: false
     t.text     "text",                      null: false
     t.string   "email",                     null: false
+    t.string   "name"
     t.boolean  "unread",     default: true, null: false
     t.datetime "created_at"
     t.datetime "updated_at"

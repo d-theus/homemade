@@ -11,6 +11,8 @@ class Contact < ActiveRecord::Base
     presence: true,
     format: { with: Devise::email_regexp }
 
+  validates :name, length: { maximum: 99 }
+
   def read
     self.unread = false
     self.save
