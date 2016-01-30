@@ -3,7 +3,7 @@
     %h1 Новый кухонный инструмент
 .row
   .col-xs-10.col-xs-offset-1
-    = simple_form_for @ii do |f|
+    = simple_form_for @ii, html: { class: 'form-horizontal material'} do |f|
       = f.input :name
       = f.input :image
       = f.submit 'СОЗДАТЬ', class: 'btn btn-primary'
