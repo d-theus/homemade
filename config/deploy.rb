@@ -33,8 +33,8 @@ namespace :docker do
   set :uploads_path, '/home/web/app/public/uploads'
   set :proxy_links, -> { (fetch(:http_backends) + fetch(:https_backends)).reduce('') { |acc,i| acc += " --link #{fetch :rails}#{i}"; acc } }
   set :volumes, "--volumes-from #{fetch :uploads} --volumes-from #{fetch :public}"
-  set :http_backends, [1,2]
-  set :https_backends, [3]
+  set :http_backends, []
+  set :https_backends, [1,2,3]
   set :backends_count, ->{ fetch(:http_backends).count + fetch(:https_backends).count }
 end
 
