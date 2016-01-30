@@ -269,7 +269,7 @@ ru:
       inventory_item: Предмет
     attributes: &attrs
       admin:
-        email: Эл. Почта
+        email: e-mail
         password: Пароль
         remember_me: Запомнить меня
       recipe:
@@ -293,12 +293,14 @@ ru:
         phone: Телефон
         address: Адрес
       contact:
-        email: Эл. Почта
+        email: e-mail
         topic: Тема
         text: Текст
       phone_callback:
         name: Имя
         phone: Телефон
+      weekly_menu_subscription:
+        email: e-mail
     values:
       order:
         payment_method:

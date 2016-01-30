@@ -13,14 +13,8 @@
     %br/
     .row.lead
       .col-xs-12
-        %p Подписаться на еженедельную рассылку меню:
-        = simple_form_for @subscription, remote: true, html: {class: 'form-inline material'} do |f|
-          = f.input :email, label: false, placeholder: 'Эл. почта', input_html: { class: 'form-inline' }
-          &nbsp;
-          = f.submit 'ПОДПИСАТЬСЯ', class: 'btn btn-primary text-primary'
-        %p.small.alert.alert-success#weekly_menu_subscription_created{style: 'display: none;'}
-          Подписка оформлена!
-        %p.nsmall.alert.alert-danger#weekly_menu_subscription_error{style: 'display: none;'}
+        = render partial: 'weekly_menu_subscriptions/form'
+        
     %br/
     %center.row
       = link_to 'НА ГЛАВНУЮ', root_path, class: 'btn btn-primary'
