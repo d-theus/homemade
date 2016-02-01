@@ -16,4 +16,4 @@ class Module
 window.Ui = new Module()
 
 $(document).on 'page:load', Ui.init
-$(document).ready Ui.init
+$(window).on   'load', Ui.init

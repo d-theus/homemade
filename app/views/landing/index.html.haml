@@ -4,30 +4,24 @@
 .jumbotron#order
   .row.lead
     %center.col-xs-12.jt
-      %span.text-nowrap Продукты для
-      = form_tag 'orders#new', class: 'material material-inverse form-inline jt' do
-        %span.form-group.no-title#count
-          = select_tag 'count', options_for_select([5, 3], 5), placeholder: 'количество'
-      %span.text-nowrap ужинов на двоих
-      %span.text-nowrap с доставкой в воскресенье,&nbsp;
-      %span.text-nowrap#d_date>= next_sunday
+      %span.text-nowrap.cta1 Набор свежих продуктов на неделю
+      %br/
+      %span.text-nowrap.cta1 для приготовления ужинов на двоих
+      %br/
+      %span.text-nowrap.cta2 с доставкой в воскресенье,
+      %span.text-nowrap.cta2#d_date>= next_sunday
+      %br/
+      %br/
     .row
       %center.col-xs-12.jt
         - if @recipes.count == 5
-          %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ЗАКАЗАТЬ 
+          %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
         - else
-          %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ЗАКАЗАТЬ 
+          %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
           %br/
-          %small Нельзя заказать: меню составляется
+          %small Нельзя ОФОРМИТЬ ЗАКАЗ: меню составляется
           %br/
 
-    - if @recipes.count == 5
-      .row
-        %center.col-xs-12.text-nowrap.jt
-          за
-          %span#price_5{style: 'display:none'} 3500
-          %span#price_3{style: 'display:none'} 2500
-          рублей
     .row.text-center.text-inverse.small
       %br/
       %a{href:'#how'} как это работает?
@@ -38,6 +32,9 @@
       %span#bow= next_week_begin
       &mdash;
       %span#eow= next_week_end
+    .row.text-primary
+      %button.btn.btn-default.disabled{type: :button, name: 'toggle_count', value: 5} 5 ужинов
+      %button.btn.btn-default{type: :button, name: 'toggle_count', value: 3} 3 ужина
   %br/
   - if @recipes.count == 5
     .row
@@ -48,12 +45,23 @@
     %br/
     .row
       %center.col-xs-12#why_disabled{style: 'display:none'}
-        %h3.text-muted Доступны при выборе 5 наборов
+        %h3.text-muted Доступны при выборе 5 ужинов
       .col-lg-10.col-lg-offset-1.col-md-12.col-md-offset-0.col-sm-6.col-sm-offset-3.col-xs-12.col-xs-offset-0
         %center.col-md-4.col-md-offset-2.col-sm-12.col-sm-offset-0
           = render partial: 'recipe_card', locals: { recipe: @recipes[3]}
         %center.col-md-4.col-md-offset-0.col-sm-12.col-sm-offset-0
           = render partial: 'recipe_card', locals: { recipe: @recipes[4]}
+    %center.row.lead
+      %br/
+      %span#price_5(name="price")
+        %strong 3500
+        %i.fa.fa-rub
+      %span#price_3.hidden(name="price")
+        %strong 2500
+        %i.fa.fa-rub
+      %br/
+      %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
+      %br/
   - else
     .row#stub
       %center.col-xs-12
@@ -87,11 +95,11 @@
     %span.lead Вот так просто.
     %br/
     - if @recipes.count == 5
-      %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ЗАКАЗАТЬ 
+      %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
     - else
-      %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ЗАКАЗАТЬ 
+      %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
       %br/
-      %small Нельзя заказать: меню составляется
+      %small Нельзя оформить заказ: меню составляется. Попробуйте через пару минут.
       %br/
 
 .jumbotron#subscribe

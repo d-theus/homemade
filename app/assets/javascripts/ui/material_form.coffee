@@ -1,5 +1,6 @@
 MaterialForm = {
   init: ->
+    return if navigator.userAgent.match(/(iPod|iPhone|iPad)/)
     @_tout = setTimeout =>
       clearTimeout(@_tout)
       if $.fn.materialForm
