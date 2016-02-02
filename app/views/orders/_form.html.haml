@@ -22,21 +22,21 @@
   .row
     .col-xs-2.text-center.form-icon
       %i.fa.fa-fw.fa-lg.fa-archive
-    .col-xs-10.col-sm-6
+    .col-xs-10.col-sm-7
       = f.input :count,
-        as: :select, collection: [['5 за 3500 р.', 5],['3 за 2500 р.', 3]],
+        as: :select, collection: [['5 ужинов за 3500 р.', 5],['3 ужина за 2500 р.', 3]],
         placeholder: t('activerecord.attributes.order.count')
   .row
     .col-xs-2.text-center.form-icon
       %i.fa.fa-fw.fa-lg.fa-clock-o
-    .col-xs-10.col-sm-6
+    .col-xs-10.col-sm-7
       = f.input :interval,
         as: :select, collection: intervals,
         placeholder: t('activerecord.attributes.order.interval')
   .row
     .col-xs-2.text-center.form-icon
       %i.fa.fa-fw.fa-lg.fa-money
-    .col-xs-10.col-sm-6
+    .col-xs-10.col-sm-7
       = f.input :payment_method,
         as: :select, collection: payment_methods,
         placeholder: t('activerecord.attributes.order.payment_method')
