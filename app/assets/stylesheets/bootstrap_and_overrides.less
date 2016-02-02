@@ -45,17 +45,38 @@
 
 @list-group-border: transparent;
 
-@input-border: transparent;
-@input-border-focus: transparent;
-input.form-control,
-input.form-control:focus
-textarea.form-control,
-textarea.form-control:focus{
-  outline: none;
-  //border: none !important;
-  -webkit-box-shadow: none !important;
-  -moz-box-shadow: none !important;
-  box-shadow: none !important;
+.material{
+  input.form-control,
+  input.form-control:focus
+  textarea.form-control,
+  textarea.form-control:focus{
+    outline: none;
+    //border: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  .form-icon{
+    margin-top: 2em;
+  }
+
+  label.control-label { display: none }
+}
+
+// Non-iPad Fallback
+form{
+  .form-icon{
+    margin-top: .5em;
+  }
+  .select-arrow{
+    .pull-right;
+    height: 0;
+    text-align: left;
+    line-height: 2.5em;
+    padding-right: 0.5em;
+    color: @gray;
+  }
 }
 .material .material-bar:before,.material .material-bar:after{
   background: @brand-primary;

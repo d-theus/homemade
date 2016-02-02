@@ -7,8 +7,16 @@ class Module
     @elements.push el
 
   init: =>
-    el.init() for el in @elements
-    cb() for cb in @onReady
+    for el in @elements
+      try
+        el.init()
+      catch err
+        console.log JSON.stringify(err)
+    for cb in @onReady
+      try
+        cb()
+      catch err
+        console.log JSON.stringify(err)
 
   ready: (cb)=>
     @onReady.push(cb)

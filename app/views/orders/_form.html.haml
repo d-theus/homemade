@@ -5,44 +5,38 @@
 = simple_form_for @order, html: { class: 'form-horizontal material' } do |f|
 
   .row
-    .col-xs-2.text-center
-      %br/
+    .col-xs-2.text-center.form-icon
       %i.fa.fa-fw.fa-lg.fa-phone
     .col-xs-10
       = f.input :phone, default: '+7', input_html: { class: 'mask tel' }
   .row
-    .col-xs-2.text-center
-      %br/
+    .col-xs-2.text-center.form-icon
       %i.fa.fa-fw.fa-lg.fa-user
     .col-xs-10
       = f.input :name
   .row
-    .col-xs-2.text-center
-      %br/
+    .col-xs-2.text-center.form-icon
       %i.fa.fa-fw.fa-lg.fa-map-marker
     .col-xs-10
       = f.input :address
   .row
-    .col-xs-2.text-center
-      %br/
+    .col-xs-2.text-center.form-icon
       %i.fa.fa-fw.fa-lg.fa-archive
-    .col-xs-5
+    .col-xs-10.col-sm-6
       = f.input :count,
         as: :select, collection: [['5 за 3500 р.', 5],['3 за 2500 р.', 3]],
         placeholder: t('activerecord.attributes.order.count')
   .row
-    .col-xs-2.text-center
-      %br/
+    .col-xs-2.text-center.form-icon
       %i.fa.fa-fw.fa-lg.fa-clock-o
-    .col-xs-10
+    .col-xs-10.col-sm-6
       = f.input :interval,
         as: :select, collection: intervals,
         placeholder: t('activerecord.attributes.order.interval')
   .row
-    .col-xs-2.text-center
-      %br/
+    .col-xs-2.text-center.form-icon
       %i.fa.fa-fw.fa-lg.fa-money
-    .col-xs-10
+    .col-xs-10.col-sm-6
       = f.input :payment_method,
         as: :select, collection: payment_methods,
         placeholder: t('activerecord.attributes.order.payment_method')
@@ -53,5 +47,5 @@
   %br/
   .col-xs-12.text-right.lead
     .btn-group
-      = f.submit 'ГОТОВО', class: 'btn btn-lg btn-flat text-primary'
+      = f.submit 'ЗАКАЗАТЬ', class: 'btn btn-lg btn-flat text-primary'
 = javascript_include_tag 'orders.js'
