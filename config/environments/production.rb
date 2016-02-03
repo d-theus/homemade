@@ -63,6 +63,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "homemade-msk.ru"}
   config.action_mailer.asset_host = 'https://homemade-msk.ru'
   config.action_mailer.smtp_settings = {
+    address: 'postfix',
     port: 25,
     domain: 'homemade-msk.ru'
   }

@@ -19,10 +19,10 @@ namespace :docker do
           execute :docker, "commit #{fetch :rails}-tmp #{fetch :rails}"
           execute :docker, "rm #{fetch :rails}-tmp || true"
           for i in fetch(:http_backends)
-            execute :docker, "run --name #{fetch :rails}#{i} -d --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec bundle exec #{fetch :backend} start"
+            execute :docker, "run --name #{fetch :rails}#{i} -d --link #{fetch :db} --link #{fetch :smtp} #{fetch :volumes} #{fetch :rails} rbenv exec bundle exec #{fetch :backend} start"
           end
           for i in fetch(:https_backends)
-            execute :docker, "run --name #{fetch :rails}#{i} -d --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec bundle exec #{fetch :backend} start --ssl"
+            execute :docker, "run --name #{fetch :rails}#{i} -d --link #{fetch :db} --link #{fetch :smtp} #{fetch :volumes} #{fetch :rails} rbenv exec bundle exec #{fetch :backend} start --ssl"
           end
         end
       end

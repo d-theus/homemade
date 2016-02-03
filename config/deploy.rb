@@ -30,6 +30,7 @@ namespace :docker do
   set :uploads, 'uploads'
   set :rails, 'rails'
   set :db, 'postgres'
+  set :smtp, 'postfix'
   set :uploads_path, '/home/web/app/public/uploads'
   set :proxy_links, -> { (fetch(:http_backends) + fetch(:https_backends)).reduce('') { |acc,i| acc += " --link #{fetch :rails}#{i}"; acc } }
   set :volumes, "--volumes-from #{fetch :uploads} --volumes-from #{fetch :public}"
