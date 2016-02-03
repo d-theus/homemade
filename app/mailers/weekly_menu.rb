@@ -2,7 +2,7 @@ class WeeklyMenu < ActionMailer::Base
   add_template_helper WeeklyMenuSubscriptionsHelper
   add_template_helper ApplicationHelper
 
-  default from: '"HomeMade" sub@homemade-msk.ru'
+  default from: 'HomeMade <sub@homemade-msk.ru>'
 
   def email(subscriber)
     @recipes = Rails.cache.fetch 'featured_recipes', expires_in: 10.seconds do
