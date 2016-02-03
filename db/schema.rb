@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20160127082739) do
 
   create_table "weekly_menu_subscriptions", force: true do |t|
     t.string   "email",      null: false
+    t.string   "token",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

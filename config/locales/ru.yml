@@ -330,3 +330,6 @@ ru:
       admin:
         invalid: 'Отказано: данные для входа указаны неверно'
         not_found_in_database: 'Отказано: данные для входа указаны неверно'
+  mailers:
+    weekly_menu:
+      subject: 'Новое меню на неделю'

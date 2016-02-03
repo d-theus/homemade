@@ -51,4 +51,25 @@ class RecipePhotoUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
+  def full_cache_path
+    "#{::Rails.root}/public/#{cache_dir}/#{cache_name}"
+  end
+
+  def base64
+    data = "data:image/jpeg;base64,"
+    data << Base64.encode64(self.preview.read)
+    data
+  end
+   
+  #private
+
+  #def encode_base64
+    #image = 
+      #manipulate! do |img|
+       #img.resize_to_fit [480, 480]
+      #img
+      #end.read
+    #data << Base64.encode64(image)
+    #File.write(self.current_path,data)
+  #end
 end

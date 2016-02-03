@@ -11,14 +11,34 @@ class WeeklyMenuSubscriptionsController < ApplicationController
   end
 
   def destroy
+    @sub = WeeklyMenuSubscription.find(params[:id])
+
+    if @sub.token != params[:token]
+      render json: { status: 'error', message: 'unauthorized' }, status: :unauthorized
+      return
+    end
+
     if @sub.destroy
-      render :unsubscribed
+      respond_to do |f|
+        f.html { render :unsubscribed }
+        f.json { render nothing: true, status: :ok }
+      end
     else
-      render json: { status: 'error', message: @sub.errors.full_messages }, status: :unprocessable_entity
+      respond_to do |f|
+        f.json { render json: { status: 'error', message: @sub.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
   def unsubscribed
+  end
+
+  def show
+    @recipes = Recipe.featured
+    @sub = WeeklyMenuSubscription.find(params[:id])
+    respond_to do |f|
+      f.html
+    end
   end
 
   private

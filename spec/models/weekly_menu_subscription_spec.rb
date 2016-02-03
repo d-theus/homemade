@@ -10,4 +10,12 @@ RSpec.describe WeeklyMenuSubscription, type: :model do
       expect(c.new(email: 'asfdsdf@aslkdfj.ru')).to be_valid
     end
   end
+
+  describe 'token' do
+    let(:wms) { c.create(email: 'subscriber@example.com') }
+
+    it 'has token' do
+      expect(wms.token).to be_a String
+    end
+  end
 end

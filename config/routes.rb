@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   post 'order/:id/close', controller: :orders, action: :close, as: :close_order
   post 'order/:id/pay', controller: :orders, action: :pay, as: :pay_order
   resources :orders, only: [:new, :create, :index, :destroy]
-  get 'weekly_menu_subscriptions/unsubscribed', controller: :weekly_menu_subscriptions, action: :unsubscribed
-  resources :weekly_menu_subscriptions, only: [:create, :destroy], defaults: { format: :json }
+  resources :weekly_menu_subscriptions, only: [:show, :create], defaults: { format: :json } do
+    get :unsubscribe, action: :destroy, on: :member
+    get :unsubscribed, action: :unsubscribed, on: :collection
+  end
   resources :contacts, except: [:edit, :update] do
     put :read, action: :read, as: :read, on: :member
   end

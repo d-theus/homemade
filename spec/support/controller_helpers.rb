@@ -17,6 +17,13 @@ shared_context 'an unauthorized request' do
   end
 end
 
+shared_context '401_response' do
+  it 'returns 401' do
+    req() if defined? req
+    expect(response).to have_http_status(:unauthorized)
+  end
+end
+
 shared_context 'an authorized request' do
   it 'does not return 403' do
     req() if defined? req
