@@ -61,7 +61,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: "homemade-msk.ru"}
-  config.action_mailer.asset_host = 'https://homemade-msk.ru'
+  config.action_mailer.asset_host = 'http://homemade-msk.ru'
   config.action_mailer.smtp_settings = {
     address: 'postfix',
     port: 25,
