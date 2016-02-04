@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :weekly_menu_subscriptions, only: [:show, :create], defaults: { format: :json } do
     get :unsubscribe, action: :destroy, on: :member
     get :unsubscribed, action: :unsubscribed, on: :collection
+    post :deliver, action: :deliver, on: :collection
   end
   resources :contacts, except: [:edit, :update] do
     put :read, action: :read, as: :read, on: :member

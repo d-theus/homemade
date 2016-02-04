@@ -41,6 +41,14 @@ class WeeklyMenuSubscriptionsController < ApplicationController
     end
   end
 
+  def deliver
+    WeeklyMenuSubscription.find_each do |sub|
+      WeeklyMenu.email(sub).deliver!
+    end
+
+    render nothing: true, status: :ok
+  end
+
   private
 
   def subscription_params

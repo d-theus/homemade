@@ -12,6 +12,11 @@
           title: "убрать рецепты",
           data: { remote: true, method: :delete, format: :json, confirm: 'Переместить рецепты с главной страницы в архив?'}}
           УБРАТЬ РЕЦЕПТЫ ИЗ МЕНЮ
+      %li
+        %a.btn.btn-flat#deliver_featured_recipes{href: deliver_weekly_menu_subscriptions_path,
+          title: "Разослать подписчикам рецепты на неделю",
+          data: { remote: true, method: :post, format: :json, confirm: 'Разослать рецепты подписчикам?'}}
+          РАЗОСЛАТЬ ПОДПИСЧИКАМ
   .col-xs-6.col-xs-offset-0.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
     %table.table#recipes
       %thead
