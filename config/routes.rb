@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :phone_callbacks, except: [:show, :edit, :update] do
     put :close, action: :close, as: :close, on: :member
   end
+  resource :policy, only: [:show], controller: :policy
   devise_for :admins
   root to: 'landing#index'
 end
