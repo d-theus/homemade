@@ -54,7 +54,13 @@ class OrdersController < ApplicationController
     @orders = Order
     .order('created_at DESC')
     .where(query_params)
-    .paginate(page: params[:page], per_page: 12)
+    respond_to do |f|
+      f.html do
+        @orders = @orders.paginate(page: params[:page], per_page: 12)
+      end
+      f.xls do
+      end
+    end
   end
 
   def destroy
