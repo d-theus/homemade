@@ -29,7 +29,7 @@
           %th(rowspan=1 colspan=3) Заказчик
           %th(rowspan=2) Оплата
           %th(rowspan=2) Статус
-          %th(rowspan=2) Доставить
+          %th(rowspan=2 colspan=2) Доставить
           %th(rowspan=2) Управление
         %tr
           %th(rowspan=1) Телефон
@@ -50,7 +50,7 @@
             %td= ord.address
             %td= t "activerecord.values.order.payment_method.#{ord.payment_method}"
             %td= t "activerecord.values.order.status.#{ord.status}"
-            %td= next_sunday(ord.created_at)
+            %td #{next_sunday(ord.created_at)} в #{ord.interval}
             %td
               = link_to 'ЗАВЕРШИТЬ',
                 close_order_path(ord),
