@@ -53,13 +53,12 @@ class OrdersController < ApplicationController
   def index
     @orders = Order
     .order('created_at DESC')
-    .where(query_params)
+    .where(query)
     respond_to do |f|
       f.html do
         @orders = @orders.paginate(page: params[:page], per_page: 12)
       end
-      f.xls do
-      end
+      f.xls
     end
   end
 
@@ -108,5 +107,9 @@ class OrdersController < ApplicationController
 
   def query_params
     params.permit(:payment_method, :status)
+  end
+
+  def query
+    query_params.keep_if { |k,v| !v.blank? }
   end
 end

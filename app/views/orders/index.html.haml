@@ -3,17 +3,19 @@
     %h1 Заказы
 .row
   .col-xs-9.col-xs-offset-1
-    = form_tag orders_path, method: :get, class: 'form-inline material' do |f|
+    = form_tag orders_path, method: :get, class: 'form-inline material', id: 'query' do |f|
       %span.col-xs-3
         = select_tag 'status', 
           options_for_select(statuses, params[:status]),
           placeholder: "Статус"
-      %span.col-xs-5
+      %span.col-xs-4
         = select_tag 'payment_method',
           options_for_select(payment_methods, params[:payment_method]),
           placeholder: "Способ оплаты"
-      %span.col-xs-1
+      %span.col-xs-3
         = submit_tag "ПРИМЕНИТЬ ФИЛЬТР", class: 'btn btn-primary'
+      %span.col-xs-2
+        = link_to 'ОЧИСТИТЬ ФИЛЬТР', orders_path, class:  'btn btn-flat'
   .col-xs-2
     %br/
     %a.btn.btn-flat.text-success{href: orders_path(format: :xls)} EXCEL
@@ -65,4 +67,5 @@
 
     = will_paginate @orders, renderer: BootstrapPagination::Rails
 
+= javascript_include_tag 'orders.js', async: true
 - content_for(:title) { 'Заказы' }
