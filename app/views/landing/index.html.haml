@@ -1,32 +1,30 @@
 .jumbotron#hero
-  %center
-    = image_tag 'logo.svg', class: 'hero-logo'
+  .row
+    %center.col-xs-12
+      = image_tag 'logo.svg', class: 'hero-logo'
+  .row
+    %center.col-xs-12.col-md-8.col-md-offset-2.col-lg-4.col-lg-offset-4.hero-text
+      %p Мы производим и доставляем наборы высококачественных продуктов для быстрого и лёгкого приготовления ужинов дома.
+      - if @recipes.count == 5
+        %a.btn.btn-primary{href: "#", data: { toggle: 'modal', target: '#order_modal' }} ОФОРМИТЬ ЗАКАЗ
+        %a.btn.btn-flat.text-primary{href: '#menu'} МЕНЮ
 .jumbotron#order
   .row.lead
     %center.col-xs-12.jt
-      %span.text-nowrap.cta1 Набор свежих продуктов
-      %span.text-nowrap.cta1 на неделю
-      %br/
-      %span.text-nowrap.cta1 для приготовления ужинов
-      %span.text-nowrap.cta1 на двоих
-      %br/
-      %span.text-nowrap.cta2 с доставкой в воскресенье,
-      %span.text-nowrap.cta2#d_date>= next_sunday
-      %br/
-      %br/
-    .row
-      %center.col-xs-12.jt
-        - if @recipes.count == 5
-          %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
-        - else
-          %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
-          %br/
-          %small Нельзя ОФОРМИТЬ ЗАКАЗ: меню составляется
-          %br/
-
-    .row.text-center.text-inverse.small
-      %br/
-      %a{href:'#how'} как это работает?
+      %span.cta1 Закажите сейчас, и в воскресенье,&nbsp;
+      %span.cta1#d_date>= next_sunday + ","
+      %span.cta1 &nbsp;к Вам приедет коробка с продуктами и рецептами блюд на следующую неделю.
+  .row.lead
+    %center.col-xs-12.jt
+      - if @recipes.count == 5
+        %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
+      - else
+        %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
+        %br/
+        %small Нельзя ОФОРМИТЬ ЗАКАЗ: меню составляется
+        %br/
+  .row.text-center.text-inverse.small
+    %a{href:'#how'} как всё устроено?
 .jumbotron#menu
   %center
     %h1.jt МЕНЮ НА НЕДЕЛЮ
@@ -74,26 +72,36 @@
 
 .jumbotron#how
   %center.jt
-    %h1 КАК ЭТО РАБОТАЕТ?
+    %h1 КАК ВСЁ УСТРОЕНО?
+
+  %section.jt.lead
+    %h2 ВЫБИРАЕТЕ
+    размер набора, который вам подходит:
+    %ul
+      %li набор для приготовления пяти ужинов на двух человек
+      %li набор для приготовления трёх ужинов на двух человек
 
   %section.jt.lead
     %h2 ЗАКАЗЫВАЕТЕ
-    При заказе с понедельника по пятницу
-    в воскресенье вы получаете коробку с рецептами
-    и продуктами на следующую неделю.
+    с понедельника по четверг на сайте или по телефону
 
   %section.jt.lead
-    %h2 В КАЖДОЙ КОРОБКЕ
-    Три или пять наборов свежих продуктов для ужина на каждый день.
-
-    Для сохранения свежести продуктов используется специальная упаковка.
+    %h2 ПОЛУЧАЕТЕ
+    в воскресенье, в удобное для Вас время. В пятницу наш оператор
+    позвонит Вам, чтобы подтвердить заказ
+    %p
+      %small Доставка в пределах МКАД.
 
   %section.jt.lead
-    %h2 В НАБОРЕ
-    Всё для приготовления блюда на двоих:
-    свежие продукты, приправы и специи в точно рассчитанных количествах,
-    а так же красочный и подробный рецепт, который подойдет как опытным кулинарам,
-    так и начинающим.
+    %h2 ГОТОВИТЕ
+    ужины как в ресторане всего за 20 ― 35 минут с помощью наших наборов.
+    В каждом наборе находится:
+    %ul
+      %li
+        свежие продукты, подготовленные таким образом, чтобы Вы могли масимально
+        быстро приготовить ужин ресторанного качества
+      %li
+        подробные рецепты, разработанные профессионалами
 
   %center.jt
     %span.lead Вот так просто.

@@ -1,35 +1,27 @@
 #hero{
-  @media only screen and (min-width: 0) and (orientation: portrait){
-    background: image-url('bg-sm.jpg') no-repeat 50% 100%;
-    -webkit-background-size: auto 100%;
-    -moz-background-size:    auto 100%;
-    -o-background-size:      auto 100%;
-    background-size:         auto 100%;
-    height: 50vh;
+  @media only screen and (min-width: 0){
+    background: #fff;
   }
-  @media only screen and (min-width: 0) and (orientation: landscape){
-    background: image-url('bg-sm.jpg') no-repeat 50% 90%;
+  @media only screen and (min-width: 321px) and (orientation: portrait){
+    background: image-url('bg-sm-p.jpg') no-repeat 50% 100%;
     -webkit-background-size: 100% auto;
     -moz-background-size:    100% auto;
     -o-background-size:      100% auto;
     background-size:         100% auto;
-    height: 78vh;
   }
-  @media only screen and (min-width: @screen-md){
+  @media only screen and (min-width: 600px){
     background: image-url('bg-md.jpg') no-repeat 50% 100%;
     -webkit-background-size: 100% auto;
     -moz-background-size:    100% auto;
     -o-background-size:      100% auto;
     background-size:         100% auto;
-    height: 55vh;
   }
-  @media only screen and (min-width: @screen-md) and (max-height: 820px){
-    background: image-url('bg-md.jpg') no-repeat 50% 100%;
+  @media only screen and (min-width: 600px) and (orientation: portrait){
+    background: image-url('bg-lg-p.jpg') no-repeat 50% 100%;
     -webkit-background-size: 100% auto;
     -moz-background-size:    100% auto;
     -o-background-size:      100% auto;
     background-size:         100% auto;
-    height: 70vh;
   }
   @media only screen and (min-width: @screen-lg){
     background: image-url('bg-lg.jpg') no-repeat 50% 100%;
@@ -37,15 +29,12 @@
     -moz-background-size:    100% auto;
     -o-background-size:      100% auto;
     background-size:         100% auto;
-    height: 55vh;
+  }
+  @media only screen and (min-width: @screen-lg) and (min-height: 941px){
+    //height: 45vh;
   }
   @media only screen and (min-width: @screen-lg) and (max-height: 940px){
-    background: image-url('bg-md.jpg') no-repeat 50% 100%;
-    -webkit-background-size: 100% auto;
-    -moz-background-size:    100% auto;
-    -o-background-size:      100% auto;
-    background-size:         100% auto;
-    height: 80vh;
+    //height: 85vh;
   }
   @media only screen and (min-width: 1921px){
     background: image-url('bg-xl.jpg') no-repeat 50% 100%;
@@ -53,29 +42,44 @@
     -moz-background-size:    100% auto;
     -o-background-size:      100% auto;
     background-size:         100% auto;
-    height: 80vh;
+    //height: 80vh;
   }
+  min-height: 100vh;
   margin: 0;
   margin-top: -@navbar-height;
 
   .hero-logo{
-    @media only screen and (min-width: 0) and (orientation: portrait){
-      margin-top: 1em;
-      width: 40%;
+    @media only screen and (max-width: 339px) and (orientation: portrait){
+      width: 12em;
     }
     @media only screen and (min-width: 0) and (orientation: landscape){
-      width: 25%;
+      width: 14em;
     }
-    @media only screen and (min-width: @screen-sm) and (orientation: portrait){
-      margin-top: 1em;
-      width: 23%;
+    @media only screen and (min-width: 340px) and (orientation: portrait){
+      margin-top: 2em;
+      width: 16em;
+    }
+    @media only screen and (min-width: 600px) and (orientation: portrait){
+      margin-top: 4em;
+      margin-bottom: 2em;
     }
     @media only screen and (min-width: @screen-sm) and (orientation: landscape){
-      margin-top: 0.5em;
-      width: 33%;
+      margin-top: 1em;
+      width: 18em;
     }
     @media only screen and (min-width: @screen-md){
-      width: 16em;
+      width: 18em;
+      margin-top: -1em;
+    }
+    margin-bottom: 1em;
+  }
+
+  .hero-text{
+    .lead;
+    text-align: center;
+    font-weight: 600;
+    @media only screen and (max-width: 360px){
+      font-size: 12px;
     }
   }
 }
