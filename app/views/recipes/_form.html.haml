@@ -13,7 +13,13 @@
   .form-group
     = f.label :photo
     = f.input :photo, wrapper: false
+    - if @recipe.photo_cache
+      %p Выбрано: #{ @recipe.photo_cache }
   .form-group
     = f.label :picture
     = f.input :picture, wrapper: false
+    - if @recipe.picture_cache
+      %p Выбрано: #{ @recipe.picture_cache }
+  = f.hidden_field :photo_cache
+  = f.hidden_field :picture_cache
   = f.submit 'Готово', class: 'btn btn-primary btn-lg'

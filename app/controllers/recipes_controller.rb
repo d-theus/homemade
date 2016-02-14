@@ -78,6 +78,7 @@ class RecipesController < ApplicationController
       :title, :subtitle, :day,
       :calories, :cooking_time,
       :photo, :picture,
+      :photo_cache, :picture_cache,
       inventory_item_ids: []
     )
   end

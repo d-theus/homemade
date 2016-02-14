@@ -13,6 +13,7 @@ class Recipe < ActiveRecord::Base
 
   scope :featured, ->{ where('day IN (1,2,3,4,5)') }
 
+
   mount_uploader :photo, RecipePhotoUploader
   mount_uploader :picture, RecipePictureUploader
 
