@@ -16,6 +16,7 @@
   background: @brand-primary;
   overflow: hidden;
   width: 100%;
+  width: 100vw;
   margin: 0;
   top: 0;
   z-index: 100;
@@ -174,4 +175,9 @@ a.tel{
 .material.form-inline{
   display: inline-flex;
   align-items: center;
+}
+
+body>footer ul.nav>li>a{
+    overflow-x: hidden;
+    text-overflow: clip ellipsis;
 }
