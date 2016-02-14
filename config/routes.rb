@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     put :close, action: :close, as: :close, on: :member
   end
   resource :policy, only: [:show], controller: :policy
+  resource :offer, only: [:show], controller: :offer
   devise_for :admins
   root to: 'landing#index'
 end
