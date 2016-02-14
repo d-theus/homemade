@@ -10,6 +10,10 @@ class InventoryItemsController < ApplicationController
     @ii = InventoryItem.new
   end
 
+  def edit
+    @ii = InventoryItem.find(params[:id])
+  end
+
   def create
     @ii = InventoryItem.create(ii_params)
     if @ii.persisted?

@@ -42,7 +42,7 @@
               %ul.list-group
                 - @recipe.inventory_items.each do |ii|
                   %li.list-group-item
-                    = inventory_item_tag(ii)
+                    = inventory_item_tag(ii, width: '10%')
                     %span.lead &nbsp;&nbsp;#{ii.name}
             %section
               %h3 Как приготовить
