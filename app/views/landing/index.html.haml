@@ -6,14 +6,13 @@
     %center.col-xs-12.col-md-8.col-md-offset-2.col-lg-4.col-lg-offset-4.hero-text
       %p Мы производим и доставляем наборы высококачественных продуктов для быстрого и лёгкого приготовления ужинов дома.
       - if @recipes.count == 5
-        %a.btn.btn-primary{href: "#", data: { toggle: 'modal', target: '#order_modal' }} ОФОРМИТЬ ЗАКАЗ
-        %a.btn.btn-flat.text-primary{href: '#menu'} МЕНЮ
+        %a.btn.btn-primary{href: '#menu'} ПОСМОТРЕТЬ МЕНЮ
 .jumbotron#order
   .row.lead
     %center.col-xs-12.jt
-      %span.cta1 Закажите сейчас, и в воскресенье,&nbsp;
-      %span.cta1#d_date>= next_sunday + ","
-      %span.cta1 &nbsp;к Вам приедет коробка с продуктами и рецептами блюд на следующую неделю.
+      %span Закажите сейчас, и в воскресенье,&nbsp;
+      %span#d_date>= next_sunday + ","
+      %span &nbsp;к Вам приедет коробка с продуктами и рецептами блюд на следующую неделю.
   .row.lead
     %center.col-xs-12.jt
       - if @recipes.count == 5
