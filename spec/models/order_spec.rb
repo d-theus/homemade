@@ -243,10 +243,47 @@ RSpec.describe Order, type: :model do
     it_behaves_like '?-method', status: :new
     it_behaves_like '?-method', status: :awaiting_delivery
     it_behaves_like '?-method', status: :awaiting_refund
-    it_behaves_like '?-method', status: :paid
     it_behaves_like '?-method', status: :pending
     it_behaves_like '?-method', status: :closed
     it_behaves_like '?-method', status: :cancelled
+
+    describe '#paid?' do
+      context 'when cash' do
+        Order::STATUS_TABLE.keys.each do |st|
+          it 'isnt' do
+            order = FactoryGirl.create(:order)
+            order.payment_method= 'cash'
+            order.status= st
+            order.save(validate: false)
+            expect(order).not_to be_paid
+          end
+        end
+      end
+      context 'when card' do
+        %w(new pending cancelled).each do |st|
+          context "when status = #{st}" do
+            it "isnt" do
+              order = FactoryGirl.create(:order)
+              order.payment_method= 'card'
+              order.status= st
+              order.save(validate: false)
+              expect(order).not_to be_paid
+            end
+          end
+        end
+        %w(paid awaiting_delivery awaiting_refund closed).each do |st|
+          context "when status = #{st}" do
+            it "is" do
+              order = FactoryGirl.create(:order)
+              order.payment_method= 'card'
+              order.status= st
+              order.save(validate: false)
+              expect(order).to be_paid
+            end
+          end
+        end
+      end
+    end
   end
 
   describe '#create' do

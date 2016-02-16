@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_or_forbid, except: [:new, :create, :pay, :received]
-  before_action :fetch_order, only: [:cancel, :close, :pay, :destroy]
+  before_action :fetch_order, only: [:cancel, :close, :destroy]
 
   def new
     @order = Order.new
@@ -41,12 +41,17 @@ class OrdersController < ApplicationController
   end
 
   def pay
-    if @order.pay
-      flash.now[:notice] = "Заказ №#{@order.id} завершен"
-      redirect_to orders_path
+    @order = Order.find(params[:customerNumber])
+    if params[:action] == 'paymentAviso'
+      if @order.pay
+        flash.now[:notice] = "Заказ №#{@order.id} завершен"
+        redirect_to orders_path
+      else
+        flash.now[:alert] = "Нельзя заплатить за заказ №#{@order.id}"
+        redirect_to orders_path, status: :unprocessable_entity
+      end
     else
-      flash.now[:alert] = "Нельзя заплатить за заказ №#{@order.id}"
-      redirect_to orders_path, status: :unprocessable_entity
+      render json: { code: }
     end
   end
 

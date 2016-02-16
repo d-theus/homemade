@@ -12,6 +12,8 @@ class Order < ActiveRecord::Base
 
   PAYMENT_METHODS = %w(cash card)
 
+  PRICES = { 5 => 3500, 3 => 2500 }
+
   validates :payment_method, presence: true, format: /\A(card|cash)\z/
   validates :count, presence: true, inclusion: { in: [3,5] }
   validates :name,  presence: true, length: { minimum: 2, maximum: 99 }
@@ -56,10 +58,20 @@ class Order < ActiveRecord::Base
     %w(cancelled closed).include? status
   end
 
+  def paid?
+    return false if self.payment_method != 'card'
+    %w(paid awaiting_delivery awaiting_refund closed).include? status
+  end
+
   STATUS_TABLE.keys.each do |key|
+    next if key == 'paid'
     define_method "#{key}?" do
       status == key
     end
+  end
+
+  def price
+    PRICES[self.count]
   end
 
   private

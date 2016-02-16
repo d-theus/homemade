@@ -97,14 +97,6 @@ RSpec.describe OrdersController, type: :controller do
         it_behaves_like 'an unauthorized request'
       end
     end
-
-    describe '#pay' do
-      let(:req) { post :pay, id: order.id }
-      context 'when not signed in' do
-        before { sign_in nil }
-        it_behaves_like 'an authorized request'
-      end
-    end
   end
 
   describe '#delete' do

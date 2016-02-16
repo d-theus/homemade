@@ -5,10 +5,10 @@ Rails.application.routes.draw do
   resources :recipes
   resources :inventory_items, defaults: { format: :json}
   get 'orders/received', controller: :orders, action: :received, as: :received_order
-  post 'order/:id/cancel', controller: :orders, action: :cancel, as: :cancel_order
-  post 'order/:id/close', controller: :orders, action: :close, as: :close_order
-  post 'order/:id/pay', controller: :orders, action: :pay, as: :pay_order
-  resources :orders, only: [:new, :create, :index, :destroy]
+  resources :orders, only: [:new, :create, :index, :destroy] do
+    post :cancel, action: :cancel, on: :member
+    post :close, action: :close, on: :member
+  end
   resources :weekly_menu_subscriptions, only: [:show, :create], defaults: { format: :json } do
     get :unsubscribe, action: :destroy, on: :member
     get :unsubscribed, action: :unsubscribed, on: :collection
@@ -23,5 +23,10 @@ Rails.application.routes.draw do
   resource :policy, only: [:show], controller: :policy
   resource :offer, only: [:show], controller: :offer
   devise_for :admins
+  resource :yandex_kassa, only: [], controller: :yandex_kassa, defaults: { format: :xml } do
+    post :paymentAviso, on: :collection
+    post :checkOrder, on: :collection
+    post :cancelOrder, on: :collection
+  end
   root to: 'landing#index'
 end
