@@ -62,20 +62,28 @@ RSpec.describe OrdersController, type: :controller do
 
     context 'w/ valid' do
       before { sign_in as_user }
-       before { post :create, order: FactoryGirl.attributes_for(:order) }
-       subject { response }
+      before { post :create, order: order_attributes }
+      subject { response }
 
-       context 'when admin' do
-         let(:as_user) { double('admin') }
+      context 'when admin' do
+        let(:as_user) { double('admin') }
+        let(:order_attributes) { FactoryGirl.attributes_for(:order) }
 
-         it { is_expected.to redirect_to orders_path }
-       end
+        it { is_expected.to redirect_to orders_path }
+      end
 
-       context 'when customer' do
-         let(:as_user) { nil }
+      context 'when customer' do
+        let(:as_user) { nil }
 
-         it { is_expected.to redirect_to received_order_path }
-       end
+        context 'when cash' do
+          let(:order_attributes) { FactoryGirl.attributes_for(:order, payment_method: 'cash') }
+          it { is_expected.to redirect_to received_order_path }
+        end
+        context 'when card' do
+          let(:order_attributes) { FactoryGirl.attributes_for(:order, payment_method: 'card') }
+          it { is_expected.to redirect_to pay_yandex_kassa_path(order_id: Order.last.id) }
+        end
+      end
     end
   end
 

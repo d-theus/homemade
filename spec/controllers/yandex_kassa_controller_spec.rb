@@ -244,4 +244,35 @@ RSpec.describe YandexKassaController, type: :controller do
        it_behaves_like 'http_response_with_status', :ok
     end
   end
+
+  describe 'POST pay' do
+    before { post :pay, order_id: order_id }
+    context 'when payment_method is "cash"' do
+      let(:order_id) { o = FactoryGirl.create(:order, payment_method: 'cash'); o.reload; o.id }
+
+      it_behaves_like 'http_response_with_status', :unprocessable_entity
+    end
+
+    context 'when payment_method is "card"' do
+
+      context 'and status is not "pending"' do
+        let(:order_id) { o = FactoryGirl.create(:order, payment_method: 'card'); o.status = 'awaiting_refund'; o.save(validate: false); o.id }
+
+        it_behaves_like 'http_response_with_status', :unprocessable_entity
+      end
+
+      context 'with pending order' do
+        let(:order_id) { o = FactoryGirl.create(:order, payment_method: 'card'); o.reload; o.id }
+        let(:order) { Order.find(order_id) }
+
+        it 'redirects to yandex kassa' do
+          expect(response).to redirect_to(
+            Rails.configuration.yandex_kassa.url,
+            customerNumber: order.id,
+            orderSumAmount: order.price
+          )
+        end
+      end
+    end
+  end
 end

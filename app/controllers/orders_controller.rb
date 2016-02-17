@@ -12,7 +12,8 @@ class OrdersController < ApplicationController
       if admin_signed_in?
         redirect_to orders_path
       else
-        redirect_to received_order_path
+        redirect_to received_order_path if @order.payment_method == 'cash'
+        redirect_to pay_yandex_kassa_path(order_id: @order.id) if @order.payment_method == 'card'
       end
     else
       flash.now[:alert] = t "flash.create.alert"
@@ -37,21 +38,6 @@ class OrdersController < ApplicationController
     else
       flash.now[:alert] = "Нельзя завершить заказ №#{@order.id}"
       redirect_to orders_path, status: :unprocessable_entity
-    end
-  end
-
-  def pay
-    @order = Order.find(params[:customerNumber])
-    if params[:action] == 'paymentAviso'
-      if @order.pay
-        flash.now[:notice] = "Заказ №#{@order.id} завершен"
-        redirect_to orders_path
-      else
-        flash.now[:alert] = "Нельзя заплатить за заказ №#{@order.id}"
-        redirect_to orders_path, status: :unprocessable_entity
-      end
-    else
-      render json: { code: }
     end
   end
 

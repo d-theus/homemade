@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     post :paymentAviso, on: :collection
     post :checkOrder, on: :collection
     post :cancelOrder, on: :collection
+    post :pay, on: :collection
   end
   root to: 'landing#index'
 end

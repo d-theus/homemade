@@ -1,6 +1,6 @@
 class YandexKassaController < ApplicationController
   respond_to :xml
-  before_action :digest
+  before_action :digest, except: :pay
   before_action :fetch_order
 
   def paymentAviso
@@ -88,6 +88,16 @@ class YandexKassaController < ApplicationController
     end
   end
 
+  def pay
+    unless @order.can_pay?
+      render text: 'За этот заказ нельзя заплатить',
+        status: :unprocessable_entity
+      return false
+    end
+
+    redirect_to Rails.application.config.yandex_kassa.url, method: :post
+  end
+
   private
   
   def xml_response(hash)
@@ -113,7 +123,8 @@ class YandexKassaController < ApplicationController
 
   def fetch_order
     begin
-      @order = Order.find(params[:customerNumber])
+      id = params[:customerNumber] || params[:order_id]
+      @order = Order.find(id)
     rescue ActiveRecord::RecordNotFound
       render xml: xml_response(
         code: YandexKassa::CODE_UNPROCESSABLE,

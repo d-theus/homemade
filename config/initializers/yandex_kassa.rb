@@ -1,7 +1,7 @@
 fail 'Yandex.Kassa API key required' unless ENV["YANDEX_KASSA_KEY"] && ENV["YANDEX_KASSA_SHOP_ID"]
 
 class YandexKassa
-  attr_accessor :shop_id, :shop_key
+  attr_accessor :shop_id, :shop_key, :url
   CODE_SUCCESS = 0
   CODE_UNAUTHORIZED = 1
   CODE_DENY = 100
@@ -26,4 +26,5 @@ end
 Rails.application.config.yandex_kassa = YandexKassa.new
 Rails.application.config.yandex_kassa.shop_id = ENV["YANDEX_KASSA_SHOP_ID"]
 Rails.application.config.yandex_kassa.shop_key = ENV["YANDEX_KASSA_KEY"]
+Rails.application.config.yandex_kassa.url = "https://demomoney.yandex.ru/eshop.xml"
 
