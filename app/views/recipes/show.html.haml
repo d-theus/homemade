@@ -36,16 +36,20 @@
                 %i.fa.fa-fw.fa-fire
                 #{@recipe.calories} ккал.
         .row
-          .col-xs-11.col-xs-offset-1.col-sm-12.col-sm-offset-0
+          .col-xs-11.col-xs-offset-1.col-sm-11.col-sm-offset-1
             %section
               %h3 Для приготовления понадобится
-              %ul.list-group
-                - @recipe.inventory_items.each do |ii|
-                  %li.list-group-item
-                    = inventory_item_tag(ii, width: '10%')
-                    %span.lead &nbsp;&nbsp;#{ii.name}
+              %div
+                - @recipe.inventory_items.each_slice(2) do |iis|
+                  .row
+                    - iis.compact.each do |ii|
+                      .col-xs-6
+                        = inventory_item_tag(ii, height: '22px')
+                        %span &nbsp;&nbsp;#{ii.name}
+                    %br/
+                    %br/
+            %br
             %section
-              %h3 Как приготовить
               %button.btn.btn-primary{ type: :button, data: { toggle: 'modal', target: '#picture_modal' }}
                 ПОКАЗАТЬ РЕЦЕПТ
 = render partial: 'picture_modal'
