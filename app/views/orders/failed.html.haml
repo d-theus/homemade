@@ -12,7 +12,7 @@
             Возникли проблемы с оплатой Вашего заказа при помощи
             пластиковой карты.
         .row
-          %center.col-xs-6
+          %center.col-xs-6.col-lg-3.col-lg-offset-3
             = form_tag Rails.application.config.yandex_kassa.url do
               = hidden_field_tag :shop_id, Rails.application.config.yandex_kassa.shop_id
               = hidden_field_tag :scid, Rails.application.config.yandex_kassa.scid
@@ -21,10 +21,11 @@
               = hidden_field_tag :sum, @order.price
               = submit_tag 'ЕЩЁ РАЗ', class: 'btn btn-primary btn-lg'
 
-          %center.col-xs-6
+          %center.col-xs-6.col-lg-3
             = link_to 'ОТМЕНИТЬ ЗАКАЗ', cancel_order_path(@order), class: 'btn btn-flat text-primary'
 
         
+    %br/
     %br/
     %center.row
       = link_to 'НА ГЛАВНУЮ', root_path, class: 'btn btn-primary'

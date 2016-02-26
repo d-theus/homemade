@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :recipes
   resources :inventory_items, defaults: { format: :json}
   get 'orders/received/:id', controller: :orders, action: :received, as: :received_order
-  get 'orders/failed/:id', controller: :orders, action: :received, as: :failed_order
+  get 'orders/failed', controller: :orders, action: :failed, as: :failed_order
   resources :orders, only: [:new, :create, :index, :destroy] do
     post :cancel, action: :cancel, on: :member
     post :close, action: :close, on: :member

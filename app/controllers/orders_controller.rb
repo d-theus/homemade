@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_or_forbid, except: [:new, :create, :pay, :received]
-  before_action :fetch_order, only: [:cancel, :close, :destroy, :received, :failed]
+  before_action :authenticate_or_forbid, except: [:new, :create, :pay, :received, :failed]
+  before_action :fetch_order, only: [:cancel, :close, :destroy, :received]
 
   def new
     @order = Order.new
@@ -67,6 +67,7 @@ class OrdersController < ApplicationController
   end
 
   def failed
+    @order = Order.find(params[:customerNumber])
   end
 
   private
