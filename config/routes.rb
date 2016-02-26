@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   end
   resources :recipes
   resources :inventory_items, defaults: { format: :json}
-  get 'orders/received', controller: :orders, action: :received, as: :received_order
+  get 'orders/received/:id', controller: :orders, action: :received, as: :received_order
+  get 'orders/failed/:id', controller: :orders, action: :received, as: :failed_order
   resources :orders, only: [:new, :create, :index, :destroy] do
     post :cancel, action: :cancel, on: :member
     post :close, action: :close, on: :member
@@ -27,7 +28,7 @@ Rails.application.routes.draw do
     post :paymentAviso, on: :collection
     post :checkOrder, on: :collection
     post :cancelOrder, on: :collection
-    post :pay, on: :collection
+    get :pay, on: :collection
   end
   root to: 'landing#index'
 end

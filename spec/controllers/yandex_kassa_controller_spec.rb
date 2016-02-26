@@ -267,9 +267,12 @@ RSpec.describe YandexKassaController, type: :controller do
 
         it 'redirects to yandex kassa' do
           expect(response).to redirect_to(
-            Rails.configuration.yandex_kassa.url,
-            customerNumber: order.id,
-            orderSumAmount: order.price
+            Rails.configuration.yandex_kassa.url(
+              shop_id: Rails.application.config.yandex_kassa.shop_id,
+              scid: Rails.application.config.yandex_kassa.scid,
+              customerNumber: order.id,
+              sum: order.price
+            )
           )
         end
       end

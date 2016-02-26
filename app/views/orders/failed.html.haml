@@ -1,0 +1,32 @@
+%br
+.row
+  %center.col-xs-12
+    .row
+      .col-xs-2.col-xs-offset-5
+        = image_tag 'logo.svg', class: 'img-responsive'
+    .row.lead
+      .col-xs-12
+        .row
+          %h2 Что-то пошло не так!
+          .lead
+            Возникли проблемы с оплатой Вашего заказа при помощи
+            пластиковой карты.
+        .row
+          %center.col-xs-6
+            = form_tag Rails.application.config.yandex_kassa.url do
+              = hidden_field_tag :shop_id, Rails.application.config.yandex_kassa.shop_id
+              = hidden_field_tag :scid, Rails.application.config.yandex_kassa.scid
+              = hidden_field_tag :customerNumber, @order.id
+              = hidden_field_tag :paymentType, 'AC'
+              = hidden_field_tag :sum, @order.price
+              = submit_tag 'ЕЩЁ РАЗ', class: 'btn btn-primary btn-lg'
+
+          %center.col-xs-6
+            = link_to 'ОТМЕНИТЬ ЗАКАЗ', cancel_order_path(@order), class: 'btn btn-flat text-primary'
+
+        
+    %br/
+    %center.row
+      = link_to 'НА ГЛАВНУЮ', root_path, class: 'btn btn-primary'
+
+= javascript_include_tag 'weekly_menu_subscriptions.js'

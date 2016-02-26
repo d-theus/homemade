@@ -4,12 +4,10 @@
     .row
       .col-xs-2.col-xs-offset-5
         = image_tag 'logo.svg', class: 'img-responsive'
-    .row
-      %h1 Спасибо за Ваш заказ.
-    %br/
-    .row
-      .lead
-        В ближайшее время с Вами свяжутся для уточнения деталей доставки.
+    - if @order.payment_method == 'cash'
+      = render partial: "thank_you"
+    - if @order.can_pay?
+      = render partial: "proceed_to_payment"
     %br/
     .row.lead
       .col-xs-12

@@ -95,7 +95,14 @@ class YandexKassaController < ApplicationController
       return false
     end
 
-    redirect_to Rails.application.config.yandex_kassa.url, method: :post
+    redirect_to(
+      Rails.application.config.yandex_kassa.url(
+        shop_id: Rails.application.config.yandex_kassa.shop_id,
+        scid: Rails.application.config.yandex_kassa.scid,
+        customerNumber: @order.id,
+        sum: @order.price
+      )
+    )
   end
 
   private

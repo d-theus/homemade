@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_or_forbid, except: [:new, :create, :pay, :received]
-  before_action :fetch_order, only: [:cancel, :close, :destroy]
+  before_action :fetch_order, only: [:cancel, :close, :destroy, :received, :failed]
 
   def new
     @order = Order.new
@@ -12,8 +12,7 @@ class OrdersController < ApplicationController
       if admin_signed_in?
         redirect_to orders_path
       else
-        redirect_to received_order_path if @order.payment_method == 'cash'
-        redirect_to pay_yandex_kassa_path(order_id: @order.id) if @order.payment_method == 'card'
+        redirect_to received_order_path(id: @order.id)
       end
     else
       flash.now[:alert] = t "flash.create.alert"
@@ -65,6 +64,9 @@ class OrdersController < ApplicationController
 
   def received
     @subscription = WeeklyMenuSubscription.new
+  end
+
+  def failed
   end
 
   private
