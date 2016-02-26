@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   resource :yandex_kassa, only: [], controller: :yandex_kassa, defaults: { format: :xml } do
     post :paymentAviso, on: :collection
     post :checkOrder, on: :collection
+    get :checkOrder, on: :collection
     post :cancelOrder, on: :collection
     get :pay, on: :collection
   end

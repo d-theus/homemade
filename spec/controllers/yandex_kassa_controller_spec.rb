@@ -57,13 +57,15 @@ RSpec.describe YandexKassaController, type: :controller do
     vp
   end
 
-  shared_examples 'xml_response_with_code' do |code|
+  shared_examples 'xml_response' do
     it 'has mime type xml' do
       expect(response.content_type).to eq 'application/xml'
     end
-    it "#{code}" do
-      hash = Hash.from_xml(response.body)["hash"].with_indifferent_access
-      expect(hash[:code].to_s).to eq code.to_s
+  end
+
+  shared_examples 'assigning_variables' do
+    it 'has valid invoiceId' do
+      expect(assigns[:invoiceId].to_s).to eq '1234567'
     end
   end
 
@@ -86,14 +88,14 @@ RSpec.describe YandexKassaController, type: :controller do
     context 'with invalid customer id' do
       let(:payment_params) { valid_payment_params(customerNumber: -5 ) }
 
-      it_behaves_like 'xml_response_with_code', 200
+      it_behaves_like 'xml_response'
       it_behaves_like 'http_response_with_status', :not_found
     end
 
     context 'with invalid md5' do
       let(:payment_params) { valid_payment_params.merge(md5: 'lkajlsdfj') }
 
-      it_behaves_like 'xml_response_with_code', 1
+      it_behaves_like 'xml_response'
       it_behaves_like 'http_response_with_status', :unauthorized
 
       it_behaves_like 'no_success_requrest'
@@ -103,14 +105,14 @@ RSpec.describe YandexKassaController, type: :controller do
       context 'when too much' do
         let(:payment_params) { valid_payment_params(shopSumAmount: '5000')}
 
-        it_behaves_like 'xml_response_with_code', 200
+        it_behaves_like 'xml_response'
         it_behaves_like 'http_response_with_status', :unprocessable_entity
         it_behaves_like 'no_success_requrest'
       end
       context 'when too small' do
         let(:payment_params) { valid_payment_params(shopSumAmount: '1500')}
 
-        it_behaves_like 'xml_response_with_code', 200
+        it_behaves_like 'xml_response'
         it_behaves_like 'http_response_with_status', :unprocessable_entity
         it_behaves_like 'no_success_requrest'
       end
@@ -120,13 +122,13 @@ RSpec.describe YandexKassaController, type: :controller do
       context 'when cash' do
         let(:payment_params) { valid_payment_params(order: unpaid_order) }
 
-        it_behaves_like 'xml_response_with_code', 200
+        it_behaves_like 'xml_response'
         it_behaves_like 'http_response_with_status', :unprocessable_entity
       end
       context 'when cancelled' do
         let(:payment_params) { valid_payment_params(order: cancelled_order) }
 
-        it_behaves_like 'xml_response_with_code', 200
+        it_behaves_like 'xml_response'
         it_behaves_like 'http_response_with_status', :unprocessable_entity
         it_behaves_like 'no_success_requrest'
       end
@@ -135,8 +137,9 @@ RSpec.describe YandexKassaController, type: :controller do
     context 'when all params are good' do
       let(:payment_params) { valid_payment_params }
 
-      it_behaves_like 'xml_response_with_code', 0
+      it_behaves_like 'xml_response'
       it_behaves_like 'http_response_with_status', :ok
+      it_behaves_like 'assigning_variables'
 
       it 'changes order status to "paid"' do
         order = Order.find(payment_params[:customerNumber])
@@ -149,7 +152,7 @@ RSpec.describe YandexKassaController, type: :controller do
 
       before { post :paymentAviso, payment_params }
 
-      it_behaves_like 'xml_response_with_code', 0
+      it_behaves_like 'xml_response'
       it_behaves_like 'http_response_with_status', :ok
     end
   end
@@ -160,14 +163,14 @@ RSpec.describe YandexKassaController, type: :controller do
     context 'with invalid customer id' do
       let(:check_params) { valid_check_params(customerNumber: -5 ) }
 
-      it_behaves_like 'xml_response_with_code', 200
+      it_behaves_like 'xml_response'
       it_behaves_like 'http_response_with_status', :not_found
     end
 
     context 'with invalid md5' do
       let(:check_params) { valid_payment_params.merge(md5: 'lkajlsdfj') }
 
-      it_behaves_like 'xml_response_with_code', 1
+      it_behaves_like 'xml_response'
       it_behaves_like 'http_response_with_status', :unauthorized
     end
 
@@ -175,13 +178,13 @@ RSpec.describe YandexKassaController, type: :controller do
       context 'when too much' do
         let(:check_params) { valid_check_params(shopSumAmount: '5000')}
 
-        it_behaves_like 'xml_response_with_code', 100
+        it_behaves_like 'xml_response'
         it_behaves_like 'http_response_with_status', :unprocessable_entity
       end
       context 'when too small' do
         let(:check_params) { valid_check_params(shopSumAmount: '1500')}
 
-        it_behaves_like 'xml_response_with_code', 100
+        it_behaves_like 'xml_response'
         it_behaves_like 'http_response_with_status', :unprocessable_entity
       end
     end
@@ -190,19 +193,19 @@ RSpec.describe YandexKassaController, type: :controller do
       context 'when cash' do
         let(:check_params) { valid_check_params(order: unpaid_order) }
 
-        it_behaves_like 'xml_response_with_code', 100
+        it_behaves_like 'xml_response'
         it_behaves_like 'http_response_with_status', :unprocessable_entity
       end
       context 'when cancelled' do
         let(:check_params) { valid_check_params(order: cancelled_order) }
 
-        it_behaves_like 'xml_response_with_code', 100
+        it_behaves_like 'xml_response'
         it_behaves_like 'http_response_with_status', :unprocessable_entity
       end
       context 'when paid' do
         let(:check_params) { valid_check_params(order: paid_order) }
 
-        it_behaves_like 'xml_response_with_code', 100
+        it_behaves_like 'xml_response'
         it_behaves_like 'http_response_with_status', :unprocessable_entity
       end
     end
@@ -210,8 +213,9 @@ RSpec.describe YandexKassaController, type: :controller do
     context 'when all params are good' do
       let(:check_params) { valid_check_params }
 
-      it_behaves_like 'xml_response_with_code', 0
+      it_behaves_like 'xml_response'
       it_behaves_like 'http_response_with_status', :ok
+      it_behaves_like 'assigning_variables'
     end
   end
 
@@ -221,27 +225,28 @@ RSpec.describe YandexKassaController, type: :controller do
     context 'with invalid customer id' do
       let(:cancel_params) { valid_cancel_params(customerNumber: -5) }
 
-       it_behaves_like 'xml_response_with_code', 200
-       it_behaves_like 'http_response_with_status', :not_found
+      it_behaves_like 'xml_response'
+      it_behaves_like 'http_response_with_status', :not_found
     end
     context 'with invalid md5' do
        let(:cancel_params) { valid_cancel_params.merge(md5: 'asldfjlsakdf') }
 
-       it_behaves_like 'xml_response_with_code', 1
+       it_behaves_like 'xml_response'
        it_behaves_like 'http_response_with_status', :unauthorized
     end
     context 'when order cannot be cancelled' do
        let(:cancel_params) { valid_cancel_params(order: cancelled_order) }
 
-       it_behaves_like 'xml_response_with_code', 200
+       it_behaves_like 'xml_response'
        it_behaves_like 'http_response_with_status', :unprocessable_entity
     end
 
     context 'when all good' do
        let(:cancel_params) { valid_cancel_params }
 
-       it_behaves_like 'xml_response_with_code', 0
+       it_behaves_like 'xml_response'
        it_behaves_like 'http_response_with_status', :ok
+       it_behaves_like 'assigning_variables'
     end
   end
 

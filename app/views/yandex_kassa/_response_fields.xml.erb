@@ -1,0 +1,7 @@
+performedDatetime="<%= Time.now.iso8601 %>"
+code="<%= @code %>"
+invoiceId="<%= @invoiceId %>"
+shopId="<%= Rails.configuration.yandex_kassa.shop_id %>"
+<% if @message %>
+  message="<%= @message %>"
+<% end %>

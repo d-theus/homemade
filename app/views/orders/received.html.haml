@@ -4,9 +4,9 @@
     .row
       .col-xs-2.col-xs-offset-5
         = image_tag 'logo.svg', class: 'img-responsive'
-    - if @order.payment_method == 'cash'
+    - if !@order || @order.payment_method == 'cash'
       = render partial: "thank_you"
-    - if @order.can_pay?
+    - if @order && @order.can_pay?
       = render partial: "proceed_to_payment"
     %br/
     .row.lead
