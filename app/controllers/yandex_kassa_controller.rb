@@ -112,7 +112,7 @@ class YandexKassaController < ApplicationController
     fail 'Expicit code required' unless hash[:code]
     fail 'Expicit message required' unless hash[:message]
     hash.merge({
-      performedDatetime: Time.now,
+      performedDatetime: Time.now.iso8601,
       shopId: Rails.configuration.yandex_kassa.shop_id, 
       invoiceId: params[:invoiceId],
       orderSumAmount: @order && @order.price

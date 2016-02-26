@@ -13,13 +13,7 @@
             пластиковой карты.
         .row
           %center.col-xs-6.col-lg-3.col-lg-offset-3
-            = form_tag Rails.application.config.yandex_kassa.url do
-              = hidden_field_tag :shop_id, Rails.application.config.yandex_kassa.shop_id
-              = hidden_field_tag :scid, Rails.application.config.yandex_kassa.scid
-              = hidden_field_tag :customerNumber, @order.id
-              = hidden_field_tag :paymentType, 'AC'
-              = hidden_field_tag :sum, @order.price
-              = submit_tag 'ЕЩЁ РАЗ', class: 'btn btn-primary btn-lg'
+            = render partial: 'yandex_kassa/form', locals: { submit: 'ЕЩЁ РАЗ' }
 
           %center.col-xs-6.col-lg-3
             = link_to 'ОТМЕНИТЬ ЗАКАЗ', cancel_order_path(@order), class: 'btn btn-flat text-primary'

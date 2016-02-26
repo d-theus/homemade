@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe YandexKassaController, type: :controller do
   let(:yparams) {{
-    requestDatetime: Time.new(2016, 02, 02, 12, 15),
+    requestDatetime: Time.new(2016, 02, 02, 12, 15).iso8601,
     shopId: Rails.configuration.yandex_kassa.shop_id,
     shopArticleId: '456',
     invoiceId: '1234567',
@@ -14,7 +14,7 @@ RSpec.describe YandexKassaController, type: :controller do
     shopSumAmount: '1498.26',
     shopSumCurrencyPaycash: 643,
     shopSumBankPaycash: 1001,
-    paymentDatetime: Time.new(2016, 02, 02, 12, 15, 15),
+    paymentDatetime: Time.new(2016, 02, 02, 12, 15, 15).iso8601,
     paymentPayerCode: 42007148320,
     paymentType: 'AC',
     cps_user_country_code: 'RU',
@@ -245,37 +245,4 @@ RSpec.describe YandexKassaController, type: :controller do
     end
   end
 
-  describe 'POST pay' do
-    before { post :pay, order_id: order_id }
-    context 'when payment_method is "cash"' do
-      let(:order_id) { o = FactoryGirl.create(:order, payment_method: 'cash'); o.reload; o.id }
-
-      it_behaves_like 'http_response_with_status', :unprocessable_entity
-    end
-
-    context 'when payment_method is "card"' do
-
-      context 'and status is not "pending"' do
-        let(:order_id) { o = FactoryGirl.create(:order, payment_method: 'card'); o.status = 'awaiting_refund'; o.save(validate: false); o.id }
-
-        it_behaves_like 'http_response_with_status', :unprocessable_entity
-      end
-
-      context 'with pending order' do
-        let(:order_id) { o = FactoryGirl.create(:order, payment_method: 'card'); o.reload; o.id }
-        let(:order) { Order.find(order_id) }
-
-        it 'redirects to yandex kassa' do
-          expect(response).to redirect_to(
-            Rails.configuration.yandex_kassa.url(
-              shop_id: Rails.application.config.yandex_kassa.shop_id,
-              scid: Rails.application.config.yandex_kassa.scid,
-              customerNumber: order.id,
-              sum: order.price
-            )
-          )
-        end
-      end
-    end
-  end
 end
