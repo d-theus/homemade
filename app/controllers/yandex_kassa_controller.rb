@@ -1,5 +1,6 @@
 class YandexKassaController < ApplicationController
   respond_to :xml
+  skip_before_action :verify_authenticity_token
   before_action :digest, except: :pay
   before_action :fetch_order
 
