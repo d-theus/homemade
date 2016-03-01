@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_or_forbid, except: [:new, :create, :pay, :received, :failed]
-  before_action :fetch_order, only: [:cancel, :close, :destroy, :received]
+  before_action :fetch_order, only: [:cancel, :close, :destroy]
 
   def new
     @order = Order.new
@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
       if admin_signed_in?
         redirect_to orders_path
       else
-        redirect_to received_order_path(id: @order.id)
+        redirect_to received_orders_path(id: @order.id)
       end
     else
       flash.now[:alert] = t "flash.create.alert"
@@ -64,6 +64,9 @@ class OrdersController < ApplicationController
 
   def received
     @subscription = WeeklyMenuSubscription.new
+    if params[:id] || params[:customerNumber]
+      @order = Order.find(params[:id] || params[:customerNumber])
+    end
   end
 
   def failed

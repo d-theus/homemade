@@ -4,11 +4,11 @@ Rails.application.routes.draw do
   end
   resources :recipes
   resources :inventory_items, defaults: { format: :json}
-  get 'orders/received/:id', controller: :orders, action: :received, as: :received_order
-  get 'orders/failed', controller: :orders, action: :failed, as: :failed_order
   resources :orders, only: [:new, :create, :index, :destroy] do
     post :cancel, action: :cancel, on: :member
     post :close, action: :close, on: :member
+    get :failed, on: :collection
+    get :received, on: :collection
   end
   resources :weekly_menu_subscriptions, only: [:show, :create], defaults: { format: :json } do
     get :unsubscribe, action: :destroy, on: :member
