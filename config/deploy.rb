@@ -5,7 +5,6 @@ set :application, 'homemade'
 set :repo_url, 'https://github.com/d-theus/homemade.git'
 
 # Default branch is :master
-set :branch, 'acquiring'
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
