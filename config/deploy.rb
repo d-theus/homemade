@@ -46,4 +46,7 @@ namespace :deploy do
       upload! '.rbenv-vars', current_path
     end
   end
+
+  after :published, 'docker:setup'
+  after 'docker:setup', 'docker:start'
 end
