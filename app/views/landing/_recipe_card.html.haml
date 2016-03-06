@@ -7,8 +7,8 @@
           %strong день #{human_day(recipe.day)}
       .row
         %hgroup.col-xs-7.col-xs-offset-1
-          %h3= recipe.title
-          %h4= recipe.subtitle
+          %h4= recipe.title
+          %h5= recipe.subtitle
         %section.col-xs-4
           .row
             .col-xs-12.text-nowrap
@@ -20,8 +20,8 @@
               %small #{recipe.serving_size}
   .card-description.col-xs-11.col-xs-offset-1
     .row
-      .col-xs-12.col-sm-7.lead
-        Для приготовления понадобится:
+      .col-xs-12.col-sm-7
+        %strong Для приготовления понадобится:
       .col-xs-12.col-sm-5.text-center
         - recipe.inventory_items.each do |ii|
           = inventory_item_tag ii
