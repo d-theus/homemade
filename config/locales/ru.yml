@@ -275,7 +275,7 @@ ru:
       recipe:
         title: Название
         subtitle: Подзаголовок
-        calories: Калорийность
+        serving_size: Размер порции
         cooking_time: Время приготовления
         day: День
         inventory_items: Для приготовления необходимо

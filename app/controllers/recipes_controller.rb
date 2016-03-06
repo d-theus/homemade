@@ -76,7 +76,7 @@ class RecipesController < ApplicationController
   def recipe_params
     params.require(:recipe).permit(
       :title, :subtitle, :day,
-      :calories, :cooking_time,
+      :serving_size, :cooking_time,
       :photo, :picture,
       :photo_cache, :picture_cache,
       inventory_item_ids: []

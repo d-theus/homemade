@@ -14,17 +14,11 @@ RSpec.describe Recipe, type: :model do
       expect(recipe).to be_valid
     end
 
-    it 'requires calories to be, to be within 0..3000' do
+    it 'requires serving_size' do
       recipe = FactoryGirl.build :recipe
-      recipe.calories = nil
+      recipe.serving_size = nil
       expect(recipe).not_to be_valid
-      recipe.calories = -1
-      expect(recipe).not_to be_valid
-      recipe.calories = 0
-      expect(recipe).to be_valid
-      recipe.calories = 1200
-      expect(recipe).to be_valid
-      recipe.calories = 2999
+      recipe.serving_size = '200 гр.'
       expect(recipe).to be_valid
     end
 

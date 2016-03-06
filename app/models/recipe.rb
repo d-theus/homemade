@@ -5,7 +5,7 @@ class Recipe < ActiveRecord::Base
   before_destroy :assert_no_day
 
   validates :title, presence: true, length: { within: 2..25}
-  validates :calories, presence: true, inclusion: { within: 0..3000 }
+  validates :serving_size, presence: true
   validates :cooking_time, presence: true, inclusion: { within: 0..180 }
   validates :day, uniqueness: true, inclusion: { within: 1..5 }, allow_nil: true
   validates :photo, presence: true

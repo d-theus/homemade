@@ -3,7 +3,7 @@ FactoryGirl.define do
     title { 'Lorem ipsum' }
     subtitle { 'dolor sit amet' }
     cooking_time 25
-    calories 450
+    serving_size '450 гр.'
     photo { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'meal-1.jpg'))}
     picture { Rack::Test::UploadedFile.new( File.join(Rails.root, 'spec', 'support', "recipe-picture.jpg")) }
 
@@ -47,7 +47,7 @@ FactoryGirl.define do
          "Donec iaculis est"].sample
       end
       sequence(:cooking_time) { 25 + rand(20) }
-      sequence(:calories) { 400 + rand(200) }
+      sequence(:serving_size) { "#{300 + rand(200)} гр." }
       sequence(:day)  { |n| n } 
       sequence(:photo) do |n|
         Rack::Test::UploadedFile.new(

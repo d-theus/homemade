@@ -3,7 +3,7 @@ class RecipeSerializer < ActiveModel::Serializer
       :title,
       :subtitle,
       :cooking_time,
-      :calories,
+      :serving_size,
       :description,
       :day,
       :url
