@@ -5,4 +5,4 @@
         %button.close(data-dismiss='modal') &times;
         .row
           .col-xs-12.no-gutter
-            %img.img-responsive{src: @recipe.picture}
+            %img.img-responsive{src: (@recipe && @recipe.picture) || ''}
