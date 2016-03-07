@@ -18,6 +18,8 @@ window.Ui.ready ->
   buttons.on 'click', ->
     val = $(this).val()
     buttons.toggleClass('disabled')
+    buttons.toggleClass('btn-flat')
+    buttons.toggleClass('btn-primary')
     updateCount(val)
 
   picture_modal = $('#picture_modal')
