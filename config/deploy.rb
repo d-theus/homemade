@@ -48,5 +48,5 @@ namespace :deploy do
   end
 
   after :published, 'docker:setup'
-  after 'docker:setup', 'docker:start'
+  after :published, 'docker:start'
 end
