@@ -17,6 +17,8 @@
       %p Выбрано: #{ @recipe.photo_cache }
   .form-group
     = f.label :picture
+    %p
+      %small <strong>Примечание:</strong> только PDF, 2 страницы. Рецепт на второй странице. 
     = f.input :picture, wrapper: false
     - if @recipe.picture_cache
       %p Выбрано: #{ @recipe.picture_cache }

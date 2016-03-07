@@ -13,6 +13,25 @@ class RecipePictureUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    %w(jpg jpeg gif png)
+    %w(pdf)
+  end
+
+
+  version :full do
+    process :extract
+    process convert: :jpg
+
+    def full_filename(for_file = model.source.file)
+      super.chomp(File.extname(super)) + '.jpg'
+    end
+  end
+
+  private
+
+  # Only extract first page of PDF
+  def extract
+    manipulate! do |img|
+      img.frames.second
+    end
   end
 end
