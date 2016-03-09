@@ -12,11 +12,11 @@
           %h5= recipe.subtitle
         %section.col-xs-4
           .row
-            .col-xs-12.text-nowrap
+            .col-xs-12.text-nowrap{ title: "Время приготовления: #{recipe.cooking_time} мин."}
               %i.fa.fa-fw.fa-clock-o
               %small #{recipe.cooking_time} мин.
           .row
-            .col-xs-12.text-nowrap
+            .col-xs-12.text-nowrap{ title: "Размер порции на одну персону: #{recipe.serving_size}"}
               %i.fa.fa-fw.fa-cutlery
               %small #{recipe.serving_size}
   .card-description.col-xs-11.col-xs-offset-1

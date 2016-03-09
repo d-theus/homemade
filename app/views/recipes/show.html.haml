@@ -6,8 +6,6 @@
       %p.alert.alert-danger= alert
 .row
   .col-xs-12.col-lg-9.col-lg-offset-1
-    %br/
-    %br/
     .row
       .col-xs-12.col-sm-7
         %img.img-responsive{src: @recipe.photo.show}
@@ -29,10 +27,10 @@
                     %i.fa.fa-fw.fa-lg.fa-times
             %br/
             .row.lead
-              %center.col-xs-5.col-xs-offset-1
+              %center.col-xs-5.col-xs-offset-1{ title: "Время приготовления: #{@recipe.cooking_time} мин."}
                 %i.fa.fa-fw.fa-clock-o
                 #{@recipe.cooking_time} мин.
-              %center.col-xs-5
+              %center.col-xs-5{ title: "Размер порции на одну персону: #{@recipe.serving_size}"}
                 %i.fa.fa-fw.fa-cutlery
                 #{@recipe.serving_size}
         .row
