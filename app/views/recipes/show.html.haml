@@ -13,7 +13,7 @@
         .row
           .col-xs-12.bg-primary
             .row
-              .col-xs-9.col-sm-9.col-xs-offset-2.col-sm-offset-1
+              %hgroup.col-xs-9.col-sm-9.col-xs-offset-2.col-sm-offset-1#recipe_heading
                 %h1= @recipe.title
                 %h2= @recipe.subtitle
               - if admin?
