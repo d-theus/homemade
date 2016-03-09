@@ -34,22 +34,24 @@
                 %i.fa.fa-fw.fa-cutlery
                 #{@recipe.serving_size}
         .row
-          .col-xs-11.col-xs-offset-1.col-sm-11.col-sm-offset-1
-            %section
-              %h3 Для приготовления понадобится
-              %div
-                - @recipe.inventory_items.each_slice(2) do |iis|
-                  .row
-                    - iis.compact.each do |ii|
-                      .col-xs-6
-                        = inventory_item_tag(ii, height: '22px')
-                        %span &nbsp;&nbsp;#{ii.name}
-                    %br/
-                    %br/
+          .col-xs-12.col-sm-11.col-sm-offset-1
+            %section.row
+              .col-xs-10.col-xs-offset-1.col-sm-11.col-sm-offset-0
+                %h3 Для приготовления понадобится
+                %div
+                  - @recipe.inventory_items.each_slice(2) do |iis|
+                    .row
+                      - iis.compact.each do |ii|
+                        .col-xs-6
+                          = inventory_item_tag(ii, height: '22px')
+                          %span &nbsp;&nbsp;#{ii.name}
+                      %br/
+                      %br/
             %br
-            %section
-              %button.btn.btn-primary{ type: :button, data: { toggle: 'modal', target: '#picture_modal' }}
-                ПОКАЗАТЬ РЕЦЕПТ
+            %section.row
+              .col-xs-12.text-center-xs
+                %button.btn.btn-primary{ type: :button, data: { toggle: 'modal', target: '#picture_modal' }}
+                  ПОКАЗАТЬ РЕЦЕПТ
 = render partial: 'picture_modal'
 
 
