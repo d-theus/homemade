@@ -21,8 +21,3 @@ window.Ui.ready ->
     buttons.toggleClass('btn-flat')
     buttons.toggleClass('btn-primary')
     updateCount(val)
-
-  picture_modal = $('#picture_modal')
-  picture_toggles = $('a[data-target="#picture_modal"]')
-  picture_toggles.on 'click', ->
-    picture_modal.find('img').attr('src', $(this).data('picture'))
