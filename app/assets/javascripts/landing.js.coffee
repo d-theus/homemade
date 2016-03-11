@@ -14,10 +14,10 @@ updateCount = (val = Cookies.get('count') || 5)->
     .click()
 
 window.Ui.ready ->
-  buttons = $('button[name="toggle_count"]')
+  lis = $('#toggle_count li')
+  buttons = $('#toggle_count a')
   buttons.on 'click', ->
-    val = $(this).val()
-    buttons.toggleClass('disabled')
-    buttons.toggleClass('btn-flat')
-    buttons.toggleClass('btn-primary')
+    val = $(this).data('value')
+    lis.removeClass('active')
+    $(this).closest('li').addClass('active')
     updateCount(val)

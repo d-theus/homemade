@@ -33,8 +33,11 @@
       %span#eow= next_week_end
     %br/
     .row.text-primary
-      %button.btn.btn-primary.btn-lg.disabled{type: :button, name: 'toggle_count', value: 5} 5 ужинов
-      %button.btn.btn-flat.btn-lg{type: :button, name: 'toggle_count', value: 3} 3 ужина
+      %ul.nav.nav-pills#toggle_count
+        %li.active
+          %a.btn{'data-value' => 5} 5 ужинов
+        %li
+          %a.btn{'data-value' => 3} 3 ужина
     %center.row.lead
       %br/
       %span#price_5(name="price")
