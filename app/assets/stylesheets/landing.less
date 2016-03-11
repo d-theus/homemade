@@ -1,6 +1,27 @@
 #hero{
-  @media only screen and (min-width: 0){
-    background: #fff;
+  @media only screen and (max-width: 340px) and (orientation: portrait){
+    background: image-url('bg-sm-p.jpg') no-repeat 50% 100%;
+    -webkit-background-size: 100% auto;
+    -moz-background-size:    100% auto;
+    -o-background-size:      100% auto;
+    background-size:         100% auto;
+    min-height: 125vh;
+  }
+  @media only screen and (min-width: 341px) and (orientation: portrait){
+    background: image-url('bg-sm-p.jpg') no-repeat 50% 100%;
+    -webkit-background-size: 100% auto;
+    -moz-background-size:    100% auto;
+    -o-background-size:      100% auto;
+    background-size:         100% auto;
+    min-height: 105vh;
+  }
+  @media only screen and (min-width: 0) and (orientation: landscape){
+    background: image-url('bg-md.jpg') no-repeat 50% 100%;
+    -webkit-background-size: 100% auto;
+    -moz-background-size:    100% auto;
+    -o-background-size:      100% auto;
+    background-size:         100% auto;
+    min-height: 150vh;
   }
   @media only screen and (min-width: 641px){
     background: image-url('bg-md.jpg') no-repeat 50% 100%;
@@ -8,22 +29,23 @@
     -moz-background-size:    100% auto;
     -o-background-size:      100% auto;
     background-size:         100% auto;
+    min-height: 100vh;
   }
   @media only screen and (min-width: 600px) and (orientation: portrait){
-    background: image-url('bg-lg.jpg') no-repeat 50% 100%;
+    background: image-url('bg-lg-p.jpg') no-repeat 50% 100%;
     -webkit-background-size: 100% auto;
     -moz-background-size:    100% auto;
     -o-background-size:      100% auto;
     background-size:         100% auto;
-    min-height: 60vh;
+    min-height: 85vh;
   }
   @media only screen and (min-width: 770px) and (orientation: portrait){
-    background: image-url('bg-lg.jpg') no-repeat 50% 100%;
+    background: image-url('bg-lg-p.jpg') no-repeat 50% 100%;
     -webkit-background-size: 100% auto;
     -moz-background-size:    100% auto;
     -o-background-size:      100% auto;
     background-size:         100% auto;
-    min-height: 50vh;
+    min-height: 85vh;
   }
   @media only screen and (min-width: @screen-lg){
     background: image-url('bg-lg.jpg') no-repeat 50% 100%;
