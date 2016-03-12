@@ -10,11 +10,13 @@ namespace :docker do
     task :setup do
       on roles :app do
         within current_path do
+          execute :docker, "stop #{fetch :db} || true"
           execute :docker, "build -t rails ."
           execute :docker, "rm -f #{fetch :rails}-tmp || true"
-          execute :docker, "run --name #{fetch :rails}-tmp -it --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec rake assets:precompile"
+          execute :docker, "run --name #{fetch :rails}-tmp -it #{fetch :volumes} #{fetch :rails} rbenv exec rake assets:precompile"
           execute :docker, "commit #{fetch :rails}-tmp #{fetch :rails}"
           execute :docker, "rm #{fetch :rails}-tmp || true"
+          execute :docker, "start #{fetch :db} || true"
           execute :docker, "run --name #{fetch :rails}-tmp -it --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec rake db:migrate"
           execute :docker, "commit #{fetch :rails}-tmp #{fetch :rails}"
           execute :docker, "rm #{fetch :rails}-tmp || true"
