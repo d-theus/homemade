@@ -197,6 +197,12 @@ a.tel{
   h2 { margin-top: 0;}
 }
 
+#recipes_show{
+  @media only screen and (max-width: @screen-sm){
+    margin-top: -@navbar-height;
+  }
+}
+
 body>footer ul.nav>li>a{
     overflow-x: hidden;
     text-overflow: clip ellipsis;
