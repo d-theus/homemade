@@ -150,3 +150,26 @@ form{
 .modal-xl .modal-dialog{
   width: 90%;
 }
+
+ul.dotted{
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0.8em;
+  li:before{
+    content: ' ';
+    background-size: cover;
+    background-image: image-url('dot.svg');
+    position: absolute;
+    left: 0;
+    @media only screen and (max-width: @screen-sm){
+      margin-top: 5px;
+      height: 13px;
+      width: 13px;
+    }
+    @media only screen and (min-width: @screen-sm){
+      margin-top: 8px;
+      height: 16px;
+      width: 16px;
+    }
+  }
+}

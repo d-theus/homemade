@@ -133,12 +133,68 @@
 
 #how{
   .white;
-  .lead{
-    @media only screen and (min-width: @screen-sm){
-      margin-top: 1em;
+  .img-container{
+    img{
+      width: 100%;
     }
+  }
+
+  @media only screen and (max-width: @screen-sm){
+    overflow-x: scroll;
+
+    .arrow-container{
+      min-height: 100%;
+      margin-top: 12%;
+      img{
+        width: 70%;
+        margin-left: 15%;
+        margin-right: 15%;
+      }
+    }
+
+    section{
+      width: 200vw;
+    }
+  }
+}
+
+#how-choose{
+  img{
+    margin-right: -10%;
+    margin-top: 10%;
+  }
+  .jt.lead{
     @media only screen and (min-width: @screen-md){
-      margin-top: 2em;
+      margin-top: 5%;
+    }
+    @media only screen and (min-width: @screen-lg){
+      margin-top: 12%;
+    }
+  }
+}
+
+#how-receive{
+  .jt.lead{
+    @media only screen and (min-width: @screen-md){
+      margin-top: 5%;
+    }
+    @media only screen and (min-width: @screen-lg){
+      margin-top: 10%;
+    }
+  }
+}
+
+#how-cook{
+  img{
+    margin-right: -17%;
+    margin-top: -5%;
+  }
+  .jt.lead{
+    @media only screen and (min-width: @screen-md){
+      margin-top: 5%;
+    }
+    @media only screen and (min-width: @screen-lg){
+      margin-top: 10%;
     }
   }
 }

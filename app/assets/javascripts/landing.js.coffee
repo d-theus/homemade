@@ -21,3 +21,6 @@ window.Ui.ready ->
     lis.removeClass('active')
     $(this).closest('li').addClass('active')
     updateCount(val)
+  textToggle = $('#how-text-toggle')
+  textToggle.on 'click', ->
+    $('#how').animate({scrollLeft: $(window).width()}, 300 )

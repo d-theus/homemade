@@ -80,48 +80,46 @@
   %br/
   .row
     .col-xs-12.col-xs-offset-0.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
-      %section.row
-        .col-xs-5.col-md-4.col-lg-4.col-lg-offset-1
+      %section.row#how-choose
+        .col-xs-4.col-sm-4.col-lg-4.col-lg-offset-1.img-container
           %img.img-responsive.pull-right{src: image_path("ig-choose.svg")}
-        .jt.lead.col-xs-7
+        .col-xs-2.visible-xs-block.arrow-container
+        .jt.lead.col-xs-6.col-sm-7.col-sm-offset-1.col-lg-6
           Вы выбираете размер набора, который Вам больше подходит:
-          %ul.list-unstyled
+          %ul.dotted
             %li
-              %i.fa.fa-fw.fa-angle-right
               для приготовления <strong>пяти</strong> ужинов на двоих.
             %li
-              %i.fa.fa-fw.fa-angle-right
               для приготовления <strong>трёх</strong> ужинов на двоих.
 
           Заказываете набор до <strong>23:00 четверга</strong> на сайте или по телефону.
 
-      %section.row
-        .col-xs-5.col-md-4.col-lg-4.col-lg-offset-1
-          %img.img-responsive.pull-left{src: image_path("ig-receive.svg")}
-        .col-xs-6.jt.lead
-          %ul.list-unstyled
+      %section.row#how-receive
+        .col-xs-4.col-sm-4.col-lg-4.col-lg-offset-1.img-container
+          %img.img-responsive{src: image_path("ig-receive.svg")}
+        .col-xs-2.visible-xs-block.arrow-container
+          %button.btn.btn-flat#how-text-toggle
+            %img{src: image_path("arrow-circle.svg")}
+        .jt.lead.col-xs-6.col-sm-7.col-sm-offset-1.col-lg-6
+          %ul.dotted
             %li
-              %i.fa.fa-fw.fa-angle-right
               Наш оператор звонит Вам и подтверждает заказ.
             %li
-              %i.fa.fa-fw.fa-angle-right
               В воскресенье мы доставляем Ваш заказ в удобное для Вас время в пределах МКАД.
             %li
-              %i.fa.fa-fw.fa-angle-right
               Вы убираете набор в холодильник.
 
-      %section.row
-        .col-xs-5.col-lg-5
+      %section.row#how-cook
+        .col-xs-4.col-sm-4.col-lg-4.col-lg-offset-1.img-container
           %img.img-responsive.pull-right{src: image_path("ig-cook.svg")}
-        .col-xs-7.jt.lead
+        .col-xs-2.visible-xs-block.arrow-container
+        .jt.lead.col-xs-6.col-sm-7.col-sm-offset-1.col-lg-6
           В наборе Вы найдёте:
-          %ul.list-unstyled
+          %ul.dotted
             %li
-              %i.fa.fa-fw.fa-angle-right
               Свежие <strong>продукты</strong>, подготовленные и упакованные
               для каждого ужина отдельно
             %li
-              %i.fa.fa-fw.fa-angle-right
               Подробные <strong>рецепты</strong>, разработанные профессионалами,
               благодаря которым Вы сможете быстро приготовить ужин как в
               ресторане всего за 20-40 минут.
