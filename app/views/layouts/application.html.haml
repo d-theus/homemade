@@ -7,6 +7,8 @@
     %meta(name="theme-color" content="#f02618")
     %meta(name="msapplication-navbutton-color" content="#f02618")
     %meta(name="apple-mobile-web-app-status-bar-style" content="#f02618")
+    %meta{name: "robots", content: content_for?(:meta_robots) ? yield(:meta_robots) : 'index,follow' }
+    %meta{name: "description", content: content_for?(:meta_description) ? yield(:meta_description) : 'Мы производим и доставляем наборы высококачественных продуктов для быстрого и лёгкого приготовления ужинов дома.'}
     %title= content_for?(:title) ? yield(:title) : 'HomeMade | Доставка наборов свежих продуктов для приготовления ужинов дома'
     = csrf_meta_tags
     = stylesheet_link_tag "application", :media => "all"
