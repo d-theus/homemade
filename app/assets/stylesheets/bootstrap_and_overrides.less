@@ -153,23 +153,23 @@ form{
 
 ul.dotted{
   list-style-type: none;
-  margin: 0;
-  padding-left: 0.8em;
+  margin: 0 0 0 0.5em;
+  padding-left: 1em;
   li:before{
     content: ' ';
     background-size: cover;
     background-image: image-url('dot.svg');
     position: absolute;
-    left: 0;
+    left: 1em;
     @media only screen and (max-width: @screen-sm){
-      margin-top: 5px;
-      height: 13px;
-      width: 13px;
+      margin-top: 7px;
+      height: 10px;
+      width: 10px;
     }
     @media only screen and (min-width: @screen-sm){
-      margin-top: 8px;
-      height: 16px;
-      width: 16px;
+      margin-top: 9px;
+      height: 13px;
+      width: 13px;
     }
   }
 }
