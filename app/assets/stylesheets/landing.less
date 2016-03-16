@@ -109,6 +109,8 @@
 
 #menu{
   .white;
+  .sliding-up-anchor;
+
   margin: 0;
   @media only screen and (max-width: @screen-sm) and (orientation: portrait){
     padding-left: 0;
@@ -133,6 +135,7 @@
 
 #how{
   .white;
+  .sliding-up-anchor;
 
   @media only screen and (max-width: @screen-sm){
     overflow-x: scroll;
@@ -226,3 +229,22 @@
   }
 }
 
+.sliding-up-anchor{
+  &:target{
+    -webkit-animation: 2s ease-in-out 1 forwards slideUp;
+    -o-animation: 2s ease-in-out 1 forwards slideUp;
+    animation: 2s ease-in-out 1 forwards slideUp;
+  }
+  @keyframes slideUp{
+    from { padding-top: @navbar-height; }
+    to { padding-top: 0; }
+  }
+  @-webkit-keyframes slideUp{
+    from { padding-top: @navbar-height; }
+    to { padding-top: 0; }
+  }
+  @-o-keyframes slideUp{
+    from { padding-top: @navbar-height; }
+    to { padding-top: 0; }
+  }
+}
