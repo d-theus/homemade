@@ -1,4 +1,5 @@
 @import "twitter/bootstrap/bootstrap";
+@import "mixins";
 
 @glyphiconsEotPath: font-url("glyphicons-halflings-regular.eot");
 @glyphiconsEotPath_iefix: font-url("glyphicons-halflings-regular.eot?#iefix");
@@ -85,6 +86,89 @@ form{
 
 .btn-flat{
   background: transparent;
+}
+
+.btn-floating{
+  z-index: 20;
+  position: fixed;
+
+  img{
+    width: 115%;
+    margin-left: -5.5%;
+    margin-top: -5.5%;
+  }
+
+  @r: 0.7cm;
+  top: 80vh;
+  box-shadow: 2px 2px 4px rgba(0,0,0,14);
+  border-radius: @r;
+  width: 2*@r;
+  height: 2*@r;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  &.in{
+    .animation(0.2s ease-in-out 1 forwards appear);
+  }
+  &.out{
+    .animation(0.2s ease-in-out 1 forwards disappear);
+  }
+
+  @keyframes appear {
+    from { 
+      width: 0;
+      height: 0;
+      margin-right: 0.5 * @r;
+      margin-top:   0.5 * @r;
+      right: -9999px;
+    }
+    1%{
+      right: 0.5*@r;
+    }
+    90% {
+      width: 2.2 * @r;
+      height: 2.2 * @r;
+      margin-right: 0;
+      margin-top:   0;
+      right: 0.5*@r;
+    }
+    to {
+      width: 2*@r;
+      height: 2*@r;
+      right: 0.5*@r;
+    }
+  }
+
+  @keyframes disappear {
+    from { 
+      width: 2*@r;
+      height: 2*@r;
+      right: 0.5*@r;
+    }
+    10% {
+      width: 2.2 * @r;
+      height: 2.2 * @r;
+      margin-right: 0;
+      margin-top:   0;
+      right: 0.5*@r;
+    }
+    99%{
+      width: 0;
+      height: 0;
+      margin-right: 0.5 * @r;
+      margin-top:   0.5 * @r;
+      box-shadow: none;
+      right: 0.5*@r;
+    }
+    to {
+      width: 0;
+      height: 0;
+      margin-right: 0.5 * @r;
+      margin-top:   0.5 * @r;
+      box-shadow: none;
+      right: -9999px;
+    }
+  }
 }
 
 .navbar-brand{

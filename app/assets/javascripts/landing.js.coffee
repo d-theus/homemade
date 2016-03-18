@@ -14,6 +14,8 @@ updateCount = (val = Cookies.get('count') || 5)->
     .click()
 
 window.Ui.ready ->
+  how = $('#how')
+  arrow = $('#how-text-toggle')
   lis = $('#toggle_count li')
   buttons = $('#toggle_count a')
   buttons.on 'click', ->
@@ -23,4 +25,37 @@ window.Ui.ready ->
     updateCount(val)
   textToggle = $('#how-text-toggle')
   textToggle.on 'click', ->
-    $('#how').animate({scrollLeft: $(window).width()}, 300 )
+    if $('#how').scrollLeft() > 0
+      how.animate({scrollLeft: 0}, 300 )
+      how.trigger 'scroll'
+    else
+      how.animate({scrollLeft: $(window).width()}, 300 )
+      how.trigger 'scroll'
+
+  # It's better to fix initial state
+  how.scrollLeft(0)
+
+  handleHowScroll = ->
+    st = $(window).scrollTop()
+    hot = how.offset().top
+    wh = $(window).height()
+    hoh = how.height()
+    if (st > (hot - 0.7 * wh)) && (st < (hot + hoh - wh))
+      arrow.show()
+      arrow.removeClass('out')
+      arrow.addClass('in')
+    else
+      arrow.removeClass('in')
+      arrow.addClass('out')
+
+  handleHowLeftScroll = ->
+    if how.scrollLeft() > 0
+      arrow.removeClass('right')
+      arrow.addClass('left')
+    else
+      arrow.removeClass('left')
+      arrow.addClass('right')
+
+
+  $(window).scroll handleHowScroll
+  how.scroll handleHowLeftScroll

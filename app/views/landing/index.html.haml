@@ -79,12 +79,11 @@
 
   %br/
   .row.xs-double
-    .col-xs-6.col-md-5.col-md-offset-1.col-lg-4.col-lg-offset-2
-      .visible-xs-block.arrow-container
-        %button.btn.btn-flat#how-text-toggle
-          %img{src: image_path("arrow-circle.svg")}
-      %img{src: image_path("ig.svg")}
-    .col-xs-6.col-lg-5
+    %button.btn.btn-floating.out#how-text-toggle
+      %img{src: image_path("arrow-circle.svg")}
+    .col-xs-6.col-sm-5.col-md-5.col-md-offset-1.col-lg-4.col-lg-offset-2
+      %img.ig{src: image_path("ig.svg")}
+    .col-xs-6.col-sm-5.col-sm-offset-1.col-lg-5
       %section.row#how-choose
         .col-xs-2.visible-xs-block.arrow-container
         .jt.lead.col-xs-12

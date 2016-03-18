@@ -145,37 +145,57 @@
   .white;
   .sliding-up-anchor;
 
-  @media only screen and (max-width: @screen-sm){
+  @media only screen and (max-width: 769px){
     overflow-x: scroll;
-
-    .arrow-container{
-      position: absolute;
-      margin-top: 55vh;
-      right: 0.5cm;
-      img{
-        width: 1.8cm;
-        margin-left: 15%;
-        margin-right: 15%;
-      }
-    }
 
     .xs-double{
       width: 200vw;
     }
   }
 
-  img{
+  .ig{
     width: 90%;
   }
 }
 
+#how-text-toggle{
+  display: none;
+    @media only screen and (min-width: 769px){
+      display: none !important;
+    }
+    .keyframes(rotate-f, {
+      from { transform: rotate(0);      }
+      to   { transform: rotate(180deg); }
+    });
+    .keyframes(rotate-b, {
+      from { transform: rotate(180deg);      }
+      to   { transform: rotate(0); }
+    });
+    &.left{
+      img{
+        .animation(0.2s ease-in-out 1 forwards rotate-f);
+      }
+    }
+    &.right{
+      img{
+        .animation(0.2s ease-in-out 1 forwards rotate-b);
+      }
+    }
+}
+
 #how-choose{
   .jt.lead{
-    @media only screen and (min-width: 360px){
-      margin-top: 5%;
-    }
-    @media only screen and (min-width: @screen-md){
+    @media only screen and (min-width: 319px) and (orientation: landscape){
       margin-top: 5vw;
+    }
+    @media only screen and (min-width: 319px) and (orientation: portrait){
+      margin-top: 10vw;
+    }
+    @media only screen and (min-width: @screen-sm) and (orientation: landscape){
+      margin-top: 4vw;
+    }
+    @media only screen and (min-width: @screen-sm) and (orientation: portrait){
+      margin-top: 10vw;
     }
     @media only screen and (min-width: @screen-lg){
       margin-top: 5vw;
@@ -185,11 +205,17 @@
 
 #how-receive{
   .jt.lead{
-    @media only screen and (min-width: 360px){
-      margin-top: 5%;
+    @media only screen and (min-width: 319px) and (orientation: landscape){
+      margin-top: 5vw;
     }
-    @media only screen and (min-width: @screen-sm){
-      margin-top: 15vw;
+    @media only screen and (min-width: 319px) and (orientation: portrait){
+      margin-top: 35vw;
+    }
+    @media only screen and (min-width: @screen-sm) and (orientation: landscape){
+      margin-top: 7vw;
+    }
+    @media only screen and (min-width: @screen-sm) and (orientation: portrait){
+      margin-top: 35vw;
     }
     @media only screen and (min-width: @screen-lg){
       margin-top: 18vw;
@@ -199,11 +225,17 @@
 
 #how-cook{
   .jt.lead{
-    @media only screen and (min-width: 360px){
-      margin-top: 7%;
+    @media only screen and (min-width: 319px) and (orientation: landscape){
+      margin-top: 5vw;
     }
-    @media only screen and (min-width: @screen-md){
-      margin-top: 10vw;
+    @media only screen and (min-width: 319px) and (orientation: portrait){
+      margin-top: 25vw;
+    }
+    @media only screen and (min-width: @screen-sm) and (orientation: landscape){
+      margin-top: 5vw;
+    }
+    @media only screen and (min-width: @screen-sm) and (orientation: portrait){
+      margin-top: 35vw;
     }
     @media only screen and (min-width: @screen-lg){
       margin-top: 16vw;
@@ -239,20 +271,10 @@
 
 .sliding-up-anchor{
   &:target{
-    -webkit-animation: 2s ease-in-out 1 forwards slideUp;
-    -o-animation: 2s ease-in-out 1 forwards slideUp;
-    animation: 2s ease-in-out 1 forwards slideUp;
+    .animation(2s ease-in-out 1 forwards slideUp);
   }
-  @keyframes slideUp{
+  .keyframes(slideUp, {
     from { padding-top: @navbar-height; }
     to { padding-top: 0; }
-  }
-  @-webkit-keyframes slideUp{
-    from { padding-top: @navbar-height; }
-    to { padding-top: 0; }
-  }
-  @-o-keyframes slideUp{
-    from { padding-top: @navbar-height; }
-    to { padding-top: 0; }
-  }
+  });
 }
