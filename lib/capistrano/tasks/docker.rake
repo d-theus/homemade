@@ -16,7 +16,7 @@ namespace :docker do
           execute :docker, "run --name #{fetch :rails}-tmp -it #{fetch :volumes} #{fetch :rails} rbenv exec rake assets:precompile"
           execute :docker, "commit #{fetch :rails}-tmp #{fetch :rails}"
           execute :docker, "rm #{fetch :rails}-tmp || true"
-          execute :docker, "start #{fetch :db} || true"
+          execute :docker, "start #{fetch :db} || sleep 5s || true"
           execute :docker, "run --name #{fetch :rails}-tmp -it --link #{fetch :db} #{fetch :volumes} #{fetch :rails} rbenv exec rake db:migrate"
           execute :docker, "commit #{fetch :rails}-tmp #{fetch :rails}"
           execute :docker, "rm #{fetch :rails}-tmp || true"
