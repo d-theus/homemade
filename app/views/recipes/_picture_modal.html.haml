@@ -1,8 +1,12 @@
 .modal.fade#picture_modal
-  .modal-dialog
+  .modal-dialog.modal-lg
     .modal-content
       .modal-body
         %button.close(data-dismiss='modal') &times;
         .row
           .col-xs-12.no-gutter
-            %img.img-responsive{src: (@recipe && @recipe.picture.full) || ''}
+            - if @recipe && @recipe.picture
+              %img.img-responsive{srcset: [ "#{@recipe.picture.small} 720w", "#{@recipe.picture.large} 1080w" ].join(',') ,
+                src: @recipe.picture.large,
+                sizes: ["(max-width: 720px) 90vw", "(min-width: 721px) 80vw", '90vw'].join(','),
+                alt: "#{@recipe.title} + #{@recipe.subtitle}" }

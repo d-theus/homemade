@@ -17,9 +17,16 @@ class RecipePictureUploader < CarrierWave::Uploader::Base
   end
 
 
-  version :full do
-    process :extract
-    process convert: :jpg
+  version :large do
+    process pdf_page_to_jpg: [{ page: 1, density: 150, prefix: 'large' }]
+
+    def full_filename(for_file = model.source.file)
+      super.chomp(File.extname(super)) + '.jpg'
+    end
+  end
+
+  version :small do
+    process pdf_page_to_jpg: [{ page: 1, density: 96, prefix: 'small' }]
 
     def full_filename(for_file = model.source.file)
       super.chomp(File.extname(super)) + '.jpg'
@@ -32,6 +39,23 @@ class RecipePictureUploader < CarrierWave::Uploader::Base
   def extract
     manipulate! do |img|
       img.frames.second
+    end
+  end
+
+  def increase_density
+    manipulate! do |img|
+      img.density(300)
+      img
+    end
+  end
+
+  def pdf_page_to_jpg(options = {})
+    options.reverse_merge!({ page: 0, density: 150, prefix: ''})
+    manipulate! do |img|
+      input = img.path
+      output = File.join(Rails.root, 'public', cache_dir, "#{options[:prefix]}_#{File.basename(input)}.jpg")
+      system 'convert', '-density', options[:density].to_s, "#{input}[#{options[:page]}]", output
+      MiniMagick::Image.open(output)
     end
   end
 end
