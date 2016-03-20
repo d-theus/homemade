@@ -20,6 +20,7 @@ tags
 
 /public/assets
 /public/uploads
+/public/sitemap.xml*
 
 *.swp
 tags
