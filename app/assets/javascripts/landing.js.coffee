@@ -32,8 +32,6 @@ window.Ui.ready ->
       how.animate({scrollLeft: $(window).width()}, 300 )
       how.trigger 'scroll'
 
-  # It's better to fix initial state
-  how.scrollLeft(0)
 
   handleHowScroll = ->
     st = $(window).scrollTop()
@@ -59,3 +57,7 @@ window.Ui.ready ->
 
   $(window).scroll handleHowScroll
   how.scroll handleHowLeftScroll
+
+  # It's better to fix initial state
+  how.scrollLeft(0)
+  how.trigger('scroll')

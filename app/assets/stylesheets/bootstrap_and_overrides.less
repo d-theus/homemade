@@ -100,7 +100,7 @@ form{
 
   @r: 0.7cm;
   top: 80vh;
-  box-shadow: 2px 2px 4px rgba(0,0,0,14);
+  box-shadow: 3px 3px 6px 2px @gray-darker;
   border-radius: @r;
   width: 2*@r;
   height: 2*@r;
@@ -114,32 +114,32 @@ form{
     .animation(0.2s ease-in-out 1 forwards disappear);
   }
 
-  @keyframes appear {
+  .keyframes(appear, {
     from { 
       width: 0;
       height: 0;
-      margin-right: 0.5 * @r;
+      margin-right: 0.7 * @r;
       margin-top:   0.5 * @r;
       right: -9999px;
     }
     1%{
-      right: 0.5*@r;
+      right: 0.7*@r;
     }
     90% {
       width: 2.2 * @r;
       height: 2.2 * @r;
       margin-right: 0;
       margin-top:   0;
-      right: 0.5*@r;
+      right: 0.7*@r;
     }
     to {
       width: 2*@r;
       height: 2*@r;
-      right: 0.5*@r;
+      right: 0.7*@r;
     }
-  }
+  });
 
-  @keyframes disappear {
+  .keyframes(disappear,{
     from { 
       width: 2*@r;
       height: 2*@r;
@@ -150,25 +150,25 @@ form{
       height: 2.2 * @r;
       margin-right: 0;
       margin-top:   0;
-      right: 0.5*@r;
+      right: 0.7*@r;
     }
     99%{
       width: 0;
       height: 0;
-      margin-right: 0.5 * @r;
+      margin-right: 0.7 * @r;
       margin-top:   0.5 * @r;
       box-shadow: none;
-      right: 0.5*@r;
+      right: 0.7*@r;
     }
     to {
       width: 0;
       height: 0;
-      margin-right: 0.5 * @r;
+      margin-right: 0.7 * @r;
       margin-top:   0.5 * @r;
       box-shadow: none;
       right: -9999px;
     }
-  }
+  });
 }
 
 .navbar-brand{
