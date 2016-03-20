@@ -267,6 +267,8 @@
 .sliding-up-anchor{
   &:target{
     .animation(2s ease-in-out 1 forwards slideUp);
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
   }
   .keyframes(slideUp, {
     from { padding-top: @navbar-height; }
