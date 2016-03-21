@@ -4,3 +4,10 @@
 .row
   .lead
     В ближайшее время с Вами свяжутся для уточнения деталей доставки.
+
+%script
+  lid = Cookies.get('last_order_id')
+  if(!lid || ( Number(lid) !== #{@order.id})){
+  ga('send', 'event', 'order', 'placement', #{@order.count}, #{@order.price} );
+  Cookies.set('last_order_id', #{@order.id});
+  }
