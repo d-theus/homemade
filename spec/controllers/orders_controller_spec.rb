@@ -77,11 +77,11 @@ RSpec.describe OrdersController, type: :controller do
 
         context 'when cash' do
           let(:order_attributes) { FactoryGirl.attributes_for(:order, payment_method: 'cash') }
-          it { is_expected.to redirect_to received_order_path }
+          it { is_expected.to redirect_to received_orders_path(id: Order.last.id) }
         end
         context 'when card' do
           let(:order_attributes) { FactoryGirl.attributes_for(:order, payment_method: 'card') }
-          it { is_expected.to redirect_to pay_yandex_kassa_path(order_id: Order.last.id) }
+          it { is_expected.to redirect_to received_orders_path(id: Order.last.id) }
         end
       end
     end

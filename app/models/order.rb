@@ -111,8 +111,8 @@ class Order < ActiveRecord::Base
     end
     b = ms[:b].to_i
     e = ms[:e].to_i
-    unless b < 24 && e < 24 && (ms[:e].to_i - ms[:b].to_i == 3)
-      self.errors[:interval] = "не более трёх часов"
+    unless e > b
+      self.errors[:interval] = "время начала интервала больше времени конца"
       return false
     end
     true

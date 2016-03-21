@@ -106,11 +106,13 @@ RSpec.describe Order, type: :model do
       end
       it 'fails with bad format' do
         expect(FactoryGirl.build(:order, interval: 'asdaf')).not_to be_valid
-        expect(FactoryGirl.build(:order, interval: '0-13')).not_to be_valid
         expect(FactoryGirl.build(:order, interval: '110-13')).not_to be_valid
       end
       it 'succeeds when matches pattern' do
         expect(FactoryGirl.build(:order, interval: '10-13')).to be_valid
+        expect(FactoryGirl.build(:order, interval: '13-18')).to be_valid
+        expect(FactoryGirl.build(:order, interval: '18-21')).to be_valid
+        expect(FactoryGirl.build(:order, interval: '10-21')).to be_valid
       end
     end
   end
