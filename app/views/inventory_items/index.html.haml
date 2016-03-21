@@ -1,0 +1,23 @@
+.row
+  .col-lg-8.col-lg-offset-2
+    %h1 Кухонные принадлежности
+.row
+  .col-lg-8.col-lg-offset-2
+    %table.table
+      %tr
+        %th id
+        %th SVG
+        %th PNG
+        %th name
+        %th action
+      - @iis.each do |i|
+        %tr
+          %td= i.id
+          %td
+            %img{src: i.image}
+          %td
+            %img{src: i.image.icon }
+          %td= i.name
+          %td
+            %a.btn.btn-flat{href: edit_inventory_item_path(i, format: :html)}
+              EDIT

@@ -3,7 +3,11 @@ class InventoryItemsController < ApplicationController
   before_action :authenticate_or_forbid, except: [:show]
 
   def index
-    render json: InventoryItem.all
+    @iis = InventoryItem.all
+    respond_to do |f|
+      f.json { render json: @iis }
+      f.html
+    end
   end
 
   def new
