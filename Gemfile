@@ -23,6 +23,7 @@ gem 'twitter-bootstrap-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'active_model_serializers'
 gem 'will_paginate-bootstrap'
+gem 'item'
 
 gem 'capistrano', group: :development
 gem 'capistrano-rbenv', group: :development

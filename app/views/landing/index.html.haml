@@ -1,151 +1,182 @@
-.jumbotron#hero
-  .row
-    %center.col-xs-12
-      = image_tag 'logo.svg', class: 'hero-logo'
-  .row
-    %center.col-xs-12.col-md-8.col-md-offset-2.col-lg-4.col-lg-offset-4.hero-text
-      %p Мы производим и доставляем наборы высококачественных продуктов для быстрого и лёгкого приготовления ужинов дома.
-      - if @recipes.count == 5
-        %a.btn.btn-primary{href: '#menu'} ПОСМОТРЕТЬ МЕНЮ
-.jumbotron#order
-  .row.lead
-    %center.col-xs-12.jt
-      %span Закажите сейчас, и в воскресенье,&nbsp;
-      %span#d_date>= next_sunday + ","
-      %span &nbsp;к Вам приедет коробка с продуктами и рецептами блюд на следующую неделю.
-  .row.lead
-    %center.col-xs-12.jt
-      - if @recipes.count == 5
-        %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
-      - else
-        %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
-        %br/
-        %small Нельзя ОФОРМИТЬ ЗАКАЗ: меню составляется
-        %br/
-  .row.text-center.text-inverse.small
-    %a{href:'#how'} как всё устроено?
-.jumbotron#menu
-  %center
-    %h1.jt МЕНЮ НА НЕДЕЛЮ
-    %h2.jt
-      %span#bow= next_week_begin
-      &mdash;
-      %span#eow= next_week_end
-    %br/
-    .row.text-primary
-      %ul.nav.nav-pills#toggle_count
-        %li.active
-          %a.btn{'data-value' => 5} 5 ужинов
-        %li
-          %a.btn{'data-value' => 3} 3 ужина
-    %center.row.lead
-      %br/
-      %span#price_5(name="price")
-        %strong 3500
-        %i.fa.fa-rub
-      %span#price_3.hidden(name="price")
-        %strong 2500
-        %i.fa.fa-rub
-  %br/
-  - if @recipes.count == 5
-    .row
-      .col-xs-12.col-xs-offset-0.col-sm-6.col-sm-offset-3.col-md-12.col-md-offset-0.col-lg-10.col-lg-offset-1
-        - @recipes.take(3).each do |recipe|
-          %center.col-md-4.col-xs-12
-            = render partial: 'recipe_card', locals: { recipe: recipe}
-    %br/
-    .row
-      %center.col-xs-12#why_disabled{style: 'display:none'}
-        %h3.text-muted Доступны при выборе 5 ужинов
-      .col-lg-10.col-lg-offset-1.col-md-12.col-md-offset-0.col-sm-6.col-sm-offset-3.col-xs-12.col-xs-offset-0
-        %center.col-md-4.col-md-offset-2.col-sm-12.col-sm-offset-0
-          = render partial: 'recipe_card', locals: { recipe: @recipes[3]}
-        %center.col-md-4.col-md-offset-0.col-sm-12.col-sm-offset-0
-          = render partial: 'recipe_card', locals: { recipe: @recipes[4]}
-    %center.row.lead
-      %br/
-      %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
-      %br/
-  - else
-    .row#stub
-      %center.col-xs-12
-        %h3 В данный момент меню обновляется.
-        %h4 Обновите страницу через пару минут.
-
-.jumbotron#how
-  .row
-    %center.jt
-      %h1 КАК ВСЁ УСТРОЕНО?
-
-  %br/
-  .row.xs-double
-    %button.btn.btn-floating.out#how-text-toggle
-      %img{src: image_path("arrow-circle.svg")}
-    .col-xs-6.col-sm-5.col-md-5.col-md-offset-1.col-lg-4.col-lg-offset-2
-      %img.ig{src: image_path("ig.svg")}
-    .col-xs-6.col-sm-5.col-sm-offset-1.col-lg-4.col-lg-pull-1
-      %section.row#how-choose
-        .col-xs-2.visible-xs-block.arrow-container
-        .jt.lead.col-xs-12
-          Вы выбираете размер набора, который Вам больше подходит:
-          %ul.dotted
-            %li
-              для приготовления <strong>пяти</strong> ужинов на двоих.
-            %li
-              для приготовления <strong>трёх</strong> ужинов на двоих.
-
-          Заказываете набор до <strong>23:00 четверга</strong> на сайте или по телефону.
-
-      %section.row#how-receive
-        .jt.lead.col-xs-12
-          %ul.dotted
-            %li
-              Наш оператор звонит Вам и подтверждает заказ.
-            %li
-              В воскресенье мы доставляем Ваш заказ в удобное для Вас время в пределах МКАД.
-            %li
-              Вы убираете набор в холодильник.
-
-      %section.row#how-cook
-        .col-xs-2.visible-xs-block.arrow-container
-        .jt.lead.col-xs-12
-          В наборе Вы найдёте:
-          %ul.dotted
-            %li
-              Свежие <strong>продукты</strong>, подготовленные и упакованные
-              для каждого ужина отдельно
-            %li
-              Подробные <strong>рецепты</strong>, разработанные профессионалами,
-              благодаря которым Вы сможете быстро приготовить ужин как в
-              ресторане всего за 20-40 минут.
-
-  %br/
-  .row
-    .col-xs-12.col-xs-offset-0.col-md-8.col-md-offset-2
-      %center.jt
-        %br/
+= scope :service do
+  .jumbotron#hero
+    = prop :provider, type: :local_business do
+      = prop name: 'HomeMade'
+      .row
+        %center.col-xs-12
+          = image_tag 'logo.svg', class: 'hero-logo', itemprop: 'logo', itemtype: 'URL', alt: 'HomeMade Logo'
+      .row
+        %center.col-xs-12.col-md-8.col-md-offset-2.col-lg-4.col-lg-offset-4.hero-text
+          %p= prop :description, "Мы производим и доставляем наборы высококачественных продуктов для быстрого и лёгкого приготовления ужинов дома."
+          - if @recipes.count == 5
+            %a.btn.btn-primary{href: '#menu'} ПОСМОТРЕТЬ МЕНЮ
+  .jumbotron#order
+    .row.lead
+      %center.col-xs-12.jt
+        %span Закажите сейчас, и в воскресенье,&nbsp;
+        %span#d_date>= next_sunday + ","
+        %span &nbsp;к Вам приедет коробка с продуктами и рецептами блюд на следующую неделю.
+    .row.lead
+      %center.col-xs-12.jt
         - if @recipes.count == 5
           %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
         - else
           %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
           %br/
-          %small Нельзя оформить заказ: меню составляется. Попробуйте через пару минут.
+          %small Нельзя ОФОРМИТЬ ЗАКАЗ: меню составляется
           %br/
+    .row.text-center.text-inverse.small
+      %a{href:'#how'} как всё устроено?
+  = prop :has_offer_catalog, type: :offer_catalog, class: 'jumbotron', id: 'menu' do
+    %center
+      %h1.jt МЕНЮ НА НЕДЕЛЮ
+      %h2.jt
+        %span#bow= next_week_begin
+        &mdash;
+        %span#eow= next_week_end
+      %br/
+      .row.text-primary
+        %ul.nav.nav-pills#toggle_count
+          %li.active
+            %a.btn{'data-value' => 5}
+              = prop :item_list_element, type: :product do
+                = prop :offers, type: :offer do
+                  = prop name: 'Набор свежих продуктов'
+                  = prop :eligible_quantity, type: :quantitative_value, tag: :span, class: 'nowrap' do
+                    = prop :value, "5"
+                    = prop :unitText, "ужинов"
+                  = prop priceCurrency: 'RUB'
+                  = prop price: '3500.00'
+          %li
+            %a.btn{'data-value' => 3}
+              = prop :item_list_element, type: :product do
+                = prop :offers, type: :offer do
+                  = prop name: 'Набор свежих продуктов'
+                  = prop :eligible_quantity, type: :quantitative_value, tag: :span, class: 'nowrap' do
+                    = prop :value, "3"
+                    = prop :unitText, "ужина"
+                  = prop priceCurrency: 'RUB'
+                  = prop price: '2500.00'
+      %center.row.lead
         %br/
+        %span#price_5(name="price")
+          %strong 3500
+          %i.fa.fa-rub
+        %span#price_3.hidden(name="price")
+          %strong 2500
+          %i.fa.fa-rub
+    %br/
+    - if @recipes.count == 5
+      .row
+        .col-xs-12.col-xs-offset-0.col-sm-6.col-sm-offset-3.col-md-12.col-md-offset-0.col-lg-10.col-lg-offset-1
+          - @recipes.take(3).each do |recipe|
+            %center.col-md-4.col-xs-12
+              = render partial: 'recipe_card', locals: { recipe: recipe}
+      %br/
+      .row
+        %center.col-xs-12#why_disabled{style: 'display:none'}
+          %h3.text-muted Доступны при выборе 5 ужинов
+        .col-lg-10.col-lg-offset-1.col-md-12.col-md-offset-0.col-sm-6.col-sm-offset-3.col-xs-12.col-xs-offset-0
+          %center.col-md-4.col-md-offset-2.col-sm-12.col-sm-offset-0
+            = render partial: 'recipe_card', locals: { recipe: @recipes[3]}
+          %center.col-md-4.col-md-offset-0.col-sm-12.col-sm-offset-0
+            = render partial: 'recipe_card', locals: { recipe: @recipes[4]}
+      %center.row.lead
+        %br/
+        %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
+        %br/
+    - else
+      .row#stub
+        %center.col-xs-12
+          %h3 В данный момент меню обновляется.
+          %h4 Обновите страницу через пару минут.
 
-  %br/
-  .row
-    .col-xs-12.col-xs-offset-0.col-md-8.col-md-offset-2.jt.text-center
-      Если у Вас возникли вопросы, мы всегда с радостью ответим на них.
+  .jumbotron#how
+    .row
+      %center.jt
+        %h1 КАК ВСЁ УСТРОЕНО?
+
+    %br/
+    .row.xs-double
+      %button.btn.btn-floating.out#how-text-toggle
+        %img{src: image_path("arrow-circle.svg")}
+      .col-xs-6.col-sm-5.col-md-5.col-md-offset-1.col-lg-4.col-lg-offset-2
+        %img.ig{src: image_path("ig.svg")}
+      .col-xs-6.col-sm-5.col-sm-offset-1.col-lg-4.col-lg-pull-1
+        %section.row#how-choose
+          .col-xs-2.visible-xs-block.arrow-container
+          .jt.lead.col-xs-12
+            Вы выбираете размер набора, который Вам больше подходит:
+            %ul.dotted
+              %li
+                для приготовления <strong>пяти</strong> ужинов на двоих.
+              %li
+                для приготовления <strong>трёх</strong> ужинов на двоих.
+
+            %p
+              Заказываете набор до <strong>23:00 четверга</strong> на сайте или по телефону
+              = prop :hoursAvailable, type: :opening_hours_specification, tag: :span do
+                = succeed '.' do
+                  = surround '(', ')' do
+                    с
+                    = prop :opens,  "09:00"
+                    до
+                    = prop :closes, "22:00"
+            %p
+              Оплатить заказ можно картой (до пятницы) или наличными при получении.
+
+        %section.row#how-receive
+          .jt.lead.col-xs-12
+            %ul.dotted
+              %li
+                Наш оператор звонит Вам и подтверждает заказ.
+              %li
+                = prop :area_served, type: :place do
+                  = prop address: 'Москва'
+                  = prop :description, "В воскресенье мы доставляем Ваш заказ в удобное для Вас время в пределах МКАД."
+              %li
+                Вы убираете набор в холодильник.
+
+        %section.row#how-cook
+          .col-xs-2.visible-xs-block.arrow-container
+          .jt.lead.col-xs-12
+            В наборе Вы найдёте:
+            %ul.dotted
+              %li
+                Свежие <strong>продукты</strong>, подготовленные и упакованные
+                для каждого ужина отдельно
+              %li
+                Подробные <strong>рецепты</strong>, разработанные профессионалами,
+                благодаря которым Вы сможете быстро приготовить ужин как в
+                ресторане всего за 20-40 минут.
+
+    %br/
+    .row
+      .col-xs-12.col-xs-offset-0.col-md-8.col-md-offset-2
+        %center.jt
+          %br/
+          - if @recipes.count == 5
+            %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
+          - else
+            %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
+            %br/
+            %small Нельзя оформить заказ: меню составляется. Попробуйте через пару минут.
+            %br/
+          %br/
+
+    %br/
+    .row
+      .col-xs-12.col-xs-offset-0.col-md-8.col-md-offset-2.jt.text-center
+        Если у Вас возникли вопросы, мы всегда с радостью ответим на них.
 
 
-.jumbotron#subscribe
-  %br/
-  .row.lead
-    .col-xs-10.col-xs-offset-1.col-sm-8.col-sm-offset-2.text-center
-      = render partial: 'weekly_menu_subscriptions/form'
-      
-  %br/
+  .jumbotron#subscribe
+    %br/
+    .row.lead
+      .col-xs-10.col-xs-offset-1.col-sm-8.col-sm-offset-2.text-center
+        = render partial: 'weekly_menu_subscriptions/form'
+        
+    %br/
 
 = javascript_include_tag 'landing.js'
 = javascript_include_tag 'weekly_menu_subscriptions.js'
