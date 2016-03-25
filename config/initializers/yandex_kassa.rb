@@ -31,5 +31,5 @@ Rails.application.config.yandex_kassa = YandexKassa.new
 Rails.application.config.yandex_kassa.shop_id = ENV["YANDEX_KASSA_SHOP_ID"]
 Rails.application.config.yandex_kassa.shop_key = ENV["YANDEX_KASSA_KEY"]
 Rails.application.config.yandex_kassa.scid = ENV["YANDEX_KASSA_SCID"]
-Rails.application.config.yandex_kassa.base_url = "https://demomoney.yandex.ru/eshop.xml"
+Rails.application.config.yandex_kassa.base_url = "https://money.yandex.ru/eshop.xml"
 
