@@ -29,7 +29,7 @@ window.Ui.ready ->
       how.animate({scrollLeft: 0}, 300 )
       how.trigger 'scroll'
     else
-      how.animate({scrollLeft: $(window).width()}, 300 )
+      how.animate({scrollLeft: 1.2 * $(window).width()}, 300 )
       how.trigger 'scroll'
 
 

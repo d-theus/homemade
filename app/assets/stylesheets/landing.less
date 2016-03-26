@@ -1,10 +1,7 @@
 #hero{
   @media only screen and (min-width: 0) and (orientation: portrait) and (min-height: 0){
     background: image-url('bg-sm-p.jpg') no-repeat 50% 100%;
-    -webkit-background-size: 100% auto;
-    -moz-background-size:    100% auto;
-    -o-background-size:      100% auto;
-    background-size:         100% auto;
+    .background-size(100% auto);
     min-height: 110vh;
   }
   @media only screen and (min-width: 0) and (orientation: portrait) and (min-height: 600px){
@@ -12,57 +9,36 @@
   }
   @media only screen and (min-width: 0) and (orientation: landscape) and (min-height: 480px){
     background: image-url('bg-md.jpg') no-repeat 50% 100%;
-    -webkit-background-size: 100% auto;
-    -moz-background-size:    100% auto;
-    -o-background-size:      100% auto;
-    background-size:         100% auto;
+    .background-size(100% auto);
     min-height: 100vh;
   }
   @media only screen and (min-width: 0) and (orientation: landscape){
     background: image-url('bg-md.jpg') no-repeat 50% 100%;
-    -webkit-background-size: 100% auto;
-    -moz-background-size:    100% auto;
-    -o-background-size:      100% auto;
-    background-size:         100% auto;
+    .background-size(100% auto);
     min-height: 135vh;
   }
   @media only screen and (min-width: 768px) and (orientation: landscape){
     background: image-url('bg-md.jpg') no-repeat 50% 100%;
-    -webkit-background-size: 100% auto;
-    -moz-background-size:    100% auto;
-    -o-background-size:      100% auto;
-    background-size:         100% auto;
+    .background-size(100% auto);
     min-height: 100vh;
   }
   @media only screen and (min-width: 600px) and (orientation: portrait){
     background: image-url('bg-lg-p.jpg') no-repeat 50% 100%;
-    -webkit-background-size: 100% auto;
-    -moz-background-size:    100% auto;
-    -o-background-size:      100% auto;
-    background-size:         100% auto;
+    .background-size(100% auto);
     min-height: 85vh;
   }
   @media only screen and (min-width: 770px) and (orientation: portrait){
     background: image-url('bg-lg-p.jpg') no-repeat 50% 100%;
-    -webkit-background-size: 100% auto;
-    -moz-background-size:    100% auto;
-    -o-background-size:      100% auto;
-    background-size:         100% auto;
+    .background-size(100% auto);
     min-height: 85vh;
   }
   @media only screen and (min-width: @screen-lg){
     background: image-url('bg-lg.jpg') no-repeat 50% 100%;
-    -webkit-background-size: 100% auto;
-    -moz-background-size:    100% auto;
-    -o-background-size:      100% auto;
-    background-size:         100% auto;
+    .background-size(100% auto);
   }
   @media only screen and (min-width: 1921px){
     background: image-url('bg-xl.jpg') no-repeat 50% 100%;
-    -webkit-background-size: 100% auto;
-    -moz-background-size:    100% auto;
-    -o-background-size:      100% auto;
-    background-size:         100% auto;
+    .background-size(100% auto);
   }
   min-height: 100vh;
   margin: 0;
@@ -140,7 +116,7 @@
   .white;
   .sliding-up-anchor;
 
-  @media only screen and (max-width: 769px){
+  @media only screen and (max-width: 919px){
     overflow-x: scroll;
 
     .xs-double{
@@ -155,7 +131,7 @@
 
 #how-text-toggle{
   display: none;
-    @media only screen and (min-width: 769px){
+    @media only screen and (min-width: 920px){
       display: none !important;
     }
     .keyframes(rotate-f, {
@@ -179,61 +155,64 @@
 }
 
 #how-choose{
+  position: absolute;
+  @media only screen and (min-width: 768px) and (max-width: 919px){
+    padding-left: 15%;
+  }
   .jt.lead{
-    @media only screen and (min-width: 319px) and (orientation: landscape){
-      margin-top: 5vw;
+    @media only screen and (min-width: 0){
+      margin-top: 0;
     }
-    @media only screen and (min-width: 319px) and (orientation: portrait){
-      margin-top: 10vw;
+    @media only screen and (min-width: 980px){
+      margin-top: 0.05*0.9*32vw;
     }
-    @media only screen and (min-width: @screen-sm) and (orientation: landscape){
-      margin-top: 4vw;
-    }
-    @media only screen and (min-width: @screen-sm) and (orientation: portrait){
-      margin-top: 10vw;
+    @media only screen and (min-width: @screen-md){
+      margin-top: 0.05*0.9*32vw;
     }
     @media only screen and (min-width: @screen-lg){
-      margin-top: 5vw;
+      margin-top: 0.05*0.9*32vw;
     }
   }
 }
 
 #how-receive{
+  position: absolute;
+  @media only screen and (min-width: 768px) and (max-width: 919px){
+    padding-left: 15%;
+  }
   .jt.lead{
-    @media only screen and (min-width: 319px) and (orientation: landscape){
-      margin-top: 5vw;
+    @media only screen and (min-width: 0){
+      margin-top: 1.2*0.9*90vw;
     }
-    @media only screen and (min-width: 319px) and (orientation: portrait){
-      margin-top: 35vw;
+    @media only screen and (min-width: 980px){
+      margin-top: 1.2*0.9*32vw;
     }
-    @media only screen and (min-width: @screen-sm) and (orientation: landscape){
-      margin-top: 7vw;
+    @media only screen and (min-width: @screen-md){
+      margin-top: 1*0.9*40vw;
     }
-    @media only screen and (min-width: @screen-sm) and (orientation: portrait){
-      margin-top: 35vw;
-    }
-    @media only screen and (min-width: @screen-lg){
-      margin-top: 18vw;
+    @media only screen and (min-width: 1440px){
+      margin-top: 1*0.9*32vw;
     }
   }
 }
 
 #how-cook{
+  position: absolute;
+  @media only screen and (min-width: 768px) and (max-width: 919px){
+    padding-left: 15%;
+  }
   .jt.lead{
-    @media only screen and (min-width: 319px) and (orientation: landscape){
-      margin-top: 5vw;
+    @media only screen and (min-width: 0){
+      margin-top: 1.85*0.9*90vw;
     }
-    @media only screen and (min-width: 319px) and (orientation: portrait){
-      margin-top: 25vw;
+    @media only screen and (min-width: 980px){
+      margin-top: 1.8*0.9*40vw;
     }
-    @media only screen and (min-width: @screen-sm) and (orientation: landscape){
-      margin-top: 5vw;
+    @media only screen and (min-width: @screen-md){
+      margin-top: 1.80*0.9*40vw;
     }
-    @media only screen and (min-width: @screen-sm) and (orientation: portrait){
-      margin-top: 35vw;
-    }
-    @media only screen and (min-width: @screen-lg){
-      margin-top: 16vw;
+    @media only screen and (min-width: 1440px){
+      margin-top: 1.9*0.9*32vw;
     }
   }
 }
