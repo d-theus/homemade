@@ -113,14 +113,14 @@
               %li
                 для приготовления <strong>трёх</strong> ужинов на двоих.
             %div
-              Заказываете набор до <strong>23:00 четверга</strong> на сайте или по телефону
+              Заказываете набор <strong>до 23:00 четверга</strong> на сайте или
               = prop :hoursAvailable, type: :opening_hours_specification, tag: :span do
-                = succeed '.' do
-                  = surround '(', ')' do
-                    с
-                    = prop :opens,  "09:00"
-                    до
-                    = prop :closes, "22:00"
+                %strong
+                  с
+                  = prop :opens,  "09:00"
+                  до
+                  = prop :closes, "21:00"
+                  по телефону.
             %div
               Оплатить заказ можно картой (до пятницы) или наличными при получении.
 
