@@ -46,7 +46,9 @@
       .col-xs-10.col-xs-offset-1
         = f.input :by_phone, input_html: { checked: true }, label: 'совершён через телефонный звонок'
   %br/
+  .col-xs-12.text-right
+    %small.text-warning Заказы пока не принимаются
   .col-xs-12.text-right.lead
     .btn-group
-      = f.submit 'ЗАКАЗАТЬ', class: 'btn btn-lg btn-flat text-primary'
+      = f.submit 'ЗАКАЗАТЬ', class: 'btn btn-lg btn-flat text-primary disabled'
 = javascript_include_tag 'orders.js'
