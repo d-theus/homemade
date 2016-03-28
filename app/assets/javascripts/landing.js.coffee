@@ -13,6 +13,9 @@ updateCount = (val = Cookies.get('count') || 5)->
   $('.order_count input[type="radio"][value=' + val + ']')
     .click()
 
+notifyUnpaid = ->
+  $('#unpaid_modal').modal('show')
+
 window.Ui.ready ->
   how = $('#how')
   arrow = $('#how-text-toggle')
@@ -61,3 +64,25 @@ window.Ui.ready ->
   # It's better to fix initial state
   how.scrollLeft(0)
   how.trigger('scroll')
+
+  if (n = Number(Cookies.get('last_order'))) > 0
+    if ios_j = Cookies.get('ignore_orders')
+      ios = JSON.parse(ios_j)
+      if ios.indexOf(n) < 0
+        notifyUnpaid()
+    else
+      notifyUnpaid()
+
+  $('#unpaid_modal').on 'hidden.bs.modal', ->
+    cb = $('#unpaid_modal [name="ignore_order"]')
+    console.log cb
+    console.log cb.prop('checked')
+    if cb.prop('checked')
+      id = Number cb.data('id')
+      console.log id
+      if ioss = Cookies.get('ignore_orders')
+        ios = JSON.parse ioss
+        ios.push(id)
+        Cookies.set('ignore_orders', JSON.stringify(ios))
+      else
+        Cookies.set('ignore_orders', JSON.stringify([id]))

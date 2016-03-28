@@ -1,7 +1,7 @@
 = form_tag Rails.application.config.yandex_kassa.url do
   = hidden_field_tag :shopId, Rails.application.config.yandex_kassa.shop_id
   = hidden_field_tag :scid, Rails.application.config.yandex_kassa.scid
-  = hidden_field_tag :customerNumber, @order.id
+  = hidden_field_tag :customerNumber, order.id
   = hidden_field_tag :paymentType, 'AC'
-  = hidden_field_tag :sum, @order.price
+  = hidden_field_tag :sum, order.price
   = submit_tag (submit || 'ПЕРЕЙТИ К ОПЛАТЕ'), class: 'btn btn-primary btn-lg'

@@ -82,6 +82,9 @@ RSpec.describe OrdersController, type: :controller do
         context 'when card' do
           let(:order_attributes) { FactoryGirl.attributes_for(:order, payment_method: 'card') }
           it { is_expected.to redirect_to received_orders_path(id: Order.last.id) }
+          it 'have cookie containing last order' do
+            expect(cookies[:last_order]).not_to be nil
+          end
         end
       end
     end
