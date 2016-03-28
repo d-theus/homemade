@@ -174,8 +174,19 @@
     .row.lead
       .col-xs-10.col-xs-offset-1.col-sm-8.col-sm-offset-2.text-center
         = render partial: 'weekly_menu_subscriptions/form'
-        
-    %br/
+
+  .jumbotron#social
+    .row.lead.text-center
+      %h2 Мы в соцсетях
+    .row.lead
+      .col-xs-12.text-center
+        %a.btn.btn-primary(href="https://vk.com/homemade_llc")
+          %i.fa.fa-lg.fa-fw.fa-vk
+        %a.btn.btn-primary(href="https://instagram.com/homemade_llc")
+          %i.fa.fa-lg.fa-fw.fa-instagram
+        %a.btn.btn-primary(href="https://plus.google.com/+Homemade-mskRu")
+          %i.fa.fa-lg.fa-fw.fa-google-plus
+    
 
 = javascript_include_tag 'landing.js'
 = javascript_include_tag 'weekly_menu_subscriptions.js'
