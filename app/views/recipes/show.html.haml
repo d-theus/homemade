@@ -63,9 +63,9 @@
                 .col-xs-12.text-center-xs
                   %button.btn.btn-primary{ type: :button, data: { toggle: 'modal', target: '#picture_modal' }}
                     ПОКАЗАТЬ РЕЦЕПТ
-  .row#recipes_nav
-    .col-xs-12.text-center
-      %a.btn.btn-flat(href="/#menu")= @recipe.day ? 'ОБРАТНО В МЕНЮ' : 'МЕНЮ НА ЭТУ НЕДЕЛЮ'
+.row#recipes_nav
+  .col-xs-12.text-center
+    %a.btn.btn-flat(href="/#menu")= @recipe.day ? 'ОБРАТНО В МЕНЮ' : 'МЕНЮ НА ЭТУ НЕДЕЛЮ'
   = render partial: 'picture_modal'
 
 
