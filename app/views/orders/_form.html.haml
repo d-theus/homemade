@@ -40,7 +40,7 @@
       = f.input :payment_method,
         as: :select, collection: payment_methods,
         placeholder: t('activerecord.attributes.order.payment_method')
-      %small Оплата наличными при получении скоро будет доступна.
+      %small Оплата заказа при получении <strong>наличными пока недоступна</strong>.
   - if admin?
     .row
       .col-xs-10.col-xs-offset-1
