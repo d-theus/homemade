@@ -19,4 +19,6 @@ SitemapGenerator::Sitemap.create do
   Recipe.find_each do |recipe|
     add recipe_path(recipe), priority: recipe.day ? 0.9 : 0.5
   end
+
+  add about_path
 end
