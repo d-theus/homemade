@@ -19,7 +19,7 @@ html,body{
   }
 
   background: @brand-primary;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
   width: 100vw;
   margin: 0;
@@ -40,9 +40,11 @@ html,body{
     @media screen and (max-width: @grid-float-breakpoint){
       &.in, &.collapsing{
         .well;
+        .text-center;
         border-radius: 0;
-        width: 100vw;
+        width: 110vw;
         position: fixed;
+        left: -5vw;
         padding: 0 2em;
         z-index: 99;
       }
