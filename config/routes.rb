@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   end
   resource :policy, only: [:show], controller: :policy
   resource :offer, only: [:show], controller: :offer
+  resource :about, only: [:show], controller: :about
   devise_for :admins
   resource :yandex_kassa, only: [], controller: :yandex_kassa, defaults: { format: :xml } do
     post :paymentAviso, on: :collection
