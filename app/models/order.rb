@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
     :closed => []
   }.with_indifferent_access
 
-  PAYMENT_METHODS = %w()
+  PAYMENT_METHODS = %w(card)
 
   PRICES = { 5 => 3500, 3 => 2500 }
 
