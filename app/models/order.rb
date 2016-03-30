@@ -72,6 +72,7 @@ class Order < ActiveRecord::Base
 
   def price
     PRICES[self.count]
+    1
   end
 
   private
