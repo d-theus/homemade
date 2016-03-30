@@ -19,7 +19,7 @@ html,body{
   }
 
   background: @brand-primary;
-  overflow: visible;
+  overflow-x: visible;
   width: 100%;
   width: 100vw;
   margin: 0;
@@ -61,10 +61,19 @@ html,body{
 
 .sticky:not(.fixed){
   height: 0 !important;
+  overflow-x: hidden;
   position: fixed;
   transition: height .3s;
+  &>*{
+    opacity: 0;
+    transition: opacity .01s .25s;
+  }
   &.in{
     height: @navbar-height !important;
+    overflow-x: visible;
+    &>*{
+      opacity: 1;
+    }
   }
 }
 
