@@ -13,7 +13,7 @@
             пластиковой карты.
         .row
           %center.col-xs-6.col-lg-3.col-lg-offset-3
-            = render partial: 'yandex_kassa/form', locals: { submit: 'ЕЩЁ РАЗ' }
+            = render partial: 'yandex_kassa/form', locals: { submit: 'ЕЩЁ РАЗ', order: @order }
 
           %center.col-xs-6.col-lg-3
             = link_to 'ОТМЕНИТЬ ЗАКАЗ', cancel_order_path(@order), class: 'btn btn-flat text-primary'

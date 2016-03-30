@@ -1,0 +1,28 @@
+.modal.fade#unpaid_modal
+  - if @unpaid_order
+    .modal-dialog
+      .modal-content
+        .modal-body
+          %button.close(data-dismiss='modal') &times;
+          .row
+            %center.col-xs-12
+              %h2 У вас есть неоплаченный заказ <small>№<span id="unpaid_order_id">#{@unpaid_order.id}</span></small>
+              %h3 от #{date_format @unpaid_order.created_at}
+          %br/
+          .row
+            .col-xs-10.col-xs-offset-1.col-sm-8.col-sm-offset-2
+              Вы можете оплатить этот заказ до 23:59 этого четверга.
+              %small
+                Если Вы передумали, заказ можно отменить по телефону.
+                Также отмена произойдет в случае, если Вы не оплатите
+                заказ.
+          %br/
+          .row
+            .col-xs-10.col-xs-offset-1.col-sm-8.col-sm-offset-2
+              %input.material(type='checkbox' name='ignore_order' data-id="#{@unpaid_order.id}") больше не показывать
+          %br/
+          .row
+            .col-xs-5.col-xs-offset-1.col-sm-4.col-sm-offset-2.text-center
+              = render partial: 'yandex_kassa/form', locals: { submit: 'ПЕРЕЙТИ К ОПЛАТЕ', order: @unpaid_order }
+            .col-xs-5.col-sm-4.text-center
+              = button_tag "ЗАКРЫТЬ", 'data-dismiss' => 'modal', class: 'btn btn-flat btn-lg'

@@ -12,6 +12,7 @@ class OrdersController < ApplicationController
       if admin_signed_in?
         redirect_to orders_path
       else
+        cookies[:last_order] = { value: @order.id, expires: next_friday } if @order.can_pay?
         redirect_to received_orders_path(id: @order.id)
       end
     else
@@ -108,5 +109,9 @@ class OrdersController < ApplicationController
 
   def query
     query_params.keep_if { |k,v| !v.blank? }
+  end
+
+  def next_friday
+    Time.now + (1 + (4 - Time.now.wday) % 7).days
   end
 end

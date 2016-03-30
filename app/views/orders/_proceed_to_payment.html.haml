@@ -4,6 +4,6 @@
 .row
   .lead
     Чтобы оплатить заказ, перейдите в платёжную систему:
-    = render partial: 'yandex_kassa/form', locals: { submit: 'ПЕРЕЙТИ К ОПЛАТЕ' }
+    = render partial: 'yandex_kassa/form', locals: { submit: 'ПЕРЕЙТИ К ОПЛАТЕ', order: @order }
   %br/
   %br/
