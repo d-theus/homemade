@@ -136,4 +136,10 @@ class Order < ActiveRecord::Base
       false
     end
   end
+
+  class << self
+    def can_create?
+      Order.where('status in (?)', [:new, :paid, :awaiting_delivery]).count < 70
+    end
+  end
 end

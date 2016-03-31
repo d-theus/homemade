@@ -326,4 +326,21 @@ RSpec.describe Order, type: :model do
       expect(order.destroy).to be_truthy
     end
   end
+
+  describe '.can_create?' do
+    context 'when 0 to 69 orders' do
+      before { Order.delete_all }
+      before { 69.times { FactoryGirl.create(:order, payment_method: 'cash') } }
+      it 'is true' do
+        expect(Order.can_create?).to be_truthy
+      end
+    end
+    context 'when 70+ orders' do
+      before { Order.delete_all }
+      before { 71.times { FactoryGirl.create(:order, payment_method: 'cash') } }
+      it 'is falsy' do
+        expect(Order.can_create?).to be_falsy
+      end
+    end
+  end
 end
