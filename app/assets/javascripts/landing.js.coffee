@@ -16,6 +16,13 @@ updateCount = (val = Cookies.get('count') || 5)->
 notifyUnpaid = ->
   $('#unpaid_modal').modal('show')
 
+getThursday = ->
+  today = new Date()
+  td = today.getDay()
+  offset = if td < 5 then 4 - td else 11 - td
+  new Date(today.getFullYear(), today.getMonth(), today.getDate() + offset, 23, 59)
+
+
 window.Ui.ready ->
   how = $('#how')
   arrow = $('#how-text-toggle')
@@ -83,6 +90,6 @@ window.Ui.ready ->
       if ioss = Cookies.get('ignore_orders')
         ios = JSON.parse ioss
         ios.push(id)
-        Cookies.set('ignore_orders', JSON.stringify(ios))
+        Cookies.set('ignore_orders', JSON.stringify(ios), expires: getThursday())
       else
-        Cookies.set('ignore_orders', JSON.stringify([id]))
+        Cookies.set('ignore_orders', JSON.stringify([id]), expires: getThursday())

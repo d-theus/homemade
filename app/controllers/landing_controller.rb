@@ -10,7 +10,7 @@ class LandingController < ApplicationController
 
   def handle_unpaid_order
     if cookies[:last_order]
-      order = Order.find(cookies[:last_order])
+      order = Order.find_by(id: cookies[:last_order])
       if order.try(:can_pay?)
         @unpaid_order = order
       else
