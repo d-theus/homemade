@@ -7,6 +7,7 @@ form.on 'ajax:send', ->
 form.on 'ajax:success', (response)->
   $(this).hide()
   success.show()
+  Cookies.set('weekly_menu_subscribed', true)
 form.on 'ajax:error', (e, data)->
   $(this).show()
   json = JSON.parse(data.responseText)

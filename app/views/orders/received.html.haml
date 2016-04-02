@@ -9,9 +9,10 @@
     - if @order && @order.can_pay?
       = render partial: "proceed_to_payment"
     %br/
-    .row.lead
-      .col-xs-12
-        = render partial: 'weekly_menu_subscriptions/form'
+    - unless cookies[:weekly_menu_subscribed]
+      .row.lead
+        .col-xs-12
+          = render partial: 'weekly_menu_subscriptions/form'
         
     %br/
     %center.row
