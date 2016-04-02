@@ -97,14 +97,11 @@
         %h1 КАК ВСЁ УСТРОЕНО?
 
     %br/
-    .row.xs-double
-      %button.btn.btn-floating.out#how-text-toggle
-        %img{src: image_path("arrow-circle.svg")}
-      .col-xs-6.col-sm-5.col-md-5.col-md-offset-1.col-lg-4.col-lg-offset-2
-        %img.ig{src: image_path("ig.svg")}
-      .col-xs-6.col-sm-6.col-md-6.col-md-offset-0.col-lg-4
-        %section.row#how-choose
-          .col-xs-2.visible-xs-block.arrow-container
+    .row
+      .hidden-xs.col-sm-5.col-md-5.col-md-offset-1.col-lg-4.col-lg-offset-2
+        %img.ig{srcset: "#{image_path('ig.svg')} 768w, #{image_path('no.svg')} 1w", sizes: '(max-width: 767px) 1px, (min-width: 768px) 768px, 100vw', src: image_path("ig.svg")}
+      .col-xs-12.col-sm-6.col-md-6.col-md-offset-0.col-lg-4
+        %section.row#how-choose(data-appear-top-offset="-400")
           .jt.lead.col-xs-12
             Вы выбираете размер набора, который Вам больше подходит:
             %ul.dotted
@@ -131,7 +128,6 @@
                 Вы убираете набор в холодильник.
 
         %section.row#how-cook
-          .col-xs-2.visible-xs-block.arrow-container
           .jt.lead.col-xs-12
             В наборе Вы найдёте:
             %ul.dotted

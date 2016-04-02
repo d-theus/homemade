@@ -130,46 +130,63 @@
   }
 
   margin-bottom: 0;
-}
 
-#how-text-toggle{
-  display: none;
-    @media only screen and (min-width: 920px){
-      display: none !important;
+  //.xs-ig-pic{
+    //.visible-xs-inline-block;
+    //&.shrinking{
+      //.keyframes(shrinking, {
+        //from { width: 50%; }
+        //to   { width: 10%; }
+      //});
+      //.animation(0.8s ease-in-out 1 forwards shrinking);
+    //}
+    //&.in{
+      //width: 10%;
+    //}
+    //&:not(.in){
+      //width: 50%;
+    //}
+    //transition: width 0.8s;
+  //}
+  //.xs-ig-text{
+    //display: inline-block;
+    //&.expanding{
+      //.keyframes(expanding, {
+        //from { width: 50%; }
+        //to   { width: 90%; }
+      //});
+      //.animation(0.8s ease-in-out 1 forwards expanding);
+    //}
+    //&.in{
+      //width: 90%;
+    //}
+    //&:not(.in){
+      //width: 50%;
+    //}
+    //transition: width 0.8s;
+  //}
+  .jt.lead{
+    @media only screen and (max-width: @screen-md){
+      font-size: 14px;
     }
-    .keyframes(rotate-f, {
-      from { transform: rotate(0);      }
-      to   { transform: rotate(180deg); }
-    });
-    .keyframes(rotate-b, {
-      from { transform: rotate(180deg);      }
-      to   { transform: rotate(0); }
-    });
-    &.left{
-      img{
-        .animation(0.2s ease-in-out 1 forwards rotate-f);
-      }
-    }
-    &.right{
-      img{
-        .animation(0.2s ease-in-out 1 forwards rotate-b);
-      }
-    }
+  }
 }
 
 #how-choose{
-  position: absolute;
-  @media only screen and (min-width: 768px) and (max-width: 919px){
-    padding-left: 15%;
+  @media only screen and (min-width: @screen-sm){
+    position: absolute;
   }
-  @media only screen and (max-width: @grid-float-breakpoint){
-    margin-left: 1em;
-  }
+  //@media only screen and (min-width: 768px) and (max-width: 919px){
+    //padding-left: 15%;
+  //}
+  //@media only screen and (max-width: @grid-float-breakpoint){
+    //margin-left: 1em;
+  //}
   .jt.lead{
-    @media only screen and (min-width: 0){
-      margin-top: -2em;
-    }
-    @media only screen and (min-width: 980px){
+    //@media only screen and (min-width: 0){
+      //margin-top: -2em;
+    //}
+    @media only screen and (min-width: @screen-sm){
       margin-top: 0.05*0.9*32vw;
     }
     @media only screen and (min-width: @screen-md){
@@ -182,18 +199,11 @@
 }
 
 #how-receive{
-  position: absolute;
-  @media only screen and (min-width: 768px) and (max-width: 919px){
-    padding-left: 15%;
-  }
-  @media only screen and (max-width: @grid-float-breakpoint){
-    margin-left: 1em;
+  @media only screen and (min-width: @screen-sm){
+    position: absolute;
   }
   .jt.lead{
-    @media only screen and (min-width: 0){
-      margin-top: 0.9*0.9*90vw;
-    }
-    @media only screen and (min-width: 980px){
+    @media only screen and (min-width: @screen-sm){
       margin-top: 1.2*0.9*32vw;
     }
     @media only screen and (min-width: @screen-md){
@@ -206,18 +216,11 @@
 }
 
 #how-cook{
-  position: absolute;
-  @media only screen and (min-width: 768px) and (max-width: 919px){
-    padding-left: 15%;
-  }
-  @media only screen and (max-width: @grid-float-breakpoint){
-    margin-left: 1em;
+  @media only screen and (min-width: @screen-sm){
+    position: absolute;
   }
   .jt.lead{
-    @media only screen and (min-width: 0){
-      margin-top: 1.85*0.9*90vw;
-    }
-    @media only screen and (min-width: 980px){
+    @media only screen and (min-width: @screen-sm){
       margin-top: 1.8*0.9*40vw;
     }
     @media only screen and (min-width: @screen-md){
