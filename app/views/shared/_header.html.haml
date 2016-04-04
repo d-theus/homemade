@@ -44,9 +44,17 @@
             Перезвонить
             %sup
               %strong.small= @pending_callbacks
-        %li
-          %a{href: destroy_admin_session_path, data: { method: :delete } }
-            Выйти
+        %li.dropdown
+          %a.dropdown-toggle(data-toggle="dropdown" name="admin" href="#")
+            Сессия
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              %a{onclick: 'ga("set", "dimension1", "HideMe");', href: root_path}
+                Игнор. браузер
+            %li
+              %a{href: destroy_admin_session_path, data: { method: :delete } }
+                Выйти
   - else
     .collapse.navbar-collapse#header_collapse
       %ul.nav.navbar-nav.navbar-right.lead
