@@ -3,34 +3,25 @@ require 'rails_helper'
 RSpec.describe InventoryItem, type: :model do
   describe 'Validation' do
     it 'fails with no name' do
-      item = FactoryGirl.build :inventory_item_with_no_name
+      item = FactoryGirl.build :inventory_item, name: nil
       expect { item.save! }.to raise_error ActiveRecord::RecordInvalid
     end
 
-    it 'fails with no image' do
-      item = FactoryGirl.build :inventory_item_with_no_image
+    it 'fails with no filename' do
+      item = FactoryGirl.build :inventory_item, filename: nil
       expect { item.save! }.to raise_error ActiveRecord::RecordInvalid
     end
 
-    it 'fails with no name and image' do
-      item = FactoryGirl.build :inventory_item_with_no_name_and_image
-      expect { item.save! }.to raise_error ActiveRecord::RecordInvalid
-    end
-
-    it 'fails with jpg image' do
-      item = FactoryGirl.build :inventory_item_with_jpg_image
-      expect { item.save! }.to raise_error ActiveRecord::RecordInvalid
-    end
-
-    it 'succeeds with name and svg image' do
+    it 'succeeds with name and filename' do
       item = FactoryGirl.build :inventory_item
       expect { item.save! }.not_to raise_error
     end
   end
 
   describe '<-> Recipe' do
-    context 'when there are recipes dependent' do
-      let!(:recipe) { FactoryGirl.create(:recipe_with_inventory_items) }
+    xcontext 'when there are recipes dependent' do
+      let!(:iis) { 4.times { FactoryGirl.create(:inventory_item) }; InventoryItem.order('created_at DESC').take(4) }
+      let!(:recipe) { FactoryGirl.create(:recipe, inventory_items: iis) }
       let!(:ii) { recipe.inventory_items.first }
 
       it 'isnt deleted' do
@@ -48,5 +39,12 @@ RSpec.describe InventoryItem, type: :model do
         expect(ii.delete).to be_truthy
       end
     end
+  end
+
+  describe 'image' do
+    let(:ii) { FactoryGirl.create(:inventory_item) }
+    subject { ii.image }
+
+    its(:svg)
   end
 end
