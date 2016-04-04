@@ -1,19 +1,12 @@
 .container.navbar
-  .navbar-header.navbar-inverse
-    %button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target="#header_collapse")
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
-    %a.navbar-brand(href='/')
-      = image_tag 'logo-inverse.png', alt: 'HomeMade', title: 'HomeMade'
-    - unless admin?
-      %ul.nav.navbar-nav.nav-pills.pull-right
-        %li
-          %a.tel(href='tel:+74993940187')
-            %i.fa.fa-fw.fa-phone
-            +7 499 394 01 87 
-            &nbsp; &nbsp;
   - if admin?
+    .navbar-header.navbar-inverse
+      %button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target="#header_collapse")
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand(href=root_url)
+        = image_tag 'logo-inverse.png', alt: 'HomeMade', title: 'HomeMade'
     .collapse.navbar-collapse#header_collapse
       %ul.nav.navbar-nav.navbar-right.lead
         %li.dropdown
@@ -55,12 +48,24 @@
             %li
               %a{href: destroy_admin_session_path, data: { method: :delete } }
                 Выйти
-  - else
-    .collapse.navbar-collapse#header_collapse
-      %ul.nav.navbar-nav.navbar-right.lead
+  - else # admin?
+    .navbar-header.navbar-inverse.col-md-12.col-lg-12
+      - if admin?
+        %button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target="#header_collapse")
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+      %a.navbar-brand(href=root_url)
+        = image_tag 'logo-inverse.png', alt: 'HomeMade', title: 'HomeMade'
+      %ul.nav.navbar-nav.nav-pills.pull-right
         %li
-          %a(href=about_path) О нас
-        %li.text-center.visible-xs-block.visible-sm-block
-          %button.btn.btn-flat(type="button" data-toggle="collapse" data-target="#header_collapse")
-            %i.fa.fa-chevron-up.fa-fw
+          %a.tel(href='tel:+74993940187')
+            %span.hidden-xs
+              %i.fa.fa-fw.fa-phone
+              +7 499 394 01 87 
+              &nbsp; &nbsp;
+            %span.visible-xs-inline
+              %i.fa.fa-fw.fa-phone.fa-lg
+          %li
+            %a(href=about_path) О нас&nbsp; &nbsp;
 
