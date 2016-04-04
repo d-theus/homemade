@@ -8,16 +8,19 @@
         %th id
         %th SVG
         %th PNG
-        %th name
-        %th action
+        %th form
       - @iis.each do |i|
         %tr
           %td= i.id
           %td
-            %img{src: i.image}
+            %img{src: i.image.svg, width: "48px"}
           %td
-            %img{src: i.image.icon }
-          %td= i.name
+            %img{src: i.image.png, width: "48px" }
           %td
-            %a.btn.btn-flat{href: edit_inventory_item_path(i, format: :html)}
-              EDIT
+            = simple_form_for i, html: { class: 'form-inline' } do |f|
+              = f.input :name
+              = f.input :filename
+              = f.submit 'РЕД', class: 'btn btn-flat text-primary'
+          %td
+            %a.btn.btn-flat{href: inventory_item_path(i), data: { method: :delete, confirm: 'Delete item?'}}
+              DEL

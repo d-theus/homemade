@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20160403150348) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "filename",   default: "no.svg", null: false
+    t.string   "filename",   default: "no", null: false
   end
 
   create_table "inventory_items_recipes", id: false, force: true do |t|

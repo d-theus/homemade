@@ -39,7 +39,7 @@
                   %ul(style='list-style: none;line-height: 24px;')
                     - recipe.inventory_items.each do |ii|
                       %li
-                        %img{src: image_url(ii.image.icon), width: '24px', style: 'vertical-align: bottom'}
+                        %img{src: (ii.image.png), width: '24px', style: 'vertical-align: bottom'}
                         = ii.name
       %tr
         %td(colspan=2 align='center')

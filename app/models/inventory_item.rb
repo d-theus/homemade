@@ -5,9 +5,9 @@ class InventoryItem < ActiveRecord::Base
   validates :filename, presence: true, length: { minimum: 2 }
 
   def image
-    OpenStruct.new do |o|
-      o.svg = "#{filename}.svg"
-      o.png = "#{filename}.png"
-    end
+    o = OpenStruct.new
+    o.svg = ActionController::Base.helpers.image_url "aids/#{filename}.svg"
+    o.png = ActionController::Base.helpers.image_url "aids/#{filename}.png"
+    o
   end
 end

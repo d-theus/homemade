@@ -43,8 +43,12 @@ RSpec.describe InventoryItem, type: :model do
 
   describe 'image' do
     let(:ii) { FactoryGirl.create(:inventory_item) }
-    subject { ii.image }
 
-    its(:svg)
+    it 'has svg image' do
+      expect(ii.image.svg).to match /.*\/aids\/#{ii.filename}\.svg/
+    end
+    it 'has png image' do
+      expect(ii.image.png).to match /.*\/aids\/#{ii.filename}\.png/
+    end
   end
 end
