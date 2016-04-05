@@ -1,0 +1,30 @@
+!!! 5
+%html(lang="ru")
+  %head
+    %meta(charset='utf8')
+  %body(style='font-family: Arial, sans-serif; font-family: Helvetica, sans-serif;')
+    %table(width='960px' style="border-spacing: 0 50px;border-collapse: separate; border-color: transparent;")
+      %tr
+        %td(colspan=2 align='center')
+          %a{href: root_url, title: 'HomeMade - Главная страница'}
+            %img{src: image_url('logo.png')}
+      %tr
+        %td(colspan=2 align='center')
+          %p(style="font-size: 16px;") Спасибо, что проявили интерес и подписались на еженедельную рассылку меню от HomeMade!
+          %p(style="font-size: 14px; padding: 0 20px;")
+            Как только будет готово новое меню, мы вышлем Вам письмо со списком рецептов и всего
+            необходимого, чтобы приготовить несколько замечательных ужинов с помощью наших наборов!
+          %p(style="font-size: 14px; padding: 0 20px;")
+            Если это письмо попало в папку СПАМ, пожалуйста, пометьте его как НЕ СПАМ.
+      %tr
+        %td(colspan=2 align='center')
+          %br/
+          %a{href: root_url, title: 'Перейти на сайт', style: 'color: white; font-weight: 600; font-size: 20px; background: #fa1211; padding: 5px; text-decoration: none;'} НА САЙТ
+          %br/
+    %table(width='960px' style="border-spacing: 0 30px;border-collapse: separate;")
+      %tr
+      %td(colspan=2 align='center')
+        %br/
+        %small
+          %a{style: 'font-size: 10px;', href: unsubscribe_weekly_menu_subscription_url(@sub, format: :html, token: @sub.token)} Отписаться от рассылки меню
+
