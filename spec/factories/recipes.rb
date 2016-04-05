@@ -7,14 +7,6 @@ FactoryGirl.define do
     photo { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'meal-1.jpg'))}
     picture { Rack::Test::UploadedFile.new( File.join(Rails.root, 'spec', 'support', "recipe-picture.jpg")) }
 
-    factory :recipe_with_inventory_items do
-      after :create do |rec|
-        4.times do
-          rec.inventory_items << FactoryGirl.create(:inventory_item)
-        end
-      end
-    end
-
     factory :recipe_with_day do
       sequence(:day) do |n|
         if Recipe.where.not(day: nil).count > 4

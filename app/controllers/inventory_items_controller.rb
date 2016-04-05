@@ -55,6 +55,6 @@ class InventoryItemsController < ApplicationController
   private
 
   def ii_params
-    params.require(:inventory_item).permit(:name, :image)
+    params.require(:inventory_item).permit(:name, :filename)
   end
 end

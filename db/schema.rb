@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305074732) do
+ActiveRecord::Schema.define(version: 20160403150348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(version: 20160305074732) do
 
   create_table "inventory_items", force: true do |t|
     t.string   "name"
-    t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "filename",   default: "no", null: false
   end
 
   create_table "inventory_items_recipes", id: false, force: true do |t|
