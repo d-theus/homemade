@@ -4,6 +4,7 @@ class WeeklyMenuSubscriptionsController < ApplicationController
   def create
     @sub = WeeklyMenuSubscription.new(subscription_params)
     if @sub.save
+      WeeklyMenu.subscribed_email(@sub).deliver
       render nothing: true, status: :ok
     else
       render json: { status: 'error', message: @sub.errors.full_messages }, status: :unprocessable_entity
