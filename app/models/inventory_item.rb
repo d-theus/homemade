@@ -6,8 +6,8 @@ class InventoryItem < ActiveRecord::Base
 
   def image
     o = OpenStruct.new
-    o.svg = ActionController::Base.helpers.image_url "aids/#{filename}.svg"
-    o.png = ActionController::Base.helpers.image_url "aids/#{filename}.png"
+    o.svg = "aids/#{filename}.svg"
+    o.png = "aids/#{filename}.png"
     o
   end
 end
