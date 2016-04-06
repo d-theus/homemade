@@ -33,6 +33,8 @@ class RecipePhotoUploader < CarrierWave::Uploader::Base
   # Create different versions of your uploaded files:
   version :preview do
     process :resize_to_fill => [440, 320]
+    process :quality => 83
+    process :interlace
   end
 
   version :show do
@@ -61,15 +63,19 @@ class RecipePhotoUploader < CarrierWave::Uploader::Base
     data
   end
    
-  #private
+  private
 
-  #def encode_base64
-    #image = 
-      #manipulate! do |img|
-       #img.resize_to_fit [480, 480]
-      #img
-      #end.read
-    #data << Base64.encode64(image)
-    #File.write(self.current_path,data)
-  #end
+  def quality(percentage)
+    manipulate! do |img|
+      img = img.quality(percentage)
+      img
+    end
+  end
+
+  def interlace
+    manipulate! do |img|
+      img = img.interlace 'plane'
+      img
+    end
+  end
 end
