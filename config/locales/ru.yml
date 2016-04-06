@@ -332,4 +332,6 @@ ru:
         not_found_in_database: 'Отказано: данные для входа указаны неверно'
   mailers:
     weekly_menu:
-      subject: 'Новое меню на неделю'
+      subject:
+        email: 'Новое меню на неделю'
+        subscribed_email: 'Подписка на рассылку меню от HomeMade'

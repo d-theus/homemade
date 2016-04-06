@@ -11,12 +11,12 @@ class WeeklyMenu < ActionMailer::Base
 
     @sub = subscriber
 
-    mail(to: @sub.email, subject: I18n.t('mailers.weekly_menu.subject') )
+    mail(to: @sub.email, subject: I18n.t('mailers.weekly_menu.subject.email') )
   end
 
   def subscribed_email(subscriber)
     @sub = subscriber
 
-    mail(to: @sub.email, subject: I18n.t('mailers.weekly_menu.subject') )
+    mail(to: @sub.email, subject: I18n.t('mailers.weekly_menu.subject.subscribed_email') )
   end
 end
