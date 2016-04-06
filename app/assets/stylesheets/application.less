@@ -76,14 +76,15 @@ html,body{
   position: fixed;
   transition: height .3s;
   &>*{
-    opacity: 0;
-    transition: opacity .01s .25s;
+    top: -@navbar-height;
+    position: absolute;
+    transition: top .2s .1s;
   }
   &.in{
     height: @navbar-height !important;
     overflow-x: visible;
     &>*{
-      opacity: 1;
+      top: 0;
     }
   }
 }
