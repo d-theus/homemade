@@ -112,6 +112,6 @@ class OrdersController < ApplicationController
   end
 
   def next_friday
-    Time.now + (1 + (4 - Time.now.wday) % 7).days
+    Time.zone.now + (1 + (4 - Time.zone.now.wday) % 7).days
   end
 end

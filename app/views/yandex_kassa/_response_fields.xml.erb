@@ -1,4 +1,4 @@
-performedDatetime="<%= Time.now.iso8601 %>"
+performedDatetime="<%= Time.zone.now.iso8601 %>"
 code="<%= @code %>"
 invoiceId="<%= @invoiceId %>"
 shopId="<%= Rails.configuration.yandex_kassa.shop_id %>"

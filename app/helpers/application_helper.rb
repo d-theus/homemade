@@ -24,7 +24,7 @@ module ApplicationHelper
     I18n.l(date, format: '%e %B')
   end
 
-  def next_week_begin(today = Date.today)
+  def next_week_begin(today = Time.zone.today)
     if today.days_to_week_start < 4
       date_format(today.next_week)
     else
@@ -32,7 +32,7 @@ module ApplicationHelper
     end
   end
 
-  def next_week_end(today = Date.today)
+  def next_week_end(today = Time.zone.today)
     if today.days_to_week_start < 4
       date_format(today.next_week + 4.days)
     else
@@ -40,7 +40,7 @@ module ApplicationHelper
     end
   end
 
-  def next_sunday(today = Date.today)
+  def next_sunday(today = Time.zone.today)
     if today.days_to_week_start < 4
       date_format(today.sunday)
     else
