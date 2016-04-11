@@ -18,7 +18,7 @@
         %span &nbsp;к Вам приедет коробка с продуктами и рецептами блюд на следующую неделю.
     .row.lead
       %center.col-xs-12.jt
-        Первым десяти заказавшим скидка <strong>10%</strong>!
+        Первым десяти заказавшим скидка <strong>20%</strong>!
     .row.lead
       %center.col-xs-12.jt
         - if @recipes.count == 5
@@ -68,7 +68,7 @@
               %strong= price_for(5)
               %i.fa.fa-rub
             %br/
-            %small.text-muted -10% первым 10 покупателям
+            %small.text-muted -20% первым 10 покупателям
             %br/
             %strong= price_with_discount_for(5)
             %i.fa.fa-rub
@@ -77,7 +77,7 @@
               %strong= price_for(3)
               %i.fa.fa-rub
             %br/
-            %small.text-muted -10% первым 10 покупателям
+            %small.text-muted -20% первым 10 покупателям
             %br/
             %strong= price_with_discount_for(3)
             %i.fa.fa-rub

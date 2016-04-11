@@ -13,7 +13,7 @@ class Order < ActiveRecord::Base
   PAYMENT_METHODS = %w(cash card)
 
   PRICES = { 5 => 3500, 3 => 2500 }
-  DISCOUNT = 0.1
+  DISCOUNT = 0.2
 
   validates :payment_method, presence: true, format: /\A(card|cash)\z/
   validates :count, presence: true, inclusion: { in: [3,5] }
