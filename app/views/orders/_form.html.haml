@@ -39,9 +39,7 @@
     .col-xs-10.col-sm-7
       = f.input :payment_method,
         as: :select, collection: payment_methods,
-        placeholder: t('activerecord.attributes.order.payment_method'),
-        selected: 'card'
-      %small Оплата заказа при получении <strong>наличными</strong> пока недоступна.
+        placeholder: t('activerecord.attributes.order.payment_method')
   - if admin?
     .row
       .col-xs-10.col-xs-offset-1
