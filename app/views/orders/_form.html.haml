@@ -24,7 +24,7 @@
       %i.fa.fa-fw.fa-lg.fa-archive
     .col-xs-10.col-sm-7
       = f.input :count,
-        as: :select, collection: [['5 ужинов за 3500 р.', 5],['3 ужина за 2500 р.', 3]],
+        as: :select, collection: prices,
         placeholder: t('activerecord.attributes.order.count')
   .row
     .col-xs-2.text-center.form-icon

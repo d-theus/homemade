@@ -27,7 +27,7 @@
           %th(rowspan=2) №
           %th(rowspan=2)
           %th(rowspan=2) Создан
-          %th(rowspan=2) Наборов
+          %th(rowspan=2) Набор
           %th(rowspan=1 colspan=3) Заказчик
           %th(rowspan=2) Оплата
           %th(rowspan=2) Статус
@@ -46,7 +46,11 @@
               - if ord.by_phone
                 %i.fa.fa-phone.fa-fw.text-primary{title: 'Заказан по телефону'}
             %td= date_format ord.created_at
-            %td= ord.count
+            %td
+              = ord.count
+              за #{ord.price}
+              - if ord.discount?
+                %strong(title="Скидка") (%)
             %td= phone_number ord.phone
             %td= ord.name
             %td= ord.address

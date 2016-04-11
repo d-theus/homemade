@@ -18,6 +18,9 @@
         %span &nbsp;к Вам приедет коробка с продуктами и рецептами блюд на следующую неделю.
     .row.lead
       %center.col-xs-12.jt
+        Первым десяти заказавшим скидка <strong>10%</strong>!
+    .row.lead
+      %center.col-xs-12.jt
         - if @recipes.count == 5
           %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
         - else
@@ -59,12 +62,32 @@
                   = prop price: '2500.00'
       %center.row.lead
         %br/
-        %span#price_5(name="price")
-          %strong 3500
-          %i.fa.fa-rub
-        %span#price_3.hidden(name="price")
-          %strong 2500
-          %i.fa.fa-rub
+        - if Order.discount?
+          %span#price_5(name="price" title="")
+            %strike.text-muted
+              %strong= price_for(5)
+              %i.fa.fa-rub
+            %br/
+            %small.text-muted -10% первым 10 покупателям
+            %br/
+            %strong= price_with_discount_for(5)
+            %i.fa.fa-rub
+          %span#price_3.hidden(name="price")
+            %strike.text-muted
+              %strong= price_for(3)
+              %i.fa.fa-rub
+            %br/
+            %small.text-muted -10% первым 10 покупателям
+            %br/
+            %strong= price_with_discount_for(3)
+            %i.fa.fa-rub
+        - else
+          %span#price_5(name="price")
+            %strong= price_for(5)
+            %i.fa.fa-rub
+          %span#price_3.hidden(name="price")
+            %strong= price_for(3)
+            %i.fa.fa-rub
     %br/
     - if @recipes.count == 5
       .row

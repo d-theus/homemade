@@ -20,4 +20,26 @@ module OrdersHelper
       ["10:00 ― 21:00", "10-21"]
     ]
   end
+
+  def prices
+    if Order.discount?
+    [
+      ["5 ужинов за #{price_with_discount_for(5)} р.", 5],
+      ["3 ужина за #{price_with_discount_for(3)} р.", 3]
+    ]
+    else
+    [
+      ["5 ужинов за #{price_for(5)} р.", 5],
+      ["3 ужина за #{price_for(3)} р.", 3]
+    ]
+    end
+  end
+
+  def price_for(count)
+    Order::PRICES[count]
+  end
+
+  def price_with_discount_for(count)
+    (Order::PRICES[count] * (1.0 - Order::DISCOUNT)).floor
+  end
 end

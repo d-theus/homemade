@@ -13,6 +13,7 @@ class Order < ActiveRecord::Base
   PAYMENT_METHODS = %w(cash card)
 
   PRICES = { 5 => 3500, 3 => 2500 }
+  DISCOUNT = 0.1
 
   validates :payment_method, presence: true, format: /\A(card|cash)\z/
   validates :count, presence: true, inclusion: { in: [3,5] }
@@ -23,6 +24,7 @@ class Order < ActiveRecord::Base
   validate  :check_interval
   before_destroy :can_destroy?
   after_create   :make_card_pending
+  before_create   :make_discount
 
   def pay
     change_status(:paid)
@@ -71,7 +73,11 @@ class Order < ActiveRecord::Base
   end
 
   def price
-    PRICES[self.count]
+    if self.discount?
+      PRICES[self.count] * (1.0 - DISCOUNT)
+    else
+      PRICES[self.count]
+    end
   end
 
   private
@@ -137,9 +143,18 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def make_discount
+    self.discount = Order.discount?
+    true
+  end
+
   class << self
     def can_create?
       Order.where('status in (?)', [:new, :paid, :awaiting_delivery]).count < 70
+    end
+
+    def discount?
+      Order.where('status in (?)', [:new, :paid, :awaiting_delivery]).count < 10
     end
   end
 end

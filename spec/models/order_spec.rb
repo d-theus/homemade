@@ -343,4 +343,61 @@ RSpec.describe Order, type: :model do
       end
     end
   end
+
+  describe 'discounting' do
+    context 'when 0 to 10 orders' do
+      before { Order.delete_all }
+      before { 3.times { FactoryGirl.create(:order, payment_method: 'cash') } }
+      describe '.discount?' do
+
+        it 'is truthy' do
+          expect(Order.discount?).to be_truthy
+        end
+      end
+
+      describe 'order price' do
+        let (:ord_cash) { o = FactoryGirl.create(:order, payment_method: 'cash', count: 5); o.reload; o }
+        let (:ord_card) { o = FactoryGirl.create(:order, payment_method: 'card', count: 3); o.reload; o }
+
+        it 'has price decreased' do
+          expect(Order.count).to be < 10
+          expect(ord_cash.price).to be <= 3500 * 0.9
+          expect(ord_card.price).to be <= 2500 * 0.9
+        end
+      end
+
+      describe '#discount?' do
+        it 'is' do
+          ord = FactoryGirl.create(:order, payment_method: 'cash', count: 5)
+          expect(ord).to be_discount
+        end
+      end
+    end
+
+    context 'when > 10 orders' do
+      before { Order.delete_all }
+      before { 10.times { FactoryGirl.create(:order, payment_method: 'cash') } }
+      describe '.discount?' do
+
+        it 'is falsy' do
+          expect(Order.discount?).to be_falsy
+        end
+      end
+      describe 'order price' do
+        ord_cash = FactoryGirl.create(:order, payment_method: 'cash', count: 5)
+        ord_card = FactoryGirl.create(:order, payment_method: 'card', count: 3)
+
+        it 'has ordinary price' do
+          expect(ord_cash.price).to be >= 3500
+          expect(ord_card.price).to be >= 2500
+        end
+      end
+      describe '#discount?' do
+        it 'isnt' do
+          ord = FactoryGirl.create(:order, payment_method: 'cash', count: 5)
+          expect(ord).not_to be_discount
+        end
+      end
+    end
+  end
 end
