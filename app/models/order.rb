@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
   STATUS_TABLE = {
     :nil => [ :new ],
-    :new => [ :cancelled],
+    :new => [ :cancelled ],
     :pending => [ :paid, :cancelled ],
     :paid => [ :awaiting_delivery, :awaiting_refund ],
     :awaiting_refund => [ :cancelled ],
@@ -80,6 +80,17 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def make_awaiting_delivery
+    if  (self.payment_method == 'card' && self.status == 'paid') ||
+        (self.payment_method == 'cash' && self.status == 'new')
+      self.status = 'awaiting_delivery'
+      self.save(validate: false)
+    else
+      false
+    end
+  end
+
+
   private
 
   def change_status(new_status)
@@ -133,16 +144,6 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def make_awaiting_delivery
-    if  (self.payment_method == 'card' && self.status == 'paid') ||
-        (self.payment_method == 'cash' && self.status == 'new')
-      self.status = 'awaiting_delivery'
-      self.save(validate: false)
-    else
-      false
-    end
-  end
-
   def make_discount
     self.discount = Order.discount?
     true
@@ -155,6 +156,15 @@ class Order < ActiveRecord::Base
 
     def discount?
       Order.where('status in (?)', [:new, :paid, :awaiting_delivery]).count < 10
+    end
+
+    def advance
+      Order.where(status: ['new','paid']).find_each { |o| o.make_awaiting_delivery }
+      Order.where(status: 'pending').find_each { |o| o.cancel } 
+    end
+
+    def close
+      Order.where(status: 'awaiting_delivery').find_each { |o| o.close }
     end
   end
 end

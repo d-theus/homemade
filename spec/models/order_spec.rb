@@ -400,4 +400,35 @@ RSpec.describe Order, type: :model do
       end
     end
   end
+
+  describe '.advance' do
+    before { Order.delete_all }
+    before { 20.times { FactoryGirl.create(:order, payment_method: 'cash')} }
+    before { 20.times { FactoryGirl.create(:order, payment_method: 'card')} }
+    before { Order.where(status: 'pending', payment_method: 'card').limit(10).each { |r| r.status= 'paid'; r.save(validate: false) } }
+
+    it 'makes only paid+card or new+cash orders awaiting_delivery' do
+      expect { Order.advance }.to change { Order.where(status: 'awaiting_delivery').count }
+      .from(0)
+      .to(30)
+      expect { Order.advance }.not_to change { Order.where(status: 'pending').count }
+      expect { Order.advance }.not_to change { Order.where(status: 'cancelled').count }
+      expect { Order.advance }.not_to change { Order.where(status: 'awaiting_refund').count }
+      expect { Order.advance }.not_to change { Order.where(status: 'closed').count }
+    end
+  end
+
+  describe '.close' do
+    before { Order.delete_all }
+    before { 20.times { FactoryGirl.create(:order, payment_method: 'cash')} }
+    before { 20.times { FactoryGirl.create(:order, payment_method: 'card')} }
+    before { Order.where(status: 'new', payment_method: 'cash').each { |r| r.status= 'awaiting_delivery'; r.save(validate: false) } }
+    before { Order.where(status: 'pending', payment_method: 'card').limit(10).each { |r| r.status= 'awaiting_delivery'; r.save(validate: false) } }
+
+    it 'closes orders with awaiting_delivery' do
+      expect { Order.close }.to change { Order.where(status: 'awaiting_delivery').count }
+      .from(30)
+      .to(0)
+    end
+  end
 end
