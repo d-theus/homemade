@@ -28,6 +28,12 @@ window.Ui.ready ->
   arrow = $('#how-text-toggle')
   lis = $('#toggle_count li')
   buttons = $('#toggle_count a')
+  order_modal = $('#order_modal')
+  order_modal_shown = false
+  order_modal.on 'shown.bs.modal', ->
+    unless order_modal_shown
+      ga('send', 'event', 'order', 'shown', 'modal')
+      order_modal_shown = true
   buttons.on 'click', ->
     val = $(this).data('value')
     lis.removeClass('active')
