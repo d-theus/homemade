@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = Order
-    .order('created_at DESC')
+    .order(order_by)
     .where(query)
     respond_to do |f|
       f.html do
@@ -109,6 +109,10 @@ class OrdersController < ApplicationController
 
   def query
     query_params.keep_if { |k,v| !v.blank? }
+  end
+
+  def order_by
+    params.permit(:order_by)
   end
 
   def next_friday
