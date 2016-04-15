@@ -10,7 +10,8 @@
           %p= prop :description, "Мы производим и доставляем наборы высококачественных продуктов для быстрого и лёгкого приготовления ужинов дома."
           - if @recipes.count == 5
             %a.btn.btn-primary{href: '#menu'} ПОСМОТРЕТЬ МЕНЮ
-          %a.btn.btn-flat{href: '#how'} КАК ВСЁ УСТРОЕНО
+          %a.btn.btn-flat{href: '#how'}
+            %span.text-primary КАК ВСЁ УСТРОЕНО
   .jumbotron#order
     .row.lead
       %center.col-xs-12.jt
