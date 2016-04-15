@@ -91,9 +91,10 @@
 
 #menu{
   .white;
-  .sliding-up-anchor;
+  .anchor;
 
   margin: 0;
+  padding-bottom: 0;
   @media only screen and (max-width: @screen-sm) and (orientation: portrait){
     padding-left: 0;
     padding-right: 0;
@@ -117,7 +118,7 @@
 
 #how{
   .white;
-  .sliding-up-anchor;
+  .anchor;
 
   @media only screen and (max-width: 919px){
     overflow-x: scroll;
@@ -267,16 +268,11 @@
   }
 }
 
-.sliding-up-anchor{
+.anchor{
   &:target{
-    .animation(2s ease-in-out 1 forwards slideUp);
-    -webkit-animation-play-state: paused;
-    animation-play-state: paused;
+    padding-top: 0.75 * @navbar-height;
+    margin-top: -0.25 * @navbar-height;
   }
-  .keyframes(slideUp, {
-    from { padding-top: @navbar-height; }
-    to { padding-top: 0; }
-  });
 }
 
 [name="price"]:not(.hidden){

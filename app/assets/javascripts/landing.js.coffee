@@ -61,3 +61,4 @@ window.Ui.ready ->
         Cookies.set('ignore_orders', JSON.stringify(ios), expires: getThursday())
       else
         Cookies.set('ignore_orders', JSON.stringify([id]), expires: getThursday())
+
