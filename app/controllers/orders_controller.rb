@@ -42,14 +42,15 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order
-    .order(order_by)
-    .where(query)
+    @orders = Order.order('created_at DESC')
     respond_to do |f|
       f.html do
-        @orders = @orders.paginate(page: params[:page], per_page: 12)
+        @orders = @orders.where(query)
+        .paginate(page: params[:page], per_page: 12)
       end
-      f.xls
+      f.xls do
+        @orders = @orders.where(status: :awaiting_delivery)
+      end
     end
   end
 
@@ -109,10 +110,6 @@ class OrdersController < ApplicationController
 
   def query
     query_params.keep_if { |k,v| !v.blank? }
-  end
-
-  def order_by
-    params.permit(:order_by)
   end
 
   def next_friday

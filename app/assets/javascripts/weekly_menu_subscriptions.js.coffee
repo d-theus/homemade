@@ -9,6 +9,7 @@ form.on 'ajax:success', (response)->
   success.show()
   Cookies.set('weekly_menu_subscribed', true)
   ga('send', 'event', 'subscriptions', 'subscribed', 'weekly_menu')
+  yaCounter35600140.reachGoal('weekly_menu_subscribed')
 form.on 'ajax:error', (e, data)->
   $(this).show()
   json = JSON.parse(data.responseText)

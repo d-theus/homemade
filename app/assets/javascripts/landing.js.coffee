@@ -33,6 +33,7 @@ window.Ui.ready ->
   order_modal.on 'shown.bs.modal', ->
     unless order_modal_shown
       ga('send', 'event', 'order', 'shown', 'modal')
+      yaCounter35600140.reachGoal('order_clicked')
       order_modal_shown = true
   buttons.on 'click', ->
     val = $(this).data('value')

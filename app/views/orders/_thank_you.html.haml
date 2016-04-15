@@ -9,5 +9,6 @@
   lid = Cookies.get('last_order_id')
   if(!lid || ( Number(lid) !== #{@order.id})){
   ga('send', 'event', 'order', 'placement', #{@order.count}, #{@order.price} );
+  yaCounter35600140.reachGoal("order_#{@order.count}")
   Cookies.set('last_order_id', #{@order.id});
   }
