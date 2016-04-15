@@ -151,11 +151,11 @@ class Order < ActiveRecord::Base
 
   class << self
     def can_create?
-      Order.where('status in (?)', [:new, :paid, :awaiting_delivery]).count < 70
+      Order.where('status in (?)', [:new, :pending, :paid]).count < 70
     end
 
     def discount?
-      Order.where('status in (?)', [:new, :paid, :awaiting_delivery]).count < 10
+      Order.where('status in (?)', [:new, :paid]).count < 10
     end
 
     def advance
