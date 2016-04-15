@@ -1,0 +1,15 @@
+%p{name: "price", id: "price_#{count}", class: ( hidden ? 'hidden' : nil ) }
+  - if discount?
+    %strike.text-muted
+      %strong= original_price_for(count)
+      %i.fa.fa-rub
+
+    %br/
+    %small.text-muted -20% первым 10 покупателям
+    %br/
+    %strong= discount_price_for(count)
+    %i.fa.fa-rub
+
+  - else
+    %strong= original_price_for(count)
+    %i.fa.fa-rub
