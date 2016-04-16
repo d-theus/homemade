@@ -1,10 +1,11 @@
 = scope :service do
   .jumbotron#hero
-    = prop :provider, type: :local_business do
+    = prop :provider, type: :organization do
       = prop name: 'HomeMade'
       .row
         %center.col-xs-12
-          = image_tag 'logo.svg', class: 'hero-logo', itemprop: 'logo', itemtype: 'URL', alt: 'HomeMade Logo'
+          = prop url: root_url
+          = image_tag 'logo.svg', class: 'hero-logo', itemprop: 'logo', itemtype: 'http://schema.org/URL', alt: 'HomeMade Logo'
       .row
         %center.col-xs-12.col-md-8.col-md-offset-2.col-lg-4.col-lg-offset-4.hero-text
           %p= prop :description, "Мы производим и доставляем наборы высококачественных продуктов для быстрого и лёгкого приготовления ужинов дома."
@@ -47,27 +48,27 @@
           %li.active
             %a.btn{'data-value' => 5}
               = prop :item_list_element, type: :product do
-                = prop :offers, type: :offer do
+                = prop :offers, type: :offer, class: 'text-condensed' do
                   = prop name: 'Набор свежих продуктов'
                   = prop :eligible_quantity, type: :quantitative_value, tag: :span, class: 'nowrap' do
                     = prop :value, "5"
                     = prop :unitText, "ужинов"
                     %br/
-                    %small на двоих
+                    %small.tiny на двоих
                   = prop priceCurrency: 'RUB'
-                  = prop price: '3500.00'
+                  = prop price: original_price_for(5)
           %li
             %a.btn{'data-value' => 3}
               = prop :item_list_element, type: :product do
-                = prop :offers, type: :offer do
+                = prop :offers, type: :offer, class: 'text-condensed' do
                   = prop name: 'Набор свежих продуктов'
                   = prop :eligible_quantity, type: :quantitative_value, tag: :span, class: 'nowrap' do
                     = prop :value, "3"
                     = prop :unitText, "ужина"
                     %br/
-                    %small на двоих
+                    %small.tiny на двоих
                   = prop priceCurrency: 'RUB'
-                  = prop price: '2500.00'
+                  = prop price: original_price_for(3)
       %center.row.lead#prices
         .col-xs-8.col-xs-offset-2.col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
           = render partial: 'price', locals: { count: 5, hidden: false }
@@ -187,13 +188,15 @@
     .row.lead.text-center
       %h2 Мы в соцсетях
     .row.lead
-      .col-xs-12.text-center
-        %a.btn.btn-primary(href="https://vk.com/club118150374")
-          %i.fa.fa-lg.fa-fw.fa-vk
-        %a.btn.btn-primary(href="https://instagram.com/homemade_msk")
-          %i.fa.fa-lg.fa-fw.fa-instagram
-        %a.btn.btn-primary(href="https://www.facebook.com/homemade.msk/")
-          %i.fa.fa-lg.fa-fw.fa-facebook
+      = prop :provider, type: :organization do
+        = prop name: 'HomeMade'
+        .col-xs-12.text-center
+          %a.btn.btn-primary(href="https://vk.com/club118150374" itemprop='sameAs' itemtype='http://schema.org/URL')
+            %i.fa.fa-lg.fa-fw.fa-vk
+          %a.btn.btn-primary(href="https://instagram.com/homemade_msk" itemprop='sameAs' itemtype='http://schema.org/URL')
+            %i.fa.fa-lg.fa-fw.fa-instagram
+          %a.btn.btn-primary(href="https://www.facebook.com/homemade.msk/" itemprop='sameAs' itemtype='http://schema.org/URL')
+            %i.fa.fa-lg.fa-fw.fa-facebook
     
 
 = javascript_include_tag 'landing.js'

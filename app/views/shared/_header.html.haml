@@ -1,66 +1,68 @@
 .container.navbar.col-xs-12.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
-  - if admin?
-    .navbar-header.navbar-inverse
-      %button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target="#header_collapse")
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a.navbar-brand(href=root_url)
-        = image_tag 'logo-inverse.png', alt: 'HomeMade', title: 'HomeMade'
-    .collapse.navbar-collapse#header_collapse
-      %ul.nav.navbar-nav.navbar-right.lead
-        %li.dropdown
-          %a.dropdown-toggle(data-toggle="dropdown" name="recipes" href="#")
-            Рецепты
-            %span.caret
-          %ul.dropdown-menu
-            %li
-              %a{href: recipes_path} Архив
-            %li
-              %a{href: new_recipe_path} Новый
-        %li.dropdown
-          %a.dropdown-toggle(data-toggle="dropdown" name="recipes" href="#")
-            Заказы
-            %span.caret
-          %ul.dropdown-menu
-            %li
-              %a{href: orders_path} Список
-            %li
-              %a{href: new_order_path} Новый
-        %li
-          %a{href: contacts_path, title: 'Сообщения обратной связи'}
-            Сообщения
-            %sup
-              %strong.small= @unread_messages
-        %li
-          %a{href: phone_callbacks_path, title: 'Сообщения обратной связи'}
-            Перезвонить
-            %sup
-              %strong.small= @pending_callbacks
-        %li.dropdown
-          %a.dropdown-toggle(data-toggle="dropdown" name="admin" href="#")
-            Сессия
-            %span.caret
-          %ul.dropdown-menu
-            %li
-              %a{onclick: 'ga("set", "dimension1", "HideMe");', href: root_path}
-                Игнор. браузер
-            %li
-              %a{href: destroy_admin_session_path, data: { method: :delete } }
-                Выйти
-  - else # admin?
-    .navbar-inverse
-      %a.navbar-brand(href=root_url)
-        = image_tag 'logo-inverse.png', alt: 'HomeMade', title: 'HomeMade'
-      %ul.nav.navbar-nav.nav-pills.pull-right
-        %li
-          %a.tel(href='tel:+74993940187')
-            %span.hidden-xs
-              %i.fa.fa-fw.fa-phone
-              +7 499 394 01 87 
-              &nbsp; &nbsp;
-            %span.visible-xs-inline
-              %i.fa.fa-fw.fa-phone.fa-lg
+  = scope :organization do
+    = prop name: 'HomeMade'
+    - if admin?
+      .navbar-header.navbar-inverse
+        %button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target="#header_collapse")
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        %a.navbar-brand(href=root_url itemprop="url")
+          = image_tag 'logo-inverse.png', alt: 'HomeMade', title: 'HomeMade', itemprop: "logo"
+      .collapse.navbar-collapse#header_collapse
+        %ul.nav.navbar-nav.navbar-right.lead
+          %li.dropdown
+            %a.dropdown-toggle(data-toggle="dropdown" name="recipes" href="#")
+              Рецепты
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                %a{href: recipes_path} Архив
+              %li
+                %a{href: new_recipe_path} Новый
+          %li.dropdown
+            %a.dropdown-toggle(data-toggle="dropdown" name="recipes" href="#")
+              Заказы
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                %a{href: orders_path} Список
+              %li
+                %a{href: new_order_path} Новый
           %li
-            %a(href=about_path) О нас&nbsp; &nbsp;
+            %a{href: contacts_path, title: 'Сообщения обратной связи'}
+              Сообщения
+              %sup
+                %strong.small= @unread_messages
+          %li
+            %a{href: phone_callbacks_path, title: 'Сообщения обратной связи'}
+              Перезвонить
+              %sup
+                %strong.small= @pending_callbacks
+          %li.dropdown
+            %a.dropdown-toggle(data-toggle="dropdown" name="admin" href="#")
+              Сессия
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                %a{onclick: 'ga("set", "dimension1", "HideMe");', href: root_path}
+                  Игнор. браузер
+              %li
+                %a{href: destroy_admin_session_path, data: { method: :delete } }
+                  Выйти
+    - else # admin?
+      .navbar-inverse
+        %a.navbar-brand(href=root_url)
+          = image_tag 'logo-inverse.png', alt: 'HomeMade', title: 'HomeMade'
+        %ul.nav.navbar-nav.nav-pills.pull-right
+          %li
+            %a.tel(href='tel:+74993940187')
+              %span.hidden-xs
+                %i.fa.fa-fw.fa-phone
+                = prop :telephone, '+7 499 394 01 87'
+                &nbsp; &nbsp;
+              %span.visible-xs-inline
+                %i.fa.fa-fw.fa-phone.fa-lg
+            %li
+              %a(href=about_path) О нас&nbsp; &nbsp;
 
