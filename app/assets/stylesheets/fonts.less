@@ -1,23 +1,34 @@
-.new-font-face(@name; @file; @style: normal; @weight: normal){
-  @font-face{
-    font-family: @name;
-    src: font-url(@file) format('truetype');
-    font-style: @style;
-    font-weight: @weight;
-  }
+@font-face {
+  font-family: 'Roboto Light';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v15/Fl4y0QdOxyyTHEGMXX8kcaCWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
 }
-
-.new-font-face('Roboto Black', 'Roboto-Black.ttf');
-.new-font-face('Roboto Black', 'Roboto-BlackItalic.ttf', italic);
-.new-font-face('Roboto', 'Roboto-Bold.ttf', normal, bold);
-.new-font-face('Roboto', 'Roboto-BoldItalic.ttf', italic, bold);
-.new-font-face('Roboto', 'Roboto-Regular.ttf');
-.new-font-face('Roboto', 'Roboto-LightItalic.ttf', italic);
-.new-font-face('Roboto Light', 'Roboto-Light.ttf');
-.new-font-face('Roboto Condensed', 'RobotoCondensed-Regular.ttf');
-.new-font-face('Roboto Medium', 'Roboto-Medium.ttf');
-.new-font-face('Roboto Medium', 'Roboto-Medium.ttf');
-.new-font-face('Roboto Slab', 'RobotoSlab-Regular.ttf');
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v15/B85vmdvDILX92ray16e-1g.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'), url(https://fonts.gstatic.com/s/roboto/v15/oHi30kwQWvpCWqAhzHcCSKCWcynf_cDxXwCLxiixG1c.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(https://fonts.gstatic.com/s/robotoslab/v6/y7lebkjgREBJK96VQi37Zpp-63r6doWhTEbsfBIRJ7A.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Condensed'), local('RobotoCondensed-Regular'), url(https://fonts.gstatic.com/s/robotocondensed/v13/Zd2E9abXLFGSr9G3YK2MsNbQxvdFQproHqwx84HIuqM.ttf) format('truetype');
+}
 
 @font-family-sans-serif: Roboto Light;
 @font-family-serif:      Roboto Slab;
+
