@@ -276,9 +276,15 @@
 }
 
 [name="price"]:not(.hidden){
-  .animation(0.2s ease-in-out 1 forwards fadeIn);
-  .keyframes(fadeIn, {
-    from { opacity: 0; background: rgba(255, 0, 0, 0.4) }
-    to   { opacity: 1; background: rgba(255, 0, 0, 0)}
+  .animation(0.3s ease-in-out 1 forwards slideIn);
+  .keyframes(slideIn, {
+    from { .transform(scaleX(0)); }
+    to   { .transform(scaleX(1)); }
   });
+  &:nth-of-type(2n){
+    .transform-origin(right);
+  }
+  &:nth-of-type(2n+1){
+    .transform-origin(left);
+  }
 }
