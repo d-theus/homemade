@@ -37,16 +37,20 @@
                       %i.fa.fa-fw.fa-lg.fa-times
               %br/
               .row.lead
-                %center.col-xs-5.col-xs-offset-1.text-condensed{ title: "Время приготовления: #{@recipe.cooking_time} мин."}
-                  %i.fa.fa-fw.fa-clock-o
-                  #{@recipe.cooking_time} мин.
-                  = prop cook_time: "PT#{@recipe.cooking_time}M"
-                %center.col-xs-5.text-condensed{ title: "Размер порции на одну персону: #{@recipe.serving_size}"}
-                  %i.fa.fa-fw.fa-cutlery
-                  = prop :nutrition, type: :nutrition_information, tag: :span do
-                    = prop :serving_size, @recipe.serving_size
-                  %br/
-                  %small.tiny (на одного)
+                .col-xs-12.col-lg-10.col-lg-offset-1
+                  %center.col-xs-4.text-condensed{ title: "Время приготовления: #{@recipe.cooking_time} мин."}
+                    %i.fa.fa-fw.fa-clock-o
+                    #{@recipe.cooking_time} мин.
+                    = prop cook_time: "PT#{@recipe.cooking_time}M"
+                  %center.col-xs-4.text-condensed{ title: "Размер порции на одну персону: #{@recipe.serving_size}"}
+                    %i.fa.fa-fw.fa-cutlery
+                    = prop :nutrition, type: :nutrition_information, tag: :span do
+                      = prop :serving_size, @recipe.serving_size
+                    %br/
+                    %small.tiny (одна порция)
+                  %center.col-xs-4.text-condensed{ title: "Количество порций: 2"}
+                    %i.fa.fa-fw.fa-user
+                    2
           .row
             .col-xs-12.col-sm-11.col-sm-offset-1
               %section.row
