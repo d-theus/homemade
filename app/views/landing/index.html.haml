@@ -13,24 +13,6 @@
             %a.btn.btn-primary{href: '#menu'} ПОСМОТРЕТЬ МЕНЮ
           %a.btn.btn-flat{href: '#how'}
             %span.text-primary КАК ВСЁ УСТРОЕНО
-  .jumbotron#order
-    .row.lead
-      %center.col-xs-12.jt
-        %span Закажите сейчас, и в воскресенье,&nbsp;
-        %span#d_date>= next_sunday + ","
-        %span &nbsp;к Вам приедет коробка с продуктами и рецептами блюд на следующую неделю.
-    .row.lead
-      %center.col-xs-12.jt
-        Первым десяти заказавшим скидка <strong>20%</strong>!
-    .row.lead
-      %center.col-xs-12.jt
-        - if @recipes.count == 5
-          %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
-        - else
-          %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
-          %br/
-          %small Нельзя ОФОРМИТЬ ЗАКАЗ: меню составляется
-          %br/
   = prop :has_offer_catalog, type: :offer_catalog, class: 'jumbotron', id: 'menu' do
     %center
       %h1.jt МЕНЮ НА НЕДЕЛЮ
@@ -89,15 +71,25 @@
             = render partial: 'recipe_card', locals: { recipe: @recipes[3]}
           %center.col-md-4.col-md-offset-0.col-sm-12.col-sm-offset-0
             = render partial: 'recipe_card', locals: { recipe: @recipes[4]}
-      %center.row.lead
-        %br/
-        %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
-        %br/
-    - else
-      .row#stub
-        %center.col-xs-12
-          %h3 В данный момент меню обновляется.
-          %h4 Обновите страницу через пару минут.
+
+  .jumbotron#order
+    .row.lead
+      %center.col-xs-12.jt
+        %span Закажите сейчас, и в воскресенье,&nbsp;
+        %span#d_date>= next_sunday + ","
+        %span &nbsp;к Вам приедет коробка с продуктами и рецептами блюд на следующую неделю.
+    .row.lead
+      %center.col-xs-12.jt
+        Первым десяти заказавшим скидка <strong>20%</strong>!
+    .row.lead
+      %center.col-xs-12.jt
+        - if @recipes.count == 5
+          %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
+        - else
+          %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
+          %br/
+          %small Нельзя ОФОРМИТЬ ЗАКАЗ: меню составляется
+          %br/
 
   .jumbotron#how
     .row
