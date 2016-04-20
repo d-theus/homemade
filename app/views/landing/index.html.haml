@@ -120,57 +120,59 @@
         %h1 КАК ВСЁ УСТРОЕНО?
 
     %br/
-    .row
+    %section.row#how-choose
       .hidden-xs.col-sm-5.col-md-5.col-md-offset-1.col-lg-3.col-lg-offset-2
-        %img.ig{srcset: "#{image_path('ig.svg')} 768w, #{image_path('no.svg')} 1w", sizes: '(max-width: 767px) 1px, (min-width: 768px) 768px, 100vw', src: image_path("ig.svg")}
-      .col-xs-12.col-sm-6.col-md-6.col-md-offset-0.col-lg-5
-        %section.row#how-choose(data-appear-top-offset="-400")
-          .jt.lead.col-xs-12
-            %hgroup.text-center.visible-xs-block
-              %h4 ВЫБИРАЕТЕ
-            Вы выбираете размер набора, который Вам больше подходит:
-            %ul.dotted
-              %li
-                для приготовления <strong>пяти</strong> ужинов на двоих.
-              %li
-                для приготовления <strong>трёх</strong> ужинов на двоих.
-            %br/
-            %div
-              Заказываете набор на сайте или <strong>с 9:00 до 21:00</strong> по телефону.
-            %br/
-            %div
-              Продукты, заказанные до <strong>23:59 четверга</strong>, привезут в <strong>ближайшее воскресенье</strong>.
-              Например, при заказе сегодня это #{next_sunday}.
+        %img.ig{srcset: "#{image_path('ig-choose.svg')} 768w, #{image_path('no.svg')} 1w", sizes: '(max-width: 767px) 1px, (min-width: 768px) 768px, 100vw', src: image_path("ig.svg")}
+      .col-xs-12.col-sm-6.col-md-6.col-md-offset-0.col-lg-5.jt.lead
+        %hgroup.text-center.visible-xs-block
+          %h4 ВЫБИРАЕТЕ
+        Вы выбираете размер набора, который Вам больше подходит:
+        %ul.dotted
+          %li
+            для приготовления <strong>пяти</strong> ужинов на двоих.
+          %li
+            для приготовления <strong>трёх</strong> ужинов на двоих.
+        %br/
+        %div
+          Заказываете набор на сайте или <strong>с 9:00 до 21:00</strong> по телефону.
+        %br/
+        %div
+          Продукты, заказанные до <strong>23:59 четверга</strong>, привезут в <strong>ближайшее воскресенье</strong>.
+          Например, при заказе сегодня это #{next_sunday}.
 
-        %section.row#how-receive
-          .jt.lead.col-xs-12
-            %hgroup.text-center.visible-xs-block
-              %h4 ПОЛУЧАЕТЕ
-            %div
-              Наш оператор звонит Вам и подтверждает заказ.
-            %br/
-            %div
-              = prop :area_served, type: :place do
-                = prop address: 'Москва'
-                = prop :description, "В воскресенье мы доставляем Ваш заказ в удобное для Вас время в пределах МКАД."
-              <small>Доставка включена в стоимость набора.</small>
-            %br/
-            %div
-              Вы убираете набор в холодильник.
+    %section.row#how-receive
+      .hidden-xs.col-sm-5.col-md-5.col-md-offset-1.col-lg-3.col-lg-offset-2
+        %img.ig{srcset: "#{image_path('ig-receive.svg')} 768w, #{image_path('no.svg')} 1w", sizes: '(max-width: 767px) 1px, (min-width: 768px) 768px, 100vw', src: image_path("ig.svg")}
+      .col-xs-12.col-sm-6.col-md-6.col-md-offset-0.col-lg-5.jt.lead
+        %hgroup.text-center.visible-xs-block
+          %h4 ПОЛУЧАЕТЕ
+        %div
+          Наш оператор звонит Вам и подтверждает заказ.
+        %br/
+        %div
+          = prop :area_served, type: :place do
+            = prop address: 'Москва'
+            = prop :description, "В воскресенье мы доставляем Ваш заказ в удобное для Вас время в пределах МКАД."
+          <small>Доставка включена в стоимость набора.</small>
+        %br/
+        %div
+          Вы убираете набор в холодильник.
 
-        %section.row#how-cook
-          .jt.lead.col-xs-12
-            %hgroup.text-center.visible-xs-block
-              %h4 ГОТОВИТЕ
-            В наборе Вы найдёте:
-            %ul.dotted
-              %li
-                Свежие <strong>продукты</strong>, подготовленные и упакованные
-                для каждого ужина отдельно
-              %li
-                Подробные <strong>рецепты</strong>, разработанные профессионалами,
-                благодаря которым Вы сможете быстро приготовить ужин как в
-                ресторане всего за 20-40 минут.
+    %section.row#how-cook
+      .hidden-xs.col-sm-5.col-md-5.col-md-offset-1.col-lg-3.col-lg-offset-2
+        %img.ig{srcset: "#{image_path('ig-cook.svg')} 768w, #{image_path('no.svg')} 1w", sizes: '(max-width: 767px) 1px, (min-width: 768px) 768px, 100vw', src: image_path("ig.svg")}
+      .col-xs-12.col-sm-6.col-md-6.col-md-offset-0.col-lg-5.jt.lead
+        %hgroup.text-center.visible-xs-block
+          %h4 ГОТОВИТЕ
+        В наборе Вы найдёте:
+        %ul.dotted
+          %li
+            Свежие <strong>продукты</strong>, подготовленные и упакованные
+            для каждого ужина отдельно
+          %li
+            Подробные <strong>рецепты</strong>, разработанные профессионалами,
+            благодаря которым Вы сможете быстро приготовить ужин как в
+            ресторане всего за 20-40 минут.
 
     %br/
     .row
