@@ -127,132 +127,43 @@
 
 #pros{
   .white;
+  margin-bottom: -7em;
 }
 
 #how{
   .white;
   .anchor;
 
-  //@media only screen and (max-width: 919px){
-    //overflow-x: scroll;
-
-    //.xs-double{
-      //width: 200vw;
-    //}
-  //}
-
-  //.ig{
-    //width: 90%;
-  //}
-
-  //margin-bottom: 0;
-
-  //.xs-ig-pic{
-    //.visible-xs-inline-block;
-    //&.shrinking{
-      //.keyframes(shrinking, {
-        //from { width: 50%; }
-        //to   { width: 10%; }
-      //});
-      //.animation(0.8s ease-in-out 1 forwards shrinking);
-    //}
-    //&.in{
-      //width: 10%;
-    //}
-    //&:not(.in){
-      //width: 50%;
-    //}
-    //transition: width 0.8s;
-  //}
-  //.xs-ig-text{
-    //display: inline-block;
-    //&.expanding{
-      //.keyframes(expanding, {
-        //from { width: 50%; }
-        //to   { width: 90%; }
-      //});
-      //.animation(0.8s ease-in-out 1 forwards expanding);
-    //}
-    //&.in{
-      //width: 90%;
-    //}
-    //&:not(.in){
-      //width: 50%;
-    //}
-    //transition: width 0.8s;
-  //}
-  .jt.lead{
+  .ig{
+    @media only screen and (max-width: 519px){
+      width: 100%;
+    }
+    @media only screen and (min-width: 520px) and (max-width: @screen-sm){
+      width: 256px;
+      margin: 0 50%;
+      .transform(translateX(-50%));
+    }
+    @media only screen and (min-width: @screen-sm){
+      width: 100%;
+    }
+    @media only screen and (min-width: @screen-md){
+      width: 80%;
+      margin-left: 10%;
+    }
+    @media only screen and (min-width: @screen-lg){
+      width: 100%;
+    }
+    margin: auto auto%;
+  }
+  .jt.lead, .jt.lead p{
+    @media only screen and (min-width: 519px) and (max-width: @screen-sm){
+      padding: 1em 20%;
+    }
     @media only screen and (max-width: @screen-md){
       font-size: 14px;
     }
   }
 }
-
-//#how-choose{
-  //@media only screen and (min-width: @screen-sm){
-    //position: absolute;
-  //}
-  ////@media only screen and (min-width: 768px) and (max-width: 919px){
-    ////padding-left: 15%;
-  ////}
-  ////@media only screen and (max-width: @grid-float-breakpoint){
-    ////margin-left: 1em;
-  ////}
-  //.jt.lead{
-    ////@media only screen and (min-width: 0){
-      ////margin-top: -2em;
-    ////}
-    //@media only screen and (min-width: @screen-sm){
-      //margin-top: 0.05*0.9*32vw;
-    //}
-    //@media only screen and (min-width: @screen-md){
-      //margin-top: 0.01*0.9*30vw;
-    //}
-    //@media only screen and (min-width: 1439px){
-      //margin-top: 1.87*0.9*23vw;
-    //}
-    //@media only screen and (min-width: @screen-lg){
-      //margin-top: 0.05*0.9*32vw;
-    //}
-    //@media only screen and (min-width: 1439px){
-      //margin-top: 0.01*0.9*23vw;
-    //}
-  //}
-//}
-
-//#how-receive{
-  //@media only screen and (min-width: @screen-sm){
-    //position: absolute;
-  //}
-  //.jt.lead{
-    //@media only screen and (min-width: @screen-sm){
-      //margin-top: 1.2*0.9*32vw;
-    //}
-    //@media only screen and (min-width: @screen-md){
-      //margin-top: 1*0.9*35vw;
-    //}
-    //@media only screen and (min-width: 1439px){
-      //margin-top: 1.1*0.9*22vw;
-    //}
-  //}
-//}
-
-//#how-cook{
-  //@media only screen and (min-width: @screen-sm){
-    //position: absolute;
-  //}
-  //.jt.lead{
-    //@media only screen and (min-width: @screen-sm){
-      //margin-top: 1.8*0.9*40vw;
-    //}
-    //@media only screen and (min-width: @screen-md){
-      //margin-top: 1.80*0.9*35vw;
-    //}
-    //@media only screen and (min-width: 1439px){
-      //margin-top: 1.85*0.9*23vw;
-    //}
-  //}
-//}
 
 #subscribe{
   .white;
