@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_or_forbid, except: [:new, :create, :pay, :received, :failed]
   before_action :fetch_order, only: [:cancel, :close, :destroy]
+  protect_from_forgery except: :create
 
   def new
     @order = Order.new
