@@ -46,4 +46,8 @@ module OrdersHelper
   def discount?
     @order_discount ||= Order.discount? 
   end
+
+  def discount
+    "#{(Order::DISCOUNT * 100).to_i}%"
+  end
 end

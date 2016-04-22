@@ -361,8 +361,8 @@ RSpec.describe Order, type: :model do
 
         it 'has price decreased' do
           expect(Order.count).to be < 10
-          expect(ord_cash.price).to be <= 3500 * 0.9
-          expect(ord_card.price).to be <= 2500 * 0.9
+          expect(ord_cash.price).to be <= Order::PRICES[5] * (1 - Order::DISCOUNT)
+          expect(ord_card.price).to be <= Order::PRICES[3] * (1 - Order::DISCOUNT)
         end
       end
 
