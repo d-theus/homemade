@@ -2,57 +2,39 @@
 %html(lang="ru")
   %head
     %meta(charset='utf8')
-  %body(style='font-family: Arial, sans-serif; font-family: Helvetica, sans-serif;width: 100%;min-width: 550px;')
-    %table(max-width='960px' style="border-spacing: 0 50px;border-collapse: separate; border-color: transparent;margin: 0 auto;")
-      %tr
-        %td(colspan=2 align='center')
-          %a{href: root_url, title: 'HomeMade - Главная страница'}
-            %img{src: image_url('logo.png')}
-      %tr
-        %td(colspan=2 align='center')
-          %h1.jt МЕНЮ НА НЕДЕЛЮ
-          %h2.jt
-            %span#bow= next_week_begin
-            &mdash;
-            %span#eow= next_week_end
+  %body(style="font-family: Arial, sans-serif; font-family: Helvetica, sans-serif; color: #111; width: 100%; padding: 0; margin: 0; ")
+    %div( style=" max-width: 500px; margin: 0 auto; overflow: hidden; text-align: center; ")
+      %a{href: root_url, title: 'HomeMade - Главная страница'}
+        %img{src: image_url('logo.png')}
+      %div(style="text-align: center;")
+        %h1 МЕНЮ НА НЕДЕЛЮ
+        %h2
+          %span#bow= next_week_begin
+          &mdash;
+          %span#eow= next_week_end
       - @recipes.each do |recipe|
-        %tr
-          %td(width='61%' style='vertical-align: top;overflow: hidden;padding: 0;margin: 0;')
-            %img{src: image_url(recipe.photo.preview), width: '100%'}
-          %td(width='39%' style="vertical-align: top;overflow: hidden;padding: 0;margin: 0;")
-            %table(style="border-spacing: 0" width='100%' height='100%')
-              %tr(height='130px')
-                %td(style="vertical-align: top; height:100%;padding: 0;")
-                  %div(style="width: 90%; height:100%; padding-top: 5px; padding-left: 5%; padding-bottom: 5px;background-color: #fa1211; color: white;")
-                    %h2= recipe.title
-                    %h3= recipe.subtitle
-                    %p
-                      %img{src: image_url('cutlery-o.png'), width: '18px'}
-                      #{recipe.serving_size}
-                      &nbsp; &nbsp; &nbsp;
-                      %img{src: image_url('clock-o.png'), width: '18px'}
-                      #{recipe.cooking_time} мин.
-
-              %tr
-                %td(style="background: transparent; vertical-align: top; padding-left: 10px;" width='100%' )
-                  %h3 Для приготовления понадобится
-                  %ul(style='list-style: none;line-height: 24px;')
-                    - recipe.inventory_items.each do |ii|
-                      %li
-                        %img{src: (image_url ii.image.png), width: '24px', style: 'vertical-align: bottom'}
-                        = ii.name
-      %tr
-        %td(colspan=2 align='center')
-          %br/
-          %br/
-          %a{href: new_order_url, title: 'Перейти на сайт для оформления заказа', style: 'color: white; font-weight: 500; font-size: 20px; background: #fa1211; padding: 5px 12px; text-decoration: none; border-radius: 3px;'} ОФОРМИТЬ ЗАКАЗ
-          %br/
-          %br/
-    %table(width='960px' style="border-spacing: 0 30px;border-collapse: separate;")
-      %tr
-      %td(colspan=2 align='center')
-        %br/
-        %br/
-        %small
-          %a{href: unsubscribe_weekly_menu_subscription_url(@sub, format: :html, token: @sub.token)} Отписаться от рассылки меню
-
+        %div(style="padding-bottom: 20px")
+          %div(style="width: 100%; margin: 0; padding: 0; ")
+            %img(style="width: 100%; margin: 0; "){src: image_url(recipe.photo.preview)}
+          %div(style=" margin: -14px 0 0 0; padding-top: 10px; padding-bottom: 5px; background: #fa1211; color: white;")
+            %h2(style="margin-top: 0;margin-bottom: 0;")= recipe.title
+            %h3(style="margin-top: 0;margin-bottom: 0;")= recipe.subtitle
+            %p
+              %img{src: image_url('cutlery-o.png'), width: '18px'}
+              #{recipe.serving_size}
+              &nbsp; &nbsp; &nbsp;
+              %img{src: image_url('clock-o.png'), width: '18px'}
+              #{recipe.cooking_time} мин.
+          %div(style="text-align: left;")
+            %div(style="text-align: center;")
+              %h3(style="margin: 2px 0") Для приготовления понадобится
+            %div(style="text-align: left;margin: 0;")
+              %ul(style='list-style: none;line-height: 24px;margin-top: 0;')
+                - recipe.inventory_items.each do |ii|
+                  %li(style="padding-left: 15%;")
+                    %img{src: (image_url ii.image.png), width: '24px', style: 'vertical-align: bottom'}
+                    = ii.name
+      %div(style="margin: 30px 0; padding: 10px;")
+        %a{href: new_order_url, title: 'Перейти на сайт для оформления заказа', style: 'color: white; font-weight: 500; font-size: 20px; background: #fa1211; padding: 5px 12px; text-decoration: none; border-radius: 3px;'} ОФОРМИТЬ ЗАКАЗ
+      %div(style="padding: 10px 0;")
+        %a(style="font-size: 10px; text-decoration: none;"){href: unsubscribe_weekly_menu_subscription_url(@sub, format: :html, token: @sub.token)} Отписаться от рассылки меню
