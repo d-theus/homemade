@@ -4,7 +4,7 @@
     .row
       %center.col-xs-12
         = prop url: root_url
-        = image_tag 'logo.svg', class: 'hero-logo', itemprop: 'logo', itemtype: 'http://schema.org/URL', alt: 'HomeMade Logo'
+        %img.hero-logo{src: image_url('logo.svg'), alt: 'HomeMade Logo', itemprop: 'logo', itemtype: 'http://schema.org/URL'}
     .row
       %center.col-xs-12.col-md-8.col-md-offset-2.col-lg-4.col-lg-offset-4.hero-text
         %p= prop :description, "Мы производим и доставляем наборы высококачественных продуктов для быстрого и лёгкого приготовления ужинов дома."
