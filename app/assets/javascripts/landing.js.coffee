@@ -36,10 +36,11 @@ window.Ui.ready ->
       yaCounter35600140.reachGoal('order_clicked')
       order_modal_shown = true
   buttons.on 'click', ->
-    val = $(this).data('value')
-    lis.removeClass('active')
-    $(this).closest('li').addClass('active')
-    updateCount(val)
+    unless $(this).closest('li').hasClass('active')
+      val = $(this).data('value')
+      lis.removeClass('active')
+      $(this).closest('li').addClass('active')
+      updateCount(val)
 
   if (n = Number(Cookies.get('last_order'))) > 0
     if ios_j = Cookies.get('ignore_orders')
