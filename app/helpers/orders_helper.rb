@@ -29,8 +29,8 @@ module OrdersHelper
     ]
     else
     [
-      ["5 ужинов за #{price_for(5)} р.", 5],
-      ["3 ужина за #{price_for(3)} р.", 3]
+      ["5 ужинов за #{original_price_for(5)} р.", 5],
+      ["3 ужина за #{original_price_for(3)} р.", 3]
     ]
     end
   end
@@ -48,6 +48,6 @@ module OrdersHelper
   end
 
   def discount
-    "#{(Order::DISCOUNT * 100).to_i}%"
+    "#{(Order::DISCOUNT * 100).to_i}%" if Order::DISCOUNT
   end
 end

@@ -351,7 +351,7 @@ RSpec.describe Order, type: :model do
       describe '.discount?' do
 
         it 'is truthy' do
-          expect(Order.discount?).to be_truthy
+          expect(Order.discount?).to be_falsy
         end
       end
 
@@ -361,15 +361,15 @@ RSpec.describe Order, type: :model do
 
         it 'has price decreased' do
           expect(Order.count).to be < 10
-          expect(ord_cash.price).to be <= Order::PRICES[5] * (1 - Order::DISCOUNT)
-          expect(ord_card.price).to be <= Order::PRICES[3] * (1 - Order::DISCOUNT)
+          expect(ord_cash.price).to be == Order::PRICES[5]
+          expect(ord_card.price).to be == Order::PRICES[3]
         end
       end
 
       describe '#discount?' do
         it 'is' do
           ord = FactoryGirl.create(:order, payment_method: 'cash', count: 5)
-          expect(ord).to be_discount
+          expect(ord).not_to be_discount
         end
       end
     end
@@ -388,8 +388,8 @@ RSpec.describe Order, type: :model do
         ord_card = FactoryGirl.create(:order, payment_method: 'card', count: 3)
 
         it 'has ordinary price' do
-          expect(ord_cash.price).to be >= 3500
-          expect(ord_card.price).to be >= 2500
+          expect(ord_cash.price).to be == Order::PRICES[5]
+          expect(ord_card.price).to be == Order::PRICES[3]
         end
       end
       describe '#discount?' do
