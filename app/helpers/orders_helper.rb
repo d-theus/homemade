@@ -22,25 +22,35 @@ module OrdersHelper
   end
 
   def prices
-    if Order.discount?
-    [
-      ["5 ужинов за #{discount_price_for(5)} р.", 5],
-      ["3 ужина за #{discount_price_for(3)} р.", 3]
-    ]
-    else
-    [
-      ["5 ужинов за #{original_price_for(5)} р.", 5],
-      ["3 ужина за #{original_price_for(3)} р.", 3]
-    ]
+    price_method = Order.discount? ? :discount_price_for : :original_price_for
+    Order::PRICES.map do |count, prices_for_servings|
+      prices_for_servings.each do |servings, _|
+        ["#{count} ужинов за #{send(price_method, count: count, servings: servings)} р.", "#{count} на #{servings}"]
+      end
     end
   end
 
-  def discount_price_for(count)
-    (Order::PRICES[count] * (1.0 - Order::DISCOUNT)).floor
+  def options_for_count
+    [
+      ["5 ужинов", 5],
+      ["3 ужинa", 3]
+    ]
   end
 
-  def original_price_for(count)
-    Order::PRICES[count]
+  def options_for_servings
+    [
+      ["На 2-x человек", 2],
+      ["На 3-x человек", 3],
+      ["На 4-x человек", 4]
+    ]
+  end
+
+  def discount_price_for(hash)
+    (Order.price_for(hash) * (1.0 - Order::DISCOUNT)).floor
+  end
+
+  def original_price_for(hash)
+    Order.price_for(hash)
   end
 
   def discount?

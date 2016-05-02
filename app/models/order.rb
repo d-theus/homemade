@@ -12,11 +12,23 @@ class Order < ActiveRecord::Base
 
   PAYMENT_METHODS = %w(cash card)
 
-  PRICES = { 5 => 3500, 3 => 2500 }
+  PRICES = {
+    3 => {
+      2 => 2500,
+      3 => 3500,
+      4 => 4500
+    },
+    5 => {
+      2 => 3500,
+      3 => 4500,
+      4 => 6300
+    }
+  }
   DISCOUNT = nil
 
   validates :payment_method, presence: true, format: /\A(card|cash)\z/
   validates :count, presence: true, inclusion: { in: [3,5] }
+  validates :servings, presence: true, inclusion: { in: [2,3,4] }
   validates :name,  presence: true, length: { minimum: 2, maximum: 99 }
   validates :phone,  presence: true, format: /\A7\d{10}\z/
   validates :address, presence: true, length: { minimum: 2, maximum: 250 }
@@ -74,9 +86,9 @@ class Order < ActiveRecord::Base
 
   def price
     if DISCOUNT && self.discount?
-      PRICES[self.count] * (1.0 - DISCOUNT)
+      Order.price_for(self) * (1.0 - DISCOUNT)
     else
-      PRICES[self.count]
+      Order.price_for(self)
     end
   end
 
@@ -165,6 +177,18 @@ class Order < ActiveRecord::Base
 
     def close
       Order.where(status: 'awaiting_delivery').find_each { |o| o.close }
+    end
+
+    def price_for(arg)
+      order = if arg.is_a? Hash
+                OpenStruct.new(arg)
+              elsif arg.is_a? Order
+                arg
+              end
+
+      prices_for_count = PRICES.fetch(order.count) { fail 'Invalid count'}
+      price = prices_for_count.fetch(order.servings) { fail 'Invalid servings' }
+      price
     end
   end
 end

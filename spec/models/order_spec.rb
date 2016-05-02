@@ -98,6 +98,24 @@ RSpec.describe Order, type: :model do
         expect(FactoryGirl.build(:order, count: 5).valid?)
         .to be_truthy
       end
+
+    end
+
+    describe '.servings' do
+      it 'fails with no servings' do
+        expect(FactoryGirl.build(:order, servings: nil)).not_to be_valid
+      end
+
+      it 'accepts servings of [2,3,4]' do
+        expect(FactoryGirl.build(:order, servings: 2)).to be_valid
+        expect(FactoryGirl.build(:order, servings: 3)).to be_valid
+        expect(FactoryGirl.build(:order, servings: 4)).to be_valid
+
+        expect(FactoryGirl.build(:order, servings: 0)).not_to be_valid
+        expect(FactoryGirl.build(:order, servings: 1)).not_to be_valid
+        expect(FactoryGirl.build(:order, servings: 5)).not_to be_valid
+        expect(FactoryGirl.build(:order, servings: -1)).not_to be_valid
+      end
     end
 
     describe '.interval' do
@@ -356,13 +374,13 @@ RSpec.describe Order, type: :model do
       end
 
       describe 'order price' do
-        let (:ord_cash) { o = FactoryGirl.create(:order, payment_method: 'cash', count: 5); o.reload; o }
-        let (:ord_card) { o = FactoryGirl.create(:order, payment_method: 'card', count: 3); o.reload; o }
+        let (:ord_cash) { o = FactoryGirl.create(:order, payment_method: 'cash', count: 5, servings: 2); o.reload; o }
+        let (:ord_card) { o = FactoryGirl.create(:order, payment_method: 'card', count: 3, servings: 2); o.reload; o }
 
         it 'has price decreased' do
           expect(Order.count).to be < 10
-          expect(ord_cash.price).to be == Order::PRICES[5]
-          expect(ord_card.price).to be == Order::PRICES[3]
+          expect(ord_cash.price).to be == Order::price_for(count: 5, servings: 2)
+          expect(ord_card.price).to be == Order::price_for(count: 3, servings: 2)
         end
       end
 
@@ -384,12 +402,14 @@ RSpec.describe Order, type: :model do
         end
       end
       describe 'order price' do
-        ord_cash = FactoryGirl.create(:order, payment_method: 'cash', count: 5)
-        ord_card = FactoryGirl.create(:order, payment_method: 'card', count: 3)
+        ord_cash = FactoryGirl.create(:order, payment_method: 'cash', count: 5, servings: 2)
+        ord_cash.reload
+        ord_card = FactoryGirl.create(:order, payment_method: 'card', count: 3, servings: 4)
+        ord_card.reload
 
         it 'has ordinary price' do
-          expect(ord_cash.price).to be == Order::PRICES[5]
-          expect(ord_card.price).to be == Order::PRICES[3]
+          expect(ord_cash.price).to be == Order::price_for(count: 5, servings: 2)
+          expect(ord_card.price).to be == Order::price_for(count: 3, servings: 4)
         end
       end
       describe '#discount?' do
@@ -429,6 +449,37 @@ RSpec.describe Order, type: :model do
       expect { Order.close }.to change { Order.where(status: 'awaiting_delivery').count }
       .from(30)
       .to(0)
+    end
+  end
+
+  describe '.price_for' do
+    it 'takes valid hash and returns price correctly' do
+      expect(Order.price_for(count: 3, servings: 2)).to eq 2500
+      expect(Order.price_for(count: 3, servings: 3)).to eq 3500
+      expect(Order.price_for(count: 3, servings: 4)).to eq 4500
+      expect(Order.price_for(count: 5, servings: 2)).to eq 3500
+      expect(Order.price_for(count: 5, servings: 3)).to eq 4500
+      expect(Order.price_for(count: 5, servings: 4)).to eq 6300
+    end
+    it 'takes invalid hash and fails' do
+      expect { Order.price_for(count: nil, servings: nil)}.to raise_error RuntimeError
+      expect { Order.price_for(count: 3, servings: nil)}.to   raise_error 'Invalid servings'
+      expect { Order.price_for(count: nil, servings: 3)}.to   raise_error 'Invalid count'
+      expect { Order.price_for(count: 21, servings: 3)}.to    raise_error 'Invalid count'
+      expect { Order.price_for(count: 3, servings: 30)}.to    raise_error 'Invalid servings'
+    end
+    it 'takes valid order and returns price correctly' do
+      expect(Order.price_for FactoryGirl.build(:order, count: 3, servings: 2)).to eq 2500
+      expect(Order.price_for FactoryGirl.build(:order, count: 3, servings: 3)).to eq 3500
+      expect(Order.price_for FactoryGirl.build(:order, count: 3, servings: 4)).to eq 4500
+      expect(Order.price_for FactoryGirl.build(:order, count: 5, servings: 2)).to eq 3500
+      expect(Order.price_for FactoryGirl.build(:order, count: 5, servings: 3)).to eq 4500
+      expect(Order.price_for FactoryGirl.build(:order, count: 5, servings: 4)).to eq 6300
+    end
+    it 'takes invalid order and fails' do
+      expect { Order.price_for FactoryGirl.build(:order, count: nil, servings: nil) }.to raise_error RuntimeError
+      expect { Order.price_for FactoryGirl.build(:order, count: nil, servings: 2) }.to raise_error 'Invalid count'
+      expect { Order.price_for FactoryGirl.build(:order, count: 3, servings: nil) }.to raise_error 'Invalid servings'
     end
   end
 end

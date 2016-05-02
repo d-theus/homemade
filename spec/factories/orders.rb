@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :order do
     sequence(:payment_method) { %w(cash card).sample }
     sequence(:count) { [3,5].sample }
+    sequence(:servings) { [2,3,4].sample }
     status "new"
     sequence(:interval) { b = rand(8); "#{b}-#{b+3}" }
     sequence(:name) { %w(Александр Андрей Валентина Владимир Елена Мария Марат Светлана Сергей Ян).sample }

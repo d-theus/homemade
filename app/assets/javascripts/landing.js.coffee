@@ -2,16 +2,12 @@ updateCount = (val = Cookies.get('count') || 5)->
   Cookies.set('count', val)
   recipes = $('[name="recipe"][data-day="4"],[name="recipe"][data-day="5"]')
   if Number(val) > 3
-    recipes.each ->
-      $(this).removeClass('fade')
+    recipes.removeClass('fade')
     $('#why_disabled').hide()
   else
     $('#why_disabled').show()
-    recipes.each ->
-      $(this).addClass('fade')
-  $('[name="price"]').toggleClass('hidden')
-  $('.order_count input[type="radio"][value=' + val + ']')
-    .click()
+    recipes.addClass('fade')
+  $(".order_count input[type=\"radio\"][value=\"#{val}\"]").click()
 
 notifyUnpaid = ->
   $('#unpaid_modal').modal('show')
@@ -26,8 +22,8 @@ getThursday = ->
 window.Ui.ready ->
   how = $('#how')
   arrow = $('#how-text-toggle')
-  lis = $('#toggle_count li')
-  buttons = $('#toggle_count a')
+  count_lis = $('#toggle_count li')
+  count_buttons = $('#toggle_count a')
   order_modal = $('#order_modal')
   order_modal_shown = false
   order_modal.on 'shown.bs.modal', ->
@@ -35,12 +31,12 @@ window.Ui.ready ->
       ga('send', 'event', 'order', 'shown', 'modal')
       yaCounter35600140.reachGoal('order_clicked')
       order_modal_shown = true
-  buttons.on 'click', ->
+  count_buttons.on 'click', ->
     unless $(this).closest('li').hasClass('active')
-      val = $(this).data('value')
-      lis.removeClass('active')
+      count_lis.removeClass('active')
       $(this).closest('li').addClass('active')
-      updateCount(val)
+      count = $(this).data('count')
+      updateCount(count)
 
   if (n = Number(Cookies.get('last_order'))) > 0
     if ios_j = Cookies.get('ignore_orders')
