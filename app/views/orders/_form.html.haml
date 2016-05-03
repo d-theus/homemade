@@ -55,13 +55,16 @@
     %br/
     .col-xs-12.text-right
       %small.text-warning Заказы пока не принимаются
-  .col-xs-12.text-right.lead
-    %p.text-nowrap.price
+  .col-xs-12
+    %p.text-nowrap.lead.text-right#price_render
       %strong ИТОГО:&nbsp;&nbsp;
-      %i.fa.fa-fw.fa-rub><
       %strong(name='price')
-        %span>< 3500
+        %i.fa.fa-fw.fa-rub><
+        %span#price_value><
+    %p.alert.alert-warning.hidden#price_alert
+      %small
+        %strong Нужно выбрать размер набора и количество порций
   .col-xs-12.text-right.lead
-    .btn-group
-      = f.submit 'ЗАКАЗАТЬ', class: 'btn btn-lg btn-flat text-primary' + (Order.can_create? ? '' : ' disabled')
+    = link_to  'ОТМЕНА','',   class: 'btn btn-lg btn-flat text-muted', 'data-dismiss' => 'modal'
+    = f.submit 'ЗАКАЗАТЬ', class: 'btn btn-lg btn-flat text-primary' + (Order.can_create? ? '' : ' disabled')
 = javascript_include_tag 'orders.js'

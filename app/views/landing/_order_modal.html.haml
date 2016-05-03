@@ -1,5 +1,5 @@
 .modal.fade#order_modal
-  .modal-dialog
+  .modal-dialog.modal-md
     .modal-content
       .modal-body
         %button.close(data-dismiss='modal') &times;
@@ -7,6 +7,6 @@
           %center.col-xs-12
             %h2 Оформление заказа
         .row
-          .col-xs-10.col-xs-offset-1.col-sm-8.col-sm-offset-2
+          .col-xs-10.col-xs-offset-1
             = render partial: 'orders/form'
 
