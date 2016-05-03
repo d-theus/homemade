@@ -1,6 +1,6 @@
 %br
 .row
-  %center.col-xs-12
+  %center.col-xs-10.col-xs-offset-1
     .row
       .col-xs-2.col-xs-offset-5
         = image_tag 'logo.svg', class: 'img-responsive'
@@ -11,7 +11,7 @@
     %br/
     - unless cookies[:weekly_menu_subscribed]
       .row.lead
-        .col-xs-12
+        .col-xs-10.col-xs-offset-1
           = render partial: 'weekly_menu_subscriptions/form'
         
     %br/
