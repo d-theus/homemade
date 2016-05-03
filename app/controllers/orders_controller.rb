@@ -87,6 +87,7 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(
     :count,
+    :servings,
     :payment_method,
     :status,
     :name,
