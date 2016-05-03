@@ -37,20 +37,16 @@
                       %i.fa.fa-fw.fa-lg.fa-times
               %br/
               .row.lead
-                .col-xs-12.col-lg-10.col-lg-offset-1
-                  %center.col-xs-4.text-condensed{ title: "Время приготовления: #{@recipe.cooking_time} мин."}
+                .col-xs-12
+                  %center.col-xs-6.text-nowrap.text-condensed{ title: "Время приготовления: #{@recipe.cooking_time} мин."}
                     %i.fa.fa-fw.fa-clock-o
                     #{@recipe.cooking_time} мин.
                     = prop cook_time: "PT#{@recipe.cooking_time}M"
-                  %center.col-xs-4.text-condensed{ title: "Размер порции на одну персону: #{@recipe.serving_size}"}
+                  %center.col-xs-6.text-condensed.text-nowrap{ title: "Размер порции на одну персону: #{@recipe.serving_size}"}
                     %i.fa.fa-fw.fa-cutlery
                     = prop :nutrition, type: :nutrition_information, tag: :span do
                       = prop :serving_size, @recipe.serving_size
-                    %br/
-                    %small.tiny (одна порция)
-                  %center.col-xs-4.text-condensed{ title: "Количество порций: 2"}
-                    %i.fa.fa-fw.fa-user
-                    2
+                      \/ чел.
           .row
             .col-xs-12.col-sm-11.col-sm-offset-1
               %section.row
@@ -70,9 +66,15 @@
                 .col-xs-12.text-center-xs
                   %button.btn.btn-primary{ type: :button, data: { toggle: 'modal', target: '#picture_modal' }}
                     ПОКАЗАТЬ РЕЦЕПТ
+%br/
 .row#recipes_nav
   .col-xs-12.text-center
-    %a.btn.btn-flat(href="/#menu")= @recipe.day ? 'ОБРАТНО В МЕНЮ' : 'МЕНЮ НА ЭТУ НЕДЕЛЮ'
+    - if @recipe.day
+      %a.btn.btn-primary(href="/orders/new")= 'ОФОРМИТЬ ЗАКАЗ'
+      %a.btn.btn-flat(href="/#menu")= 'ОБРАТНО В МЕНЮ'
+    - else
+      %p.lead Этого блюда нет актуальном меню.
+      %a.btn.btn-flat(href="/#menu")= 'МЕНЮ НА ЭТУ НЕДЕЛЮ'
   = render partial: 'picture_modal'
 
 
