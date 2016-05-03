@@ -31,7 +31,7 @@
           %th(rowspan=1 colspan=3) Заказчик
           %th(rowspan=2) Оплата
           %th(rowspan=2) Статус
-          %th(rowspan=2 colspan=2) Доставить
+          %th(rowspan=2 colspan=1) Доставить
           %th(rowspan=2) Управление
         %tr
           %th(rowspan=1) Телефон
@@ -45,18 +45,19 @@
             %td
               - if ord.by_phone
                 %i.fa.fa-phone.fa-fw.text-primary{title: 'Заказан по телефону'}
-            %td= date_format ord.created_at
+            %td.text-nowrap= date_format ord.created_at
             %td
-              = ord.count
+              #{ord.count} на #{ord.servings}-x
+              %br/
               за #{ord.price}
               - if ord.discount?
                 %strong(title="Скидка") (%)
-            %td= phone_number ord.phone
+            %td.text-nowrap= phone_number ord.phone
             %td= ord.name
             %td= ord.address
             %td= t "activerecord.values.order.payment_method.#{ord.payment_method}"
             %td= t "activerecord.values.order.status.#{ord.status}"
-            %td #{next_sunday(ord.created_at)} в #{ord.interval}
+            %td.text-nowrap #{next_sunday(ord.created_at)} в #{ord.interval}
             %td
               = link_to 'ЗАВЕРШИТЬ',
                 close_order_path(ord),
