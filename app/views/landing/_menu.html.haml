@@ -9,8 +9,10 @@
       %br/
       .row.text-primary
         %ul.nav.nav-pills#toggle_count
-          = render partial: "count_li", locals: { active: true,  count: 5}
-          = render partial: "count_li", locals: { active: false,  count: 3}
+          %li.active
+            %a.btn{'data-count' => 5} 5 ужинов
+          %li
+            %a.btn{'data-count' => 3} 3 ужина
       .row
         .col-xs-12.text-center
           %span Меню действительно до ближайшего четверга включительно.
