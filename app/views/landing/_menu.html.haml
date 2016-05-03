@@ -17,18 +17,18 @@
           %span Доставка в воскресенье, #{next_sunday}.
     %br/
     - if @recipes.count == 5
-      .row
-        .col-xs-12.col-xs-offset-0.col-sm-6.col-sm-offset-3.col-md-12.col-md-offset-0.col-lg-10.col-lg-offset-1
-          - @recipes.take(3).each do |recipe|
-            %center.col-md-4.col-xs-12
-              = render partial: 'recipe_card', locals: { recipe: recipe}
-      %br/
-      .row
-        %center.col-xs-12#why_disabled{style: 'display:none'}
-          %h3.text-muted Доступны при выборе 5 ужинов
-        .col-lg-10.col-lg-offset-1.col-md-12.col-md-offset-0.col-sm-6.col-sm-offset-3.col-xs-12.col-xs-offset-0
-          %center.col-md-4.col-md-offset-2.col-sm-12.col-sm-offset-0
-            = render partial: 'recipe_card', locals: { recipe: @recipes[3]}
-          %center.col-md-4.col-md-offset-0.col-sm-12.col-sm-offset-0
-            = render partial: 'recipe_card', locals: { recipe: @recipes[4]}
+      .recipes
+        .row
+          .col-xs-12.col-xs-offset-0.col-sm-6.col-sm-offset-3.col-md-12.col-md-offset-0.col-lg-10.col-lg-offset-1
+            - @recipes.take(3).each do |recipe|
+              %center.col-md-4.col-xs-12.recipe-container
+                = render partial: 'recipe_card', locals: { recipe: recipe}
+        .row
+          %center.col-xs-12#why_disabled{style: 'display:none'}
+            %h3.text-muted Доступны при выборе 5 ужинов
+          .col-lg-10.col-lg-offset-1.col-md-12.col-md-offset-0.col-sm-6.col-sm-offset-3.col-xs-12.col-xs-offset-0
+            %center.col-md-4.col-md-offset-2.col-sm-12.col-sm-offset-0.recipe-container
+              = render partial: 'recipe_card', locals: { recipe: @recipes[3]}
+            %center.col-md-4.col-md-offset-0.col-sm-12.col-sm-offset-0.recipe-container
+              = render partial: 'recipe_card', locals: { recipe: @recipes[4]}
 

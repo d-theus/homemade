@@ -98,6 +98,20 @@
   @media only screen and (max-width: @screen-sm) and (orientation: portrait){
     padding-left: 0;
     padding-right: 0;
+
+    // ### ANIMATION
+    .recipes{
+      transform-origin: top center;
+      transition: all 0.1s ease-in-out;
+    }
+
+    &.zoom-out{
+      .recipes{
+        .transform(scale(0.1));
+        height: 400px;
+      }
+    }
+    // #############
   }
   @media only screen and (min-width: @screen-lg){
     padding-left: 6em;
@@ -107,6 +121,7 @@
     padding-left: 26em;
     padding-right: 26em;
   }
+
 }
 
 #toggle_count{

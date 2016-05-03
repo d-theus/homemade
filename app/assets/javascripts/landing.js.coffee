@@ -33,10 +33,20 @@ window.Ui.ready ->
       order_modal_shown = true
   count_buttons.on 'click', ->
     unless $(this).closest('li').hasClass('active')
+      # TODO: make it smooth
+      $(window).scrollTop($('#toggle_count').offset().top - 100)
+      $('#menu').addClass('zoom-out')
       count_lis.removeClass('active')
       $(this).closest('li').addClass('active')
       count = $(this).data('count')
-      updateCount(count)
+      setTimeout(->
+        updateCount(count)
+      , 500
+      )
+      setTimeout(->
+        $('#menu').removeClass('zoom-out')
+      , 1000
+      )
 
   if (n = Number(Cookies.get('last_order'))) > 0
     if ios_j = Cookies.get('ignore_orders')
