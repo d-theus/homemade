@@ -39,8 +39,8 @@
           = render partial: 'price', locals: { count: 3, hidden: true }
       .row
         .col-xs-12.text-center
-          %small Меню действительно до ближайшего четверга включительно.
-          %small Доставка в воскресенье, #{next_sunday}.
+          %span Меню действительно до ближайшего четверга включительно.
+          %span Доставка в воскресенье, #{next_sunday}.
     %br/
     - if @recipes.count == 5
       .row
