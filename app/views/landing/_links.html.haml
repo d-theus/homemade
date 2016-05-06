@@ -1,0 +1,13 @@
+.jumbotron#links
+  .row
+    %center.jt
+      .btn-group
+        = link_to 'О КОМПАНИИ', about_path, class: 'btn btn-flat'
+      .btn-group
+        - if @recipes.count == 5
+          %a.btn.btn-primary.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
+        - else
+          %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
+          %small Нельзя оформить заказ: меню составляется. Попробуйте через пару минут.
+      .btn-group
+        = link_to 'ЗАДАТЬ ВОПРОС', new_contact_path, class: 'btn btn-flat'

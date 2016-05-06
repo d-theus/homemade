@@ -133,6 +133,7 @@
 #how{
   .white;
   .anchor;
+  margin-bottom: 0;
 
   .ig{
     padding: 0;
@@ -161,6 +162,23 @@
     }
     @media only screen and (max-width: @screen-md){
       font-size: 14px;
+    }
+  }
+}
+
+#links{
+  .white;
+  margin-bottom: 2em;
+  padding: 0;
+  @media screen and (max-width: 600px){
+    .btn-group{
+      width: 100%;
+      .btn{
+        margin-left: 50%;
+        margin-top:    0.5em;
+        margin-bottom: 0.5em;
+        .transform(translateX(-50%));
+      }
     }
   }
 }
