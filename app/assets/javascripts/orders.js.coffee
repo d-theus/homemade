@@ -4,10 +4,12 @@ $('form#new_order').submit ->
 NewOrder = $('form#new_order').data('order')
 NewOrder.price = null
 NewOrder.update = (k,v)->
+  console.log "update #{k}: #{v}"
   this[k] = v
   this.refresh()
   console.log this
 NewOrder.sync = ->
+  console.log "Sync: #{JSON.stringify NewOrder}"
   price_render = $('#price_render')
   price_value =  $('#price_value')
   price_alert =  $('#price_alert')
@@ -51,7 +53,14 @@ NewOrder.refresh = ->
 NewOrder.refresh()
 
 $('form#new_order').on 'click', (e)->
+  console.log 'input click'
   input = $(e.target).closest('input')
   name = $(input).attr('name') && $(input).attr('name').match(/order\[(.*)\]/)[1]
   if name
     NewOrder.update(name, input.val())
+
+$('form#new_order input option').on 'click', (e)->
+  input = $(e.target).closest('input')
+  name = $(input).attr('name') && $(input).attr('name').match(/order\[(.*)\]/)[1]
+  if name
+    NewOrder.update(name, $(@).val())
