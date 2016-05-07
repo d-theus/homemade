@@ -46,7 +46,8 @@
                     %i.fa.fa-fw.fa-cutlery
                     = prop :nutrition, type: :nutrition_information, tag: :span do
                       = prop :serving_size, @recipe.serving_size
-                      \/ чел.
+                      %br/
+                      %small (на человека)
           .row
             .col-xs-12.col-sm-11.col-sm-offset-1
               %section.row
