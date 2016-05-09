@@ -1,39 +1,35 @@
 .overflow-container
-  .jumbotron#packages-0
-    .bg
-    .row
-      .col-xs-6.col-xs-offset-1
-        %img{src: image_path('production-photos/packages-0.jpg')}
-      .col-xs-5.col-lg-4
-        %p.jt.vc
-          Компания ООО «ХОУММЕЙД» занимается производством и доставкой продуктовых
-          наборов для быстрого и легкого приготовления ужинов. С помощью наших наборов
-          Вы сможете каждую неделю готовить без особого труда вкусные блюда
-          ресторанного качества. Каждый ужин рассчитан на двух взрослых человек.
-          Порции рассчитаны так, что голодными Вы точно не останетесь.
-    .row
-      .col-xs-10.col-xs-offset-1
-        %a.btn.btn-flat.pull-right(href='#' name='next')
-          %i.fa.fa-lg.fa-fw.fa-chevron-down.jt
-  .jumbotron#packages-1
-    .bg
-    .row
-      .col-xs-6.col-xs-offset-1
-        %img{src: image_path('production-photos/packages-1.jpg')}
-      .col-xs-5.col-lg-4
-        %p.jt.vc
-          Мы берем все хлопоты по подготовке Вашего ужина на себя. Вам  больше не придётся:
-          %ul.dotted.jt.lead
-            %li Тратить время на походы в магазин.
-            %li Каждый вечер ломать голову над тем, что приготовить на ужин.
-            %li Заранее подбирать и  подготавливать ингредиенты для ужина.
-            %li Долго стоять у плиты.
-        %p.jt
-          Вам нужно только выбрать количество блюд в наборе (три или пять), количество порций и заказать его.
-    .row
-      .col-xs-10.col-xs-offset-1
-        %a.btn.btn-flat.pull-right(href='#' name='next')
-          %i.fa.fa-lg.fa-fw.fa-chevron-down.jt
+  = render layout: 'slide', locals: { state: 'in', image: 'production-photos/packages-0.jpg', prev_slide: false, next_slide: true} do
+    %p.jt
+      Компания ООО «ХОУММЕЙД» занимается производством и доставкой продуктовых
+      наборов для быстрого и легкого приготовления ужинов. С помощью наших наборов
+      Вы сможете каждую неделю готовить без особого труда вкусные блюда
+      ресторанного качества. Каждый ужин рассчитан на двух взрослых человек.
+      Порции рассчитаны так, что голодными Вы точно не останетесь.
+
+  = render layout: 'slide', locals: { state: 'below', image: 'production-photos/packages-1.jpg', prev_slide: true, next_slide: true} do
+    %p.jt
+      Мы берем все хлопоты по подготовке Вашего ужина на себя. Вам  больше не придётся:
+      %ul.dotted.jt.lead
+        %li Тратить время на походы в магазин.
+        %li Каждый вечер ломать голову над тем, что приготовить на ужин.
+        %li Заранее подбирать и  подготавливать ингредиенты для ужина.
+        %li Долго стоять у плиты.
+    %p.jt
+      Вам нужно только выбрать количество блюд в наборе (три или пять), количество порций и заказать его.
+  = render layout: 'slide', locals: { state: 'below', image: 'production-photos/package-inside.jpg', prev_slide: true, next_slide: true} do
+    %p.jt
+      Продукты упакованы в вакуум, за счет чего они сохраняют свежесть в течение
+      всей рабочей недели. Срок годности нашей продукции подтвержден лабораторными
+      испытаниями. Доставку мы производим в рефрижераторах с соблюдением необходимого
+      температурного режима.
+    %p.jt
+      Продукция изготовлена в соответствии с СТО 27122932-001-2016
+  = render layout: 'slide', locals: { state: 'below', image: 'production-photos/truck.jpg', prev_slide: true, next_slide: false} do
+    %p.jt
+      Доставку мы производим в рефрижераторах с соблюдением необходимого
+      температурного режима.
+
   -#.jumbotron#packages-2
   -#.jumbotron#package-inside
   -#.jumbotron#box-inside

@@ -1,0 +1,21 @@
+%div{class: ['jumbotron', 'slide', state]}
+  .bg
+  .row
+    .col-xs-10.col-xs-offset-1.text-center
+      %a{href:'#', name:'prev', class: ['btn', 'btn-flat'] + [ prev_slide==false ? 'disabled' : nil] }
+        %i.fa.fa-lg.fa-fw.fa-chevron-up.jt
+    %br/
+    %br/
+    %span &nbsp;
+  .row
+    .col-xs-5.col-xs-offset-1
+      %img{src: image_path(image)}
+    .col-xs-6.col-lg-4.slide-center
+      .row
+        = yield
+  .row
+    %br/
+    %br/
+    .col-xs-10.col-xs-offset-1.text-center
+      %a{href:'#', name:'next', class: ['btn', 'btn-flat'] + [ next_slide==false ? 'disabled' : nil ]}
+        %i.fa.fa-lg.fa-fw.fa-chevron-down.jt

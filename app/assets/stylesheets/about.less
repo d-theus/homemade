@@ -11,10 +11,37 @@
   z-index: -1;
 }
 
-#packages-0, #packages-1{
-  margin-top: -@navbar-height;
+.slide-center{
+  height: 50vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.jumbotron.slide{
+  background: transparent;
+  height: 100vh;
+  position: absolute;
+  z-index: -2;
+  &.in{
+    top: -@navbar-height;
+    z-index: 0;
+    transition: top 1.8s ease-in-out;
+  }
+  &.above{
+    top: -120vh;
+    transition: top 2.8s ease-in-out;
+  }
+  &.below{
+    top: 90vh;
+    transition: top 2.8s ease-in-out;
+  }
+  padding-top: 25vh;
   img{
-    height: 50vh;
+    max-height: 50vh;
+    max-width: 100%;
     box-shadow: 2px 2px 2px 2px @gray-darker;
   }
   .jt{
@@ -22,32 +49,38 @@
     color: white;
     font-weight: 500;
   }
-  .row{
-    margin-top: 12.5vh;
-    height: 50vh;
+
+  &:nth-of-type(1){
+    .bg{
+      background: image-url('production-photos/packages-0.jpg') no-repeat 50% 50%;
+      .background-size(100% auto);
+      background-attachment: scroll;
+    }
+    .vc{
+      display: table-cell;
+      vertical-align: middle;
+    }
   }
-}
-#packages-0{
-  .bg{
-    background: image-url('production-photos/packages-0.jpg') no-repeat 50% 50%;
-    .background-size(100% auto);
-    background-attachment: scroll;
+  &:nth-of-type(2){
+    .bg{
+      background: image-url('production-photos/packages-1.jpg') no-repeat 50% 50%;
+      .background-size(100% auto);
+      background-attachment: scroll;
+    }
   }
-  .vc{
-    margin-top: 22%;
+  &:nth-of-type(3){
+    .bg{
+      background: image-url('production-photos/package-inside.jpg') no-repeat 50% 50%;
+      .background-size(100% auto);
+      background-attachment: scroll;
+    }
   }
-}
-#packages-1{
-  .bg{
-    background: image-url('production-photos/packages-1.jpg') no-repeat 50% 50%;
-    .background-size(100% auto);
-    background-attachment: scroll;
-  }
-  .vc{
-    margin-top: 5vh;
-  }
-  &>.row{
-    margin-top: 120vh;
+  &:nth-of-type(4){
+    .bg{
+      background: image-url('production-photos/truck.jpg') no-repeat 50% 50%;
+      .background-size(100% auto);
+      background-attachment: scroll;
+    }
   }
 }
 
@@ -60,26 +93,4 @@ html, body, .overflow-container{
   top: @navbar-height;
   width: 100%;
   height: 100%;
-  .jumbotron{
-    background: transparent;
-    min-height: 100vh;
-    position: relative;
-    transition: margin 3.2s ease-in-out;
-    &>.row{
-      transition: margin 2s ease-in-out;
-    }
-  }
-  &.next{
-    #packages-0{
-      margin-top: -105vh;
-      &>.row{
-        margin-top: -140vh;
-      }
-    }
-    #packages-1{
-      &>.row{
-        margin-top: 12.5vh;
-      }
-    }
-  }
 }
