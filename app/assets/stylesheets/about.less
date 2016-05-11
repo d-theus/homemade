@@ -1,96 +1,91 @@
 @import 'bootstrap_and_overrides';
-.bg{
-  position: absolute;
-  min-height: 105vh;
-  min-width: 105vw;
-  top: @navbar-height;
-  left: -1em;
+.jumbotron{
+  &:first-of-type{
+    margin-top: -1*@navbar-height;
+  }
+  background: transparent !important;
   padding: 0;
-  margin-top: -1em;
-  filter: brightness(50%) saturate(30%) blur(5px);
-  z-index: -1;
-}
-
-.slide-center{
-  height: 50vh;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-}
-
-.jumbotron.slide{
-  background: transparent;
-  height: 100vh;
-  position: absolute;
-  z-index: -2;
-  &.in{
+  .bg{
+    position: relative;
+    left: 0;
     top: -@navbar-height;
+    z-index: -1;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    @media only screen and (orientation: portrait){
+      width: 100vh;
+      min-height: 80vh;
+    }
+    @media only screen and (orientation: landscape){
+      height: 90vh;
+      min-width: 100vw;
+    }
+  }
+  .fixed{
+    position: absolute;
+    top: @navbar-height;
     z-index: 0;
-    transition: top 1.8s ease-in-out;
-  }
-  &.above{
-    top: -120vh;
-    transition: top 2.8s ease-in-out;
-  }
-  &.below{
-    top: 90vh;
-    transition: top 2.8s ease-in-out;
-  }
-  padding-top: 25vh;
-  img{
-    max-height: 50vh;
-    max-width: 100%;
-    box-shadow: 2px 2px 2px 2px @gray-darker;
-  }
-  .jt{
-    text-shadow: 5px @gray-darker;
+    width: 100%;
     color: white;
-    font-weight: 500;
+    margin-top: 10vh;
   }
-
-  &:nth-of-type(1){
-    .bg{
-      background: image-url('production-photos/packages-0.jpg') no-repeat 50% 50%;
-      .background-size(100% auto);
-      background-attachment: scroll;
-    }
-    .vc{
-      display: table-cell;
-      vertical-align: middle;
-    }
-  }
-  &:nth-of-type(2){
-    .bg{
-      background: image-url('production-photos/packages-1.jpg') no-repeat 50% 50%;
-      .background-size(100% auto);
-      background-attachment: scroll;
-    }
-  }
-  &:nth-of-type(3){
-    .bg{
-      background: image-url('production-photos/package-inside.jpg') no-repeat 50% 50%;
-      .background-size(100% auto);
-      background-attachment: scroll;
-    }
-  }
-  &:nth-of-type(4){
-    .bg{
-      background: image-url('production-photos/truck.jpg') no-repeat 50% 50%;
-      .background-size(100% auto);
-      background-attachment: scroll;
-    }
+  .content{
+    position: relative;
+    background: white;
+    width: 100%;
+    padding: 3% 5%;
+    margin-top: -20vh;
   }
 }
 
-html, body, .overflow-container{
-  overflow: hidden;
+.logo{
+  max-height: 5cm;
+  height: 10vh;
 }
 
-.overflow-container{
-  position: absolute;
-  top: @navbar-height;
-  width: 100%;
-  height: 100%;
+#summary .bg{
+    background: image-url('production-photos/packages-0.jpg') no-repeat 50% 0%;
+    background-attachment: fixed;
+    @media only screen and (orientation: portrait){
+      .background-size(auto 100%);
+    }
+    @media only screen and (orientation: landscape){
+      .background-size(100% auto);
+    }
 }
+#pros .bg{
+    background: image-url('production-photos/packages-1.jpg') no-repeat 50% 0%;
+    @media only screen and (orientation: portrait){
+      .background-size(auto 100%);
+    }
+    @media only screen and (orientation: landscape){
+      .background-size(100% auto);
+    }
+    background-attachment: fixed;
+}
+#packaging .bg{
+    background: image-url('production-photos/package-inside.jpg') no-repeat 50% 0%;
+    @media only screen and (orientation: portrait){
+      .background-size(auto 100%);
+    }
+    @media only screen and (orientation: landscape){
+      .background-size(100% auto);
+    }
+    background-attachment: fixed;
+}
+#delivery .bg{
+    background: image-url('production-photos/truck.jpg') no-repeat 50% 50%;
+    @media only screen and (orientation: portrait){
+      .background-size(auto 100%);
+    }
+    @media only screen and (orientation: landscape){
+      .background-size(100% auto);
+    }
+    background-attachment: fixed;
+}
+
+footer{
+  background: white;
+}
+
