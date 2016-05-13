@@ -23,7 +23,7 @@
         .col-xs-2.text-center.form-icon
           %i.fa.fa-fw.fa-lg.fa-tag
         .col-xs-10.col-sm-8
-          = f.input :topic
+          = f.input :topic, placeholder: t('activerecord.attributes.contact.topic') + "(не обязательно)"
       .row
         .col-xs-2.text-center.form-icon
           %i.fa.fa-fw.fa-lg.fa-terminal

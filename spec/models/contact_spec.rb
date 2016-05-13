@@ -4,14 +4,14 @@ RSpec.describe Contact, type: :model do
   describe 'validations' do
     describe '.topic' do
       context 'when nil' do
-        it 'is invalid' do
-          expect(FactoryGirl.build(:contact, topic: nil)).not_to be_valid
+        it 'is valid' do
+          expect(FactoryGirl.build(:contact, topic: nil)).to be_valid
         end
       end
 
       context 'when empty' do
-        it 'is invalid' do
-          expect(FactoryGirl.build(:contact, topic: nil)).not_to be_valid
+        it 'is valid' do
+          expect(FactoryGirl.build(:contact, topic: nil)).to be_valid
         end
       end
 
@@ -112,5 +112,14 @@ RSpec.describe Contact, type: :model do
         expect(contact).not_to be_unread
       end
     end
+  end
+
+  context 'nil topic' do
+    subject { ct = FactoryGirl.build(:contact, topic: nil); ct.save; ct.reload; ct.topic }
+    it { is_expected.to eq "без темы" }
+  end
+  context 'empty topic' do
+    subject { ct = FactoryGirl.build(:contact, topic: ''); ct.save; ct.reload; ct.topic }
+    it { is_expected.to eq "без темы" }
   end
 end

@@ -1,7 +1,6 @@
 class Contact < ActiveRecord::Base
   validates :topic,
-    presence: true,
-    length: { minimum: 1, maximum: 255 }
+    length: { maximum: 255 }
 
   validates :text,
     presence: true,
@@ -13,6 +12,8 @@ class Contact < ActiveRecord::Base
 
   validates :name, length: { maximum: 99 }
 
+  before_create :make_topic
+
   def read
     self.unread = false
     self.save
@@ -20,5 +21,11 @@ class Contact < ActiveRecord::Base
 
   def unread?
     self.unread
+  end
+
+  private
+
+  def make_topic
+    self.topic = "без темы" if self.topic.blank?
   end
 end
