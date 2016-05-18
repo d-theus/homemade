@@ -163,7 +163,8 @@ class Order < ActiveRecord::Base
 
   class << self
     def can_create?
-      Order.where('status in (?)', [:new, :pending, :paid]).count < 70
+      #Order.where('status in (?)', [:new, :pending, :paid]).count < 70
+      false
     end
 
     def discount?

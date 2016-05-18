@@ -6,7 +6,7 @@
       %span &nbsp;к Вам приедет коробка с продуктами и рецептами блюд на следующую неделю.
   .row.lead
     %center.col-xs-12.jt
-      - if @recipes.count == 5
+      - if @recipes.count == 5 && Order.can_create?
         %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
       - else
         %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
