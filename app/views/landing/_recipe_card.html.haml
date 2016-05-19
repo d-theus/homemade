@@ -1,9 +1,15 @@
 = card name: 'recipe', 'data-day' => recipe.day do
   = scope :recipe do
-    = prop url: recipe_path(recipe)
+    = prop name: "#{recipe.title} #{recipe.subtitle}"
+    = prop in_language: 'Russian'
+    = prop recipe_yield: 'две порции'
+    = prop source_organization: 'HomeMade'
+    = prop publisher: 'HomeMade'
+    = prop date_published: recipe.created_at.iso8601
+    = prop url: recipe_url(recipe)
     %center.row.card-img-container.carousel
       %a{href: recipe_path(recipe)}
-        %img.card-img{src: recipe.photo.preview }
+        = prop :image, tag: :img, class: 'card-img', src: recipe.photo.preview
       .carousel-caption
         .row
           .col-xs-6.col-xs-offset-1
@@ -18,10 +24,12 @@
               .col-xs-12.text-nowrap{ title: "Время приготовления: #{recipe.cooking_time} мин."}
                 %i.fa.fa-fw.fa-clock-o
                 %small #{recipe.cooking_time} мин.
+                = prop cook_time: "PT#{recipe.cooking_time}M"
             .row
               .col-xs-12.text-nowrap{ title: "Размер порции на одну персону: #{recipe.serving_size}"}
-                %i.fa.fa-fw.fa-cutlery
-                %small #{recipe.serving_size}
+                = prop :nutrition, type: :nutrition_information, tag: :span do
+                  %i.fa.fa-fw.fa-cutlery
+                  %small= prop :serving_size, recipe.serving_size
     .card-description.col-xs-11.col-xs-offset-1
       .row
         .col-xs-12.col-sm-7

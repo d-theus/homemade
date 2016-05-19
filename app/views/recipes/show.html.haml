@@ -9,7 +9,7 @@
   = scope :recipe do
     = prop name: "#{@recipe.title} #{@recipe.subtitle}"
     = prop in_language: 'Russian'
-    = prop recipe_yield: 'две порции'
+    = prop recipe_yield: "2―4 порции"
     = prop source_organization: 'HomeMade'
     = prop publisher: 'HomeMade'
     = prop date_published: @recipe.created_at.iso8601
