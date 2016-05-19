@@ -1,8 +1,5 @@
 FROM dtheus/rails
 
-USER root
-RUN yum -y update; yum -y install ImageMagick postgresql-server postgresql-contrib postgresql-devel; yum clean all
-USER web
 ENV RAILS_ENV production
 ENV BUNDLE_WITHOUT test:development
 ENV PATH $RBENV_DIR/shims:$PATH
