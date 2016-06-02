@@ -4,6 +4,11 @@
       .btn-group
         = link_to 'О КОМПАНИИ', about_path, class: 'btn btn-flat'
       .btn-group
+        = link_to 'ОТЗЫВЫ И ОБЗОРЫ', reviews_path, class: 'btn btn-flat'
+      .btn-group
+        = link_to 'ЗАДАТЬ ВОПРОС', new_contact_path, class: 'btn btn-flat'
+      %br/
+      .btn-group
         - if @recipes.count == 5 && Order.can_create?
           %a.btn.btn-primary.btn-lg.jb{href: "#", data: { toggle: 'modal', target: '#order_modal' } } ОФОРМИТЬ ЗАКАЗ 
         - else
@@ -11,5 +16,3 @@
             %small Нельзя ОФОРМИТЬ ЗАКАЗ: меню составляется
           %p
             %a.btn.btn-primary.btn-lg.btn-disabled.jb{href: "#", disabled: true} ОФОРМИТЬ ЗАКАЗ
-      .btn-group
-        = link_to 'ЗАДАТЬ ВОПРОС', new_contact_path, class: 'btn btn-flat'

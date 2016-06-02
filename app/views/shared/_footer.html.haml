@@ -2,13 +2,17 @@
   = scope :organization do
     .row
       %ul.nav.col-xs-12.col-xs-offset-0.col-md-8.col-md-offset-2
-        %li.col-xs-6.col-sm-3.text-center
+        %li.col-xs-6.col-sm-3.col-lg-2.text-center.text-nowrap
+          %a(href=about_path rel="index,follow") О Homemade
+        %li.col-xs-6.col-sm-3.col-lg-2.text-center.text-nowrap
+          %a(href=reviews_path rel="index,follow") Отзывы и обзоры
+        %li.col-xs-6.col-sm-3.col-lg-2.text-center.text-nowrap
           %a(href=offer_path rel="nofollow") Публичная оферта
-        %li.col-xs-6.col-sm-3.text-center
-          %a(href=policy_path rel="nofollow") Политика конфиденциальности
-        %li.col-xs-6.col-sm-3.text-center
+        %li.col-xs-6.col-sm-3.col-lg-2.text-center.text-nowrap
+          %a(href=policy_path rel="nofollow") Конфиденциальность
+        %li.col-xs-6.col-sm-3.col-sm-offset-3.col-lg-offset-0.col-lg-2.text-center.text-nowrap
           %a(href=new_contact_path rel="nofollow") Обратная связь
-        %li.col-xs-6.col-sm-3.text-center
+        %li.col-xs-6.col-sm-3.col-lg-2.text-center.text-nowrap
           %a(href=new_phone_callback_path rel="nofollow") Заказать звонок
     %center
       = prop email: "contact@homemade-msk.ru"
