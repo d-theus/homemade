@@ -1,3 +1,5 @@
+@import 'bootstrap_and_overrides';
+
 #hero{
   @media only screen and (min-width: 0) and (orientation: portrait) and (min-height: 0){
     background: image-url('bg-sm-p.jpg') no-repeat 50% 100%;
@@ -250,4 +252,14 @@
   &:nth-of-type(2n+1){
     .transform-origin(left);
   }
+}
+
+small{
+  font-family: Roboto;
+  font-weight: 300;
+  font-size:   11px;
+}
+
+small.tiny{
+  font-size:   10px;
 }
