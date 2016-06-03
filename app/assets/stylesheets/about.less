@@ -14,8 +14,8 @@
     margin: 0;
     overflow: hidden;
     @media only screen and (orientation: portrait){
-      width: 100vh;
-      min-height: 80vh;
+      width: 100vw;
+      min-height: 70vh;
     }
     @media only screen and (orientation: landscape){
       height: 90vh;
@@ -45,24 +45,24 @@
 }
 
 #summary .bg{
-  background: image-url('production-photos/packages-0.jpg') no-repeat 50% 0%;
-  background-attachment: fixed;
+  background: image-url('production-photos/packages-0.jpg') no-repeat 50% 50%;
   @media only screen and (orientation: portrait){
     .background-size(auto 100%);
   }
   @media only screen and (orientation: landscape){
     .background-size(100% auto);
   }
+  .background-attachment-fixed;
 }
 #pros .bg{
-  background: image-url('production-photos/packages-1.jpg') no-repeat 50% 0%;
+  background: image-url('production-photos/packages-1.jpg') no-repeat 50% 50%;
   @media only screen and (orientation: portrait){
-    .background-size(auto 100%);
+    .background-size(100% auto);
   }
   @media only screen and (orientation: landscape){
     .background-size(100% auto);
   }
-  background-attachment: fixed;
+  .background-attachment-fixed;
 }
 #packaging .bg{
   background: image-url('production-photos/seals.jpg') no-repeat 50% 50%;
@@ -72,35 +72,36 @@
   @media only screen and (orientation: landscape){
     .background-size(100% auto);
   }
-  background-attachment: fixed;
+  .background-attachment-fixed;
 }
 #delivery .bg{
   background: image-url('production-photos/truck.jpg') no-repeat 50% 50%;
   @media only screen and (orientation: portrait){
-    .background-size(auto 100%);
+    .background-size(100% auto);
   }
   @media only screen and (orientation: landscape){
     .background-size(100% auto);
   }
-  background-attachment: fixed;
+  .background-attachment-fixed;
 }
 
 #links{
   .bg{
-    background: image-url('production-photos/package-inside.jpg') no-repeat 50% 0%;
+    background: image-url('production-photos/package-inside.jpg') no-repeat 35% 50%;
     @media only screen and (orientation: portrait){
-      .background-size(auto 100%);
+      .background-size(120% auto);
     }
     @media only screen and (orientation: landscape){
       .background-size(100% auto);
     }
-    background-attachment: fixed;
+  .background-attachment-fixed;
   }
 
   .content{
     background: transparent !important;
     .bg-glass{
       padding: 1em;
+      margin-bottom: 2em;
     }
   }
 }
