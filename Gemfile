@@ -26,9 +26,14 @@ gem 'will_paginate-bootstrap'
 gem 'item'
 gem 'vkontakte_api'
 
-gem 'capistrano', group: :development
-gem 'capistrano-rbenv', group: :development
-gem 'capistrano-rails', group: :development
+group :development do
+  gem 'capistrano', group: :development
+  gem 'capistrano-rbenv', group: :development
+  gem 'capistrano-rails', group: :development
+  gem 'chef'
+  gem 'knife-solo'
+  gem 'knife-solo_data_bag'
+end
 
 group :development, :test do
   gem 'rspec-rails'

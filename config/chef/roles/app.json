@@ -1,0 +1,12 @@
+{
+  "name": "app",
+  "run_list": [
+    "recipe[users::default]",
+    "recipe[ssh::default]",
+    "recipe[selinux::disabled]",
+    "recipe[dockerails::default]",
+    "recipe[dockerails::www]",
+    "recipe[dockerails::ntpd]",
+    "recipe[dockerails::docker]"
+  ]
+}

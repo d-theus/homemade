@@ -5,7 +5,7 @@ set :application, 'homemade'
 set :repo_url, 'https://github.com/d-theus/homemade.git'
 
 # Default branch is :master
-ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, '/var/www/my_app_name'
@@ -21,32 +21,104 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 set :pty, true
 
-# Docker specific
+set :chef_dir, File.expand_path('chef', File.dirname(__FILE__))
+
 namespace :docker do
-  set :user, 'dtheus'
-  set :proxy, 'nginx'
-  set :backend, 'thin'
-  set :public, 'public'
-  set :uploads, 'uploads'
-  set :rails, 'rails'
-  set :db, 'postgres'
-  set :smtp, 'postfix'
-  set :uploads_path, '/home/web/app/public/uploads'
-  set :proxy_links, -> { (fetch(:http_backends) + fetch(:https_backends)).reduce('') { |acc,i| acc += " --link #{fetch :rails}#{i}"; acc } }
-  set :volumes, "--volumes-from #{fetch :uploads} --volumes-from #{fetch :public}"
-  set :http_backends, []
-  set :https_backends, [1,2,3]
-  set :backends_count, ->{ fetch(:http_backends).count + fetch(:https_backends).count }
-end
+  namespace :compose do
+    task :up do
+      on roles :app do
+        within current_path do
+          execute 'docker-compose', 'up', '-d'
+        end
+      end
+    end
 
+    task :down do
+      on roles :app do
+        if test("[ -d #{current_path} ]") and capture('docker ps -q').lines.any?
+          within current_path do
+            execute 'docker-compose', 'down'
+          end
+        end
+      end
+    end
 
-namespace :deploy do
-  after :published, :upload_secrets do
-    on roles :app do
-      upload! '.rbenv-vars', current_path
+    task :onboot do
+      on roles :app do
+        execute "echo '@reboot cd #{current_path} && while [[ -z  $(#{capture 'which pgrep'} docker) ]]; do sleep 2; done && #{capture 'which docker-compose'} up -d' | crontab -"
+      end
+    end
+
+    task :sitemap do
+      on roles :app do
+        within current_path do
+          sleep 2
+          execute 'docker-compose', 'exec', 'app1', 'bundle exec rake sitemap:refresh'
+        end
+      end
+    end
+
+    task :migrate do
+      on roles :app do
+        within current_path do
+          sleep 2
+          execute 'docker-compose', 'exec', 'app1', 'bundle exec rake db:migrate'
+        end
+      end
     end
   end
 
-  after :published, 'docker:setup'
-  after :published, 'docker:start'
+  task :persistence do
+    config = YAML.load(File.read File.expand_path('docker-compose.yml'))
+    on roles :app do
+      config['volumes'].each do |_, val|
+        name = val['external']['name']
+        execute "docker volume ls | grep #{name} &>/dev/null; if [ $? -ne 0 ]; then docker volume create --name #{name}; fi"
+      end
+    end
+  end
+end
+
+namespace :chef do
+  task :cook do
+    Dir.chdir(fetch :chef_dir) do
+      nodes = JSON.parse(`knife search -z node "role:app" -a ipaddress -a name -F json 2>/dev/null`)["rows"]
+      nodes.each do |node|
+        puts "Another node: #{node.inspect}"
+        node.keys.each do |k|
+          attrs = node[k]
+          system "knife solo cook admin@#{attrs['ipaddress']} -N #{attrs['name']}"
+        end
+      end
+    end
+  end
+end
+
+namespace :deploy do
+  namespace :secrets do
+    task :upload_env do
+      on roles :app do
+        upload! '.rbenv-vars', current_path
+      end
+    end
+
+    task :upload_certs do
+      on roles :app do
+        files = Dir.glob('config/certs/*')
+        execute "mkdir -p #{File.join current_path, 'config', 'certs'}" if files.any?
+        files.each do |f|
+          upload! f, File.join(current_path, 'config', 'certs', File.basename(f))
+        end
+      end
+    end
+  end
+
+  after :updated,   'docker:compose:down'
+  after :published, 'secrets:upload_env'
+  after :published, 'secrets:upload_certs'
+  after :published, 'docker:persistence'
+  after :published, 'docker:compose:up'
+  after :finished,  'docker:compose:migrate'
+  after :finished,  'docker:compose:sitemap'
+  after :finished,  'docker:compose:onboot'
 end

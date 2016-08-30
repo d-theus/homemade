@@ -4,7 +4,7 @@ default: &default
   template: template0
   database: homemade
   pool: 5
-  username: web
+  username: <%= ENV["DB_USER"] %>
   password: <%= ENV["DB_PASS"] %>
   host: localhost
   port: 5432
@@ -21,4 +21,4 @@ test:
 
 production:
   <<: *default
-  host: postgres
+  host: db

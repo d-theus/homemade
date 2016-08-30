@@ -63,7 +63,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "homemade-msk.ru"}
   config.action_mailer.asset_host = 'http://homemade-msk.ru'
   config.action_mailer.smtp_settings = {
-    address: 'postfix',
+    address: 'smtp',
     port: 25,
     domain: 'homemade-msk.ru'
   }
@@ -79,6 +79,8 @@ Rails.application.configure do
   # config.autoflush_log = false
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
+  STDOUT.sync = true
+  config.logger = ::Logger.new(STDOUT)
   config.log_formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.

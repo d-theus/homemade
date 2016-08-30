@@ -26,3 +26,5 @@ tags
 tags
 .rbenv-vars
 /documents/
+
+config/certs/

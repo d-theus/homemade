@@ -1,0 +1,6 @@
+{
+  "name": "app1",
+  "run_list": [
+    "role[app]"
+  ]
+}

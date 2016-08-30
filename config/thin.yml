@@ -1,0 +1,5 @@
+---
+timeout: 30
+log: /dev/stdout
+max_conns: 512
+threaded: true
